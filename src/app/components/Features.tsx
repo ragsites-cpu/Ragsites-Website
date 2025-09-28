@@ -101,27 +101,6 @@ export default function Features() {
             </div>
           ))}
         </div>
-
-        {/* Stats section */}
-        <div className="mt-20 pt-16 border-t border-gray-200 dark:border-gray-800">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { number: '99.9%', label: 'Uptime Guarantee' },
-              { number: '< 200ms', label: 'Response Time' },
-              { number: '24/7', label: 'AI Availability' },
-              { number: '50+', label: 'Languages Supported' }
-            ].map((stat, index) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl lg:text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600 dark:text-gray-400 font-medium">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
