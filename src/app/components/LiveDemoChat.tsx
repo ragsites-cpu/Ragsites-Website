@@ -1,4 +1,4 @@
-// LiveDemoChat.tsx with Gemini RAG Integration
+// LiveDemoChat.tsx with Pure Gemini RAG Integration
 'use client';
 import { useState, useEffect, useRef } from 'react';
 
@@ -57,43 +57,70 @@ export default function LiveDemoChatWithRAG() {
 
   const currentIndustry = industries[selectedIndustry];
 
-  // Initialize with welcome message
+  // Initialize with welcome message from API
   useEffect(() => {
-    setMsgs([{
-      id: 'm1',
-      from: 'bot',
-      text: currentIndustry.welcomeMsg,
-      timestamp: new Date(),
-      industry: selectedIndustry
-    }]);
+    const initializeChat = async () => {
+      setLoading(true);
+      setIsTyping(true);
+      
+      try {
+        const response = await fetch('/api/chat-rag', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            message: "Generate a welcome message for a new visitor to the website",
+            industry: selectedIndustry,
+            isWelcomeMessage: true
+          })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+          setMsgs([{
+            id: 'm1',
+            from: 'bot',
+            text: data.reply || currentIndustry.welcomeMsg,
+            timestamp: new Date(),
+            industry: selectedIndustry,
+            sources: data.sources
+          }]);
+        } else {
+          // Fallback to default welcome message if API fails
+          setMsgs([{
+            id: 'm1',
+            from: 'bot',
+            text: currentIndustry.welcomeMsg,
+            timestamp: new Date(),
+            industry: selectedIndustry
+          }]);
+        }
+      } catch (error) {
+        console.error('Failed to initialize chat:', error);
+        // Fallback to default welcome message
+        setMsgs([{
+          id: 'm1',
+          from: 'bot',
+          text: currentIndustry.welcomeMsg,
+          timestamp: new Date(),
+          industry: selectedIndustry
+        }]);
+      } finally {
+        setLoading(false);
+        setIsTyping(false);
+      }
+    };
+
+    initializeChat();
   }, [selectedIndustry]);
 
   // Industry change handler
   const handleIndustryChange = (industry: typeof selectedIndustry) => {
     setSelectedIndustry(industry);
     setInput('');
-  };
-
-  // Enhanced greeting detection
-  const isGreeting = (message: string) => {
-    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings'];
-    const msg = message.toLowerCase().trim();
-    return greetings.some(greeting => 
-      msg === greeting || 
-      msg.startsWith(greeting + ' ') || 
-      msg.startsWith(greeting + '!')
-    );
-  };
-
-  // Generate contextual greeting response
-  const generateGreetingResponse = () => {
-    const responses = {
-      plumber: `Hello! Great to chat with you. I'm here to help with any plumbing questions or services you need from ${currentIndustry.companyName}. Whether it's an emergency repair, routine maintenance, or just getting pricing information, I can assist you. What can I help you with today?`,
-      lawfirm: `Hello! Nice to meet you. I'm here to help with any legal questions about ${currentIndustry.companyName}. I can provide information about our services, schedule a free consultation, or help determine if we can assist with your case. What brings you here today?`,
-      gym: `Hey there! Welcome! I'm excited to help you with ${currentIndustry.companyName}. Whether you're looking to start your fitness journey, learn about our classes, or get membership details, I'm here to help. What fitness goals are you working towards?`,
-      marketing: `Hi! Great to connect with you. I'm here to help with ${currentIndustry.companyName} and all your digital marketing needs. Whether you want to learn about our services, see case studies, or book a strategy session, I can guide you. What marketing challenges are you facing?`
-    };
-    return responses[selectedIndustry];
   };
 
   // Send message to Gemini RAG API
@@ -114,24 +141,6 @@ export default function LiveDemoChatWithRAG() {
     setIsTyping(true);
 
     try {
-      // Check if it's a greeting and handle locally for better UX
-      if (isGreeting(currentInput)) {
-        await new Promise(resolve => setTimeout(resolve, 800)); // Simulate thinking
-        
-        const botMsg: Msg = { 
-          id: crypto.randomUUID(), 
-          from: 'bot', 
-          text: generateGreetingResponse(),
-          timestamp: new Date(),
-          industry: selectedIndustry
-        };
-        
-        setMsgs((m) => [...m, botMsg]);
-        setLoading(false);
-        setIsTyping(false);
-        return;
-      }
-
       const response = await fetch('/api/chat-rag', {
         method: 'POST',
         headers: { 
@@ -176,7 +185,7 @@ export default function LiveDemoChatWithRAG() {
       const botMsg: Msg = { 
         id: crypto.randomUUID(), 
         from: 'bot', 
-        text: data.reply || "I received your message but couldn't generate a proper response. Can you try rephrasing your question?",
+        text: data.reply || "I apologize, but I'm having trouble generating a response right now. Please try asking your question again.",
         timestamp: new Date(),
         industry: selectedIndustry,
         sources: data.sources
@@ -186,71 +195,51 @@ export default function LiveDemoChatWithRAG() {
     } catch (error) {
       console.error('Chat error:', error);
       
-      // Enhanced fallback response
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const fallbackResponse = generateFallbackResponse(currentInput);
-      setMsgs((m) => [...m, { 
-        id: crypto.randomUUID(), 
-        from: 'bot', 
-        text: fallbackResponse,
-        timestamp: new Date(),
-        industry: selectedIndustry
-      }]);
+      // Try to get a fallback response from the API
+      try {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const fallbackResponse = await fetch('/api/chat-rag', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            message: "The user had a technical issue. Please provide a helpful message explaining that there was a temporary problem and asking them to try again, while also mentioning what you can help them with.",
+            industry: selectedIndustry,
+            isFallback: true
+          })
+        });
+
+        if (fallbackResponse.ok) {
+          const fallbackData = await fallbackResponse.json();
+          setMsgs((m) => [...m, { 
+            id: crypto.randomUUID(), 
+            from: 'bot', 
+            text: fallbackData.reply || `I apologize, but I'm experiencing some technical difficulties right now. Please try your question again. I'm here to help with any questions about ${currentIndustry.companyName} and our services.`,
+            timestamp: new Date(),
+            industry: selectedIndustry,
+            sources: fallbackData.sources
+          }]);
+        } else {
+          throw new Error('Fallback also failed');
+        }
+      } catch (fallbackError) {
+        console.error('Fallback error:', fallbackError);
+        // Only if everything fails, use a simple fallback
+        setMsgs((m) => [...m, { 
+          id: crypto.randomUUID(), 
+          from: 'bot', 
+          text: `I apologize, but I'm experiencing some technical difficulties right now. Please try your question again. I'm here to help with any questions about ${currentIndustry.companyName} and our services.`,
+          timestamp: new Date(),
+          industry: selectedIndustry
+        }]);
+      }
     } finally {
       setLoading(false);
       setIsTyping(false);
     }
-  }
-
-  // Enhanced fallback response generator
-  const generateFallbackResponse = (message: string) => {
-    const msg = message.toLowerCase();
-    const industry = currentIndustry;
-    
-    // Handle greetings
-    if (isGreeting(message)) {
-      return generateGreetingResponse();
-    }
-    
-    // Simulated responses based on keywords
-    if (msg.includes('price') || msg.includes('cost') || msg.includes('how much')) {
-      const prices = {
-        plumber: "Service calls start at $89 (waived with repair). Emergency calls are $150. Drain cleaning runs $200-400 depending on severity. Would you like me to schedule an estimate for your specific needs?",
-        lawfirm: "We work on contingency for personal injury cases - no fees unless we win your case. Initial consultations are always free. Would you like me to schedule a consultation to discuss your specific situation?",
-        gym: "Memberships start at $49/month for basic access, $79/month with classes included. Personal training is $75/session with package discounts available. Want to schedule a tour and trial workout?",
-        marketing: "Our packages range from $2,500/month for small businesses to $10,000+ for enterprise clients. Every package includes a free initial audit. Should I schedule a strategy call to discuss your specific needs?"
-      };
-      return prices[selectedIndustry as keyof typeof prices] || "Please contact us for detailed pricing information tailored to your needs.";
-    }
-    
-    if (msg.includes('book') || msg.includes('appointment') || msg.includes('schedule')) {
-      const booking = {
-        plumber: "I can schedule your service right away! We have emergency slots available today or regular service appointments tomorrow. What type of plumbing issue are you experiencing?",
-        lawfirm: "I'll help you book a free consultation. We have availability this week for case evaluations. Would you prefer a morning or afternoon appointment?",
-        gym: "Perfect! I can book you a tour and free trial session. We have slots available today at 2 PM or tomorrow at 10 AM. Which works better for your schedule?",
-        marketing: "I'll schedule your free marketing audit and strategy session. Are you available for a 30-minute call this week to discuss your business goals?"
-      };
-      return booking[selectedIndustry as keyof typeof booking] || "I'd be happy to schedule that for you. What day and time work best?";
-    }
-    
-    if (msg.includes('emergency') || msg.includes('urgent') || msg.includes('now')) {
-      return selectedIndustry === 'plumber' 
-        ? "This sounds like an emergency! I'm connecting you with our emergency dispatch team right now. Our technician will arrive within 45 minutes. Please shut off your main water valve if possible and text me your address."
-        : `I understand this is urgent. Let me connect you with our priority team right away. For immediate assistance with ${industry.companyName}, what's the best number to reach you?`;
-    }
-
-    if (msg.includes('help') || msg.includes('what can you do') || msg.includes('services')) {
-      const services = {
-        plumber: `I can help you with all of ${industry.companyName}'s services including emergency repairs, drain cleaning, water heater installation, pipe repairs, and routine maintenance. I can also provide pricing, schedule appointments, and dispatch emergency technicians. What specific plumbing issue can I help you with?`,
-        lawfirm: `I can assist with information about ${industry.companyName}'s legal services, particularly personal injury cases, car accidents, slip and falls, and wrongful death claims. I can schedule free consultations, provide case evaluations, and connect you with our attorneys. What type of legal matter brings you here today?`,
-        gym: `I can help with everything related to ${industry.companyName} including membership options, class schedules, personal training, nutrition counseling, and facility tours. I can also book trial sessions and answer questions about our equipment and amenities. What are your fitness goals?`,
-        marketing: `I can assist with ${industry.companyName}'s digital marketing services including SEO, PPC advertising, social media marketing, content creation, and website optimization. I can also schedule strategy sessions, provide case studies, and create custom proposals. What marketing challenges is your business facing?`
-      };
-      return services[selectedIndustry as keyof typeof services] || `I can help with questions about ${industry.companyName} and schedule appointments or consultations. What would you like to know?`;
-    }
-    
-    // Default response with industry context
-    return `I'm here to help with any questions about ${industry.companyName}. Whether you need information about our services, pricing, scheduling, or have specific ${selectedIndustry} questions, I'm ready to assist. What would you like to know?`;
   }
 
   // Quick suggestion handler
@@ -343,13 +332,6 @@ export default function LiveDemoChatWithRAG() {
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-bl-sm'
                 } shadow-sm`}>
                   <div className="leading-relaxed">{m.text}</div>
-                  {m.sources && m.sources.length > 0 && (
-                    <div className="mt-1 pt-1 border-t border-white/20">
-                      <div className="text-xs opacity-75">
-                        Sources: {m.sources.join(', ')}
-                      </div>
-                    </div>
-                  )}
                 </div>
                 <div className={`text-xs mt-0.5 ${
                   m.from === 'user' ? 'text-right' : 'text-left'
