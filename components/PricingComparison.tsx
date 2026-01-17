@@ -78,14 +78,6 @@ export default function PricingComparison() {
         </table>
       </div>
 
-      {/* ROI Highlight */}
-      <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-cyber-cyan/10 to-cyber-purple/10 border border-cyber-cyan/30">
-        <p className="text-center text-lg">
-          <span className="text-gray-400">Get </span>
-          <span className="text-3xl font-bold gradient-text">significant savings</span>
-          <span className="text-gray-400"> while improving service quality</span>
-        </p>
-      </div>
     </div>
   );
 }

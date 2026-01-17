@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import AudioCard from '@/components/AudioCard';
 import ChatDemo from '@/components/ChatDemo';
 import ReputationFlow from '@/components/ReputationFlow';
-import PortfolioCard from '@/components/PortfolioCard';
 import PricingComparison from '@/components/PricingComparison';
 
 export default function Home() {
@@ -193,43 +192,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Section */}
-      <section id="portfolio-section" className="py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Deployed Systems</span>
-            </h2>
-            <p className="text-xl text-gray-400">
-              Real businesses. Real results.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <PortfolioCard
-              title="Randy's Tree Service"
-              tag="Web Design & Conversion"
-              stats="Mobile-First Architecture"
-              imagePlaceholder="Mobile Site Screenshot Placeholder"
-              imageAlt="Randy's Tree Service Mobile Website"
-              reviewText="Ragsites built us an amazing website that actually converts. Our quote requests doubled in the first month!"
-              reviewAuthor="Randy Martinez, Owner"
-              rating={5}
-            />
-            <PortfolioCard
-              title="Mia Bella Salon"
-              tag="Reputation Management"
-              stats="Automated Review System"
-              imagePlaceholder="Review Count Graph Placeholder"
-              imageAlt="Mia Bella Salon Review Analytics"
-              reviewText="The automated review system is a game changer. We went from 12 reviews to 87+ five-star reviews in just 3 months!"
-              reviewAuthor="Mia Chen, Salon Owner"
-              rating={5}
-              projectUrl="https://mia-bella-salon.vercel.app/"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Pricing Section */}
       <section id="pricing-section" className="py-24 px-4 bg-cyber-gray/30">
