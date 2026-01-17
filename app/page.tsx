@@ -215,7 +215,6 @@ export default function Home() {
               reviewText="Ragsites built us an amazing website that actually converts. Our quote requests doubled in the first month!"
               reviewAuthor="Randy Martinez, Owner"
               rating={5}
-              projectUrl="https://randy-tree-construction.vercel.app/"
             />
             <PortfolioCard
               title="Mia Bella Salon"
@@ -249,9 +248,14 @@ export default function Home() {
             <p className="text-xl text-gray-400 mb-8">
               Let&apos;s build your AI automation system. No commitment consultation.
             </p>
-            <button className="px-8 py-4 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-bold text-lg hover:scale-105 transition-transform duration-200 shadow-2xl">
+            <a
+              href="https://api.leadconnectorhq.com/widget/booking/gzNCy8e40o7y8qafZynN"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-bold text-lg hover:scale-105 transition-transform duration-200 shadow-2xl"
+            >
               Schedule a Demo
-            </button>
+            </a>
           </div>
         </div>
       </section>

@@ -35,10 +35,10 @@ export default function PricingComparison() {
               <th className="text-center py-4 px-4">
                 <div className="space-y-1">
                   <p className="text-xl font-bold gradient-text">Ragsites AI</p>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-cyber-cyan to-cyber-purple bg-clip-text text-transparent">
-                    $1,500/mo
+                  <p className="text-xl font-bold bg-gradient-to-r from-cyber-cyan to-cyber-purple bg-clip-text text-transparent">
+                    Contact Our Team
                   </p>
-                  <p className="text-xs text-cyber-cyan">all-inclusive</p>
+                  <p className="text-xs text-cyber-cyan">custom pricing</p>
                 </div>
               </th>
             </tr>
@@ -81,8 +81,8 @@ export default function PricingComparison() {
       {/* ROI Highlight */}
       <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-cyber-cyan/10 to-cyber-purple/10 border border-cyber-cyan/30">
         <p className="text-center text-lg">
-          <span className="text-gray-400">Save </span>
-          <span className="text-3xl font-bold gradient-text">$1,700/mo</span>
+          <span className="text-gray-400">Get </span>
+          <span className="text-3xl font-bold gradient-text">significant savings</span>
           <span className="text-gray-400"> while improving service quality</span>
         </p>
       </div>

@@ -12,7 +12,7 @@ interface PortfolioCardProps {
   reviewText: string;
   reviewAuthor: string;
   rating: number;
-  projectUrl: string;
+  projectUrl?: string;
   imagePath?: string;
 }
 
@@ -88,6 +88,7 @@ export default function PortfolioCard({
           <p className="text-xs text-gray-500 mt-2">— {reviewAuthor}</p>
         </div>
 
+{projectUrl && (
         <div className="pt-4 border-t border-white/10">
           <a
             href={projectUrl}
@@ -99,6 +100,7 @@ export default function PortfolioCard({
             <ExternalLink className="w-4 h-4" />
           </a>
         </div>
+)}
       </div>
     </div>
   );
