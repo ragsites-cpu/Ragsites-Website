@@ -7,6 +7,7 @@ import ChatDemo from '@/components/ChatDemo';
 import ReputationFlow from '@/components/ReputationFlow';
 import PricingComparison from '@/components/PricingComparison';
 import AuditForm from '@/components/AuditForm';
+import Testimonials from '@/components/Testimonials';
 
 export default function Home() {
   const scrollToDemo = () => {
@@ -198,6 +199,9 @@ export default function Home() {
           <PricingComparison />
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <Testimonials />
 
       {/* CTA Section */}
       <section id="contact-section" className="py-24 px-4">
