@@ -219,23 +219,8 @@ export default function Home() {
               <span className="font-bold gradient-text">RAGSITES</span>
             </div>
 
-            <div className="flex gap-8 text-sm text-gray-400">
-              <a href="#" className="hover:text-cyber-cyan transition-colors">
-                Services
-              </a>
-              <a href="#" className="hover:text-cyber-cyan transition-colors">
-                Portfolio
-              </a>
-              <a href="#" className="hover:text-cyber-cyan transition-colors">
-                Pricing
-              </a>
-              <a href="#" className="hover:text-cyber-cyan transition-colors">
-                Contact
-              </a>
-            </div>
-
             <p className="text-sm text-gray-500">
-              Built by Ragsites. &copy; 2024
+              Built by Ragsites. &copy; 2025
             </p>
           </div>
         </div>
