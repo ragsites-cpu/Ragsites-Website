@@ -6,9 +6,11 @@ A high-performance, cyberpunk-themed landing page built for an AI automation age
 
 - **Framework**: Next.js 15 (App Router)
 - **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
+- **Animations**: Framer Motion + CSS Animations
 - **Icons**: Lucide React
 - **Language**: TypeScript
+- **Form Handling**: Web3Forms
+- **Analytics**: Google Analytics, Meta Pixel, Microsoft Clarity
 
 ## Features
 
@@ -35,11 +37,17 @@ A high-performance, cyberpunk-themed landing page built for an AI automation age
 ### Other Sections
 
 - Hero section with gradient effects
-- Features showcase
-- Portfolio cards with image placeholders
-- Pricing comparison table
+- Features showcase with pricing comparison
+- Testimonials with scrollytelling animation
+- Contact form (Web3Forms integration)
 - Call-to-action sections
 - Responsive footer
+
+### Analytics & Tracking
+
+- **Google Analytics** (G-ZEZRV7M5F4) - Page views, traffic sources, user demographics
+- **Meta Pixel** - Facebook/Instagram ad tracking and retargeting
+- **Microsoft Clarity** - Session recordings, heatmaps, user behavior analysis
 
 ## Getting Started
 
@@ -78,15 +86,18 @@ npm start
 ```
 ragsites_website/
 ├── app/
-│   ├── layout.tsx          # Root layout
+│   ├── layout.tsx          # Root layout with analytics scripts
 │   ├── page.tsx            # Main landing page
 │   └── globals.css         # Global styles
 ├── components/
 │   ├── AudioCard.tsx       # AI Voice demo
 │   ├── ChatDemo.tsx        # Chatbot simulation
 │   ├── ReputationFlow.tsx  # Review automation flow
-│   ├── PortfolioCard.tsx   # Portfolio item
-│   └── PricingComparison.tsx # Pricing table
+│   ├── AuditForm.tsx       # Contact form with Web3Forms
+│   ├── Testimonials.tsx    # Testimonials with scroll animation
+│   ├── Navbar.tsx          # Navigation bar
+│   ├── PricingComparison.tsx # Pricing table
+│   └── PortfolioCard.tsx   # Portfolio item (unused)
 ├── public/
 │   └── audio/
 │       └── sample.mp3      # (Add your audio file here)
@@ -112,7 +123,14 @@ colors: {
 
 - Update text in `app/page.tsx`
 - Modify component content in individual component files
-- Replace placeholder images in portfolio section
+- Edit testimonials in `components/Testimonials.tsx`
+
+### Form Configuration
+
+The contact form uses Web3Forms. To change the recipient email:
+1. Go to [web3forms.com](https://web3forms.com)
+2. Create a new access key for your email
+3. Update the access key in `components/AuditForm.tsx`
 
 ## Performance Optimizations
 
@@ -153,3 +171,4 @@ Private project for Ragsites.
 - All animations are optimized for performance
 - Components are modular and reusable
 - Fully responsive design
+- Form submissions are sent via Web3Forms to configured email
