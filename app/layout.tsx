@@ -3,7 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ragsites - AI Auitomation for Local Businesses",
+  title: "Ragsites - AI Automation and for Local Businesses",
   description: "From AI Receptionists that never sleep to 5-Star Review Systems. We build the tech that scales local businesses.",
 };
 
