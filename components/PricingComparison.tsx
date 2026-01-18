@@ -78,6 +78,16 @@ export default function PricingComparison() {
         </table>
       </div>
 
+      <div className="mt-8 text-center">
+        <button
+          onClick={() => document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })}
+          className="group px-8 py-4 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-bold text-lg hover:scale-105 transition-transform duration-200 shadow-2xl cyber-glow inline-flex items-center gap-3"
+        >
+          Get Custom Pricing
+          <Check className="w-5 h-5 group-hover:scale-110 transition-transform" />
+        </button>
+      </div>
+
     </div>
   );
 }

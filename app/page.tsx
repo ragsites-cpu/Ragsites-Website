@@ -6,6 +6,7 @@ import AudioCard from '@/components/AudioCard';
 import ChatDemo from '@/components/ChatDemo';
 import ReputationFlow from '@/components/ReputationFlow';
 import PricingComparison from '@/components/PricingComparison';
+import AuditForm from '@/components/AuditForm';
 
 export default function Home() {
   const scrollToDemo = () => {
@@ -34,16 +35,14 @@ export default function Home() {
 
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-white">We Automate Your</span>
+            <span className="text-white">Scale Revenue Without</span>
             <br />
-            <span className="gradient-text">Busy Work.</span>
+            <span className="gradient-text">Increasing Overhead.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto">
-            From AI Receptionists that never sleep to 5-Star Review Systems.
-            <br />
-            We build the tech that scales local businesses.
+            Stop losing leads to missed calls. Automate your reception and reputation management to capture pure profit 24/7.
           </p>
 
           {/* CTA Button */}
@@ -203,22 +202,7 @@ export default function Home() {
       {/* CTA Section */}
       <section id="contact-section" className="py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="glass-card p-12 cyber-glow">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="gradient-text">Ready to Scale?</span>
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Let&apos;s build your AI automation system. No commitment consultation.
-            </p>
-            <a
-              href="https://api.leadconnectorhq.com/widget/booking/gzNCy8e40o7y8qafZynN"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-4 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-bold text-lg hover:scale-105 transition-transform duration-200 shadow-2xl"
-            >
-              Schedule a Demo
-            </a>
-          </div>
+          <AuditForm />
         </div>
       </section>
 
