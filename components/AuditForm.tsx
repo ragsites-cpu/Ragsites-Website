@@ -17,12 +17,43 @@ export default function AuditForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        console.log('Form submitted:', formData);
-        setIsSubmitting(false);
-        // Here you would typically reset form or show success message
-        alert('Thanks! We will be in touch shortly.');
+
+        const submitData = new FormData();
+        submitData.append("access_key", "a9e80fab-4da4-44c6-b31f-3369557abdbe");
+        submitData.append("name", formData.name);
+        submitData.append("email", formData.email);
+        submitData.append("phone", formData.phone);
+        submitData.append("business_name", formData.businessName);
+        submitData.append("website", formData.website);
+        submitData.append("message", formData.message);
+        submitData.append("subject", `New Lead from ${formData.businessName}`);
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: submitData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Thanks! We will be in touch shortly.");
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    businessName: '',
+                    website: '',
+                    message: '',
+                });
+            } else {
+                alert("Error: " + data.message);
+            }
+        } catch {
+            alert("Something went wrong. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
