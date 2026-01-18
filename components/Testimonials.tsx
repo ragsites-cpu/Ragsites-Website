@@ -54,12 +54,15 @@ export default function Testimonials() {
         const observer = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting) {
-              setVisibleCards((prev) => new Set([...prev, index]));
+              // Add a staggered delay based on index
+              setTimeout(() => {
+                setVisibleCards((prev) => new Set([...prev, index]));
+              }, index * 150);
             }
           },
           {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px',
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px',
           }
         );
         observer.observe(ref);
@@ -91,13 +94,11 @@ export default function Testimonials() {
             <div
               key={index}
               ref={(el) => { cardRefs.current[index] = el; }}
-              className={`glass-card p-8 transition-all duration-700 ease-out ${
-                visibleCards.has(index)
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-12'
-              }`}
+              className="glass-card p-8"
               style={{
-                transitionDelay: `${index * 100}ms`,
+                opacity: visibleCards.has(index) ? 1 : 0,
+                transform: visibleCards.has(index) ? 'translateY(0) scale(1)' : 'translateY(60px) scale(0.95)',
+                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
               }}
             >
               {/* Quote Icon */}
@@ -105,7 +106,7 @@ export default function Testimonials() {
 
               {/* Quote Text */}
               <p className="text-lg text-gray-300 leading-relaxed mb-6 italic">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </p>
 
               {/* Author Info */}
