@@ -42,7 +42,7 @@ export default function Home() {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto">
-            Stop losing leads to missed calls. Automate your reception and reputation management to capture pure profit 24/7.
+            Stop losing leads to missed calls. Auitomate your reception and reputation management to capture pure profit 24/7.
           </p>
 
           {/* CTA Button */}
