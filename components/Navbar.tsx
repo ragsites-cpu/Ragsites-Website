@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Zap, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,7 +48,7 @@ export default function Navbar() {
             onClick={() => scrollToSection('hero-section')}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <Zap className="w-6 h-6 text-cyber-cyan" />
+            <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded" />
             <span className="text-xl font-bold gradient-text">RAGSITES</span>
           </button>
 

@@ -1,6 +1,7 @@
 'use client';
 
-import { ArrowDown, Zap, MessageSquare, Star, Phone } from 'lucide-react';
+import { ArrowDown, MessageSquare, Star, Phone } from 'lucide-react';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import AudioCard from '@/components/AudioCard';
 import ChatDemo from '@/components/ChatDemo';
@@ -30,7 +31,7 @@ export default function Home() {
         <div className="relative z-10 max-w-5xl mx-auto text-center">
           {/* Logo/Brand */}
           <div className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
-            <Zap className="w-5 h-5 text-cyber-cyan" />
+            <Image src="/logo.png" alt="Ragsites" width={24} height={24} className="rounded" />
             <span className="text-sm font-semibold gradient-text">RAGSITES</span>
           </div>
 
@@ -215,7 +216,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-cyber-cyan" />
+              <Image src="/logo.png" alt="Ragsites" width={24} height={24} className="rounded" />
               <span className="font-bold gradient-text">RAGSITES</span>
             </div>
 

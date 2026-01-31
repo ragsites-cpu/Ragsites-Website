@@ -5,6 +5,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Ragsites - AI Automation for Local Businesses",
   description: "From AI Receptionists that never sleep to 5-Star Review Systems. We build the tech that scales local businesses.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
