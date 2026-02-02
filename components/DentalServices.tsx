@@ -148,7 +148,7 @@ export default function DentalServices() {
                 100% Risk-Free Guarantee
               </h3>
               <p className="text-lg text-gray-300 mb-6">
-                If we don't deliver 20 qualified, booked cosmetic patients in 90 days, you don't pay our service fee. We only win when you win.
+                If we don't deliver 60 qualified, booked cosmetic patients in 90 days, you don't pay our service fee. We only win when you win.
               </p>
 
               <div className="flex flex-wrap gap-4 justify-center md:justify-start">
