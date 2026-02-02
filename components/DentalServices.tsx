@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Users, Clock, Calendar, TrendingUp, Shield, Sparkles } from 'lucide-react';
 
 const stats = [
-  { value: '20+', label: 'Patients Guaranteed', icon: Users },
+  { value: '60', label: 'Patients Guaranteed', icon: Users },
   { value: '90', label: 'Days', icon: Calendar },
   { value: '60s', label: 'AI Response Time', icon: Clock },
   { value: '316%', label: 'Average ROI', icon: TrendingUp },
@@ -69,7 +69,7 @@ export default function DentalServices() {
             className="text-4xl md:text-6xl font-bold mb-6"
           >
             <span className="text-white">Get </span>
-            <span className="bg-gradient-to-r from-emerald-400 to-cyber-cyan bg-clip-text text-transparent">20+ Cosmetic Patients</span>
+            <span className="bg-gradient-to-r from-emerald-400 to-cyber-cyan bg-clip-text text-transparent">60 Cosmetic Patients</span>
             <br />
             <span className="text-white">in 90 Days.</span>
           </motion.h2>

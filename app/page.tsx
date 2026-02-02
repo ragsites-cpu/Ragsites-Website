@@ -53,7 +53,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-white">Get 20+ Cosmetic Patients</span>
+            <span className="text-white">Get 60 Cosmetic Patients</span>
             <br />
             <span className="bg-gradient-to-r from-emerald-400 to-cyber-cyan bg-clip-text text-transparent">In 90 Days. Guaranteed.</span>
           </h1>
@@ -72,7 +72,7 @@ export default function Home() {
 
           <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div className="glass-card p-4 rounded-xl">
-              <p className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">20+</p>
+              <p className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">60</p>
               <p className="text-sm text-gray-400 mt-1">Patients Guaranteed</p>
             </div>
             <div className="glass-card p-4 rounded-xl">
