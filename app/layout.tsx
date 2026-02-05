@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     icon: "/logo.png",
     apple: "/logo.png",
   },
+  other: {
+    "trustpilot-one-time-domain-verification-id": "a3c41fb2-a225-48c4-a6ac-1e2d903acc81",
+  },
 };
 
 export default function RootLayout({
