@@ -418,13 +418,13 @@
             margin-top: 16px;
         }
 
-        /* How It Works */
-        .how-it-works {
+        /* Testimonials */
+        .testimonials {
             padding: 80px 20px;
             position: relative;
         }
 
-        .how-it-works::before {
+        .testimonials::before {
             content: '';
             position: absolute;
             top: 0;
@@ -451,7 +451,35 @@
             color: var(--text-secondary);
         }
 
-        .steps {
+        .section-header .patient-count {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .trustpilot-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            color: var(--cyber-cyan);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            background: rgba(0, 240, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .trustpilot-link:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: var(--neon-glow-cyan);
+        }
+
+        .testimonials-grid {
             max-width: 800px;
             margin: 0 auto;
             display: flex;
@@ -459,45 +487,67 @@
             gap: 20px;
         }
 
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            padding: 28px;
+        .testimonial-card {
+            padding: 30px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .step:hover {
+        .testimonial-card:hover {
             border-color: rgba(0, 240, 255, 0.2);
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.05);
         }
 
-        .step-number {
-            flex-shrink: 0;
-            width: 48px;
-            height: 48px;
+        .testimonial-stars {
+            margin-bottom: 14px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid var(--cyber-border);
+        }
+
+        .testimonial-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-purple));
-            color: #000;
-            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.2rem;
-            box-shadow: var(--neon-glow-cyan);
-        }
-
-        .step-content h3 {
-            font-size: 1.15rem;
             font-weight: 700;
-            color: white;
-            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: #000;
         }
 
-        .step-content p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
+        .testimonial-name {
+            font-weight: 600;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
         }
 
         /* Guarantee Section */
@@ -678,7 +728,7 @@
                 font-size: 1.4rem;
             }
 
-            .how-it-works {
+            .testimonials {
                 padding: 50px 16px;
             }
 
@@ -686,8 +736,12 @@
                 font-size: 1.7rem;
             }
 
-            .step {
-                padding: 20px;
+            .section-header .patient-count {
+                font-size: 2.2rem;
+            }
+
+            .testimonial-card {
+                padding: 22px;
             }
 
             .guarantee {
@@ -778,6 +832,69 @@
             </div>
         </section>
 
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="section-header reveal">
+                <h2><span class="patient-count gradient-text-green">120+</span> Patients Delivered So Far</h2>
+                <p>Don't just take our word for it — hear from real clients</p>
+                <a href="https://www.trustpilot.com/review/ragsites.com" target="_blank" class="trustpilot-link">
+                    View on Trustpilot &rarr;
+                </a>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass-card reveal">
+                    <div class="testimonial-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+                    <div class="testimonial-title">"The service works"</div>
+                    <div class="testimonial-text">
+                        "The service actually works! I had been dismissive of their claim but they actually delivered 30 customers to my clinic in a mere 40 days. Would definitely recommend."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">TH</div>
+                        <div>
+                            <div class="testimonial-name">Tanaka Hiroshi</div>
+                            <div class="testimonial-date">February 3, 2025</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card glass-card reveal reveal-delay-1">
+                    <div class="testimonial-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+                    <div class="testimonial-title">"I did not believe that this will work"</div>
+                    <div class="testimonial-text">
+                        "I did not believe that this will work, but it does! Was genuinely shocked seeing my booking calendar a month into the service. You have to be a bit patient and put in a bit of initial investment, but it's sure worth it."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JJ</div>
+                        <div>
+                            <div class="testimonial-name">John Jonathan</div>
+                            <div class="testimonial-date">January 27, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guarantee -->
+        <section class="guarantee">
+            <div class="guarantee-card reveal">
+                <div class="guarantee-icon">&#9889;</div>
+                <h2>Our <span class="gradient-text-green">100% Risk-Free</span> Guarantee</h2>
+                <p>
+                    If we don't deliver 60 qualified, booked cosmetic patients in 90 days, you don't pay our service fee. We only win when you win.
+                </p>
+            </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <section class="bottom-cta">
+            <div class="reveal">
+                <h2>Don't Let Another Month Go By With <span class="gradient-text">Empty Chairs</span></h2>
+                <p>Join the practices already using our system to predictably grow their cosmetic revenue.</p>
+                <button class="cta-button"
+                    onclick="window.location.href='https://api.leadconnectorhq.com/widget/booking/gzNCy8e40o7y8qafZynN';">
+                    SCHEDULE YOUR CALL NOW
+                </button>
+            </div>
+        </section>
 
         <!-- Disclaimer -->
         <section class="disclaimer">
