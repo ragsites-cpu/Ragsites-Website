@@ -413,7 +413,7 @@ export default function Home() {
                 <p className="text-sm text-gray-400">the cost of a human receptionist</p>
               </div>
               <div>
-                <p className="text-3xl md:text-4xl font-bold gradient-text mb-1">&infin;</p>
+                <p className="text-3xl md:text-4xl font-bold gradient-text mb-1">30</p>
                 <p className="text-sm text-gray-400">parallel calls handled simultaneously</p>
               </div>
               <div>
@@ -467,7 +467,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-cyber-cyan flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-300">Handles unlimited parallel calls</span>
+                  <span className="text-gray-300">Handles up to 30 parallel calls</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <BarChart3 className="w-5 h-5 text-cyber-cyan flex-shrink-0 mt-0.5" />
