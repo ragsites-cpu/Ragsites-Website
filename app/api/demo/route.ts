@@ -152,7 +152,9 @@ IMPORTANT RULES:
       firstMessage: `Hi, thanks for calling ${businessName}! How can I help you today?`,
       model: {
         provider: 'openai',
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
+        temperature: 0.7,
+        maxTokens: 150,
         messages: [
           {
             role: 'system',
@@ -163,30 +165,34 @@ IMPORTANT RULES:
       voice: {
         provider: '11labs',
         voiceId: 'EXAVITQu4vr4xnSDxMaL',
-        model: 'eleven_flash_v2_5',
+        model: 'eleven_turbo_v2_5',
         optimizeStreamingLatency: 4,
+        stability: 0.5,
+        similarityBoost: 0.75,
       },
       transcriber: {
         provider: 'deepgram',
         model: 'nova-3',
         language: 'en',
+        endpointing: 100,
       },
       maxDurationSeconds: 300, // 5 min max for demos
       silenceTimeoutSeconds: 30,
       backgroundSound: 'office',
       backgroundDenoisingEnabled: true,
       startSpeakingPlan: {
-        waitSeconds: 0.4,
+        waitSeconds: 0.2,
+        smartEndpointingEnabled: true,
         transcriptionEndpointingPlan: {
-          onPunctuationSeconds: 0.1,
-          onNoPunctuationSeconds: 1.2,
-          onNumberSeconds: 0.5,
+          onPunctuationSeconds: 0.05,
+          onNoPunctuationSeconds: 0.8,
+          onNumberSeconds: 0.3,
         },
       },
       stopSpeakingPlan: {
         numWords: 1,
-        voiceSeconds: 0.3,
-        backoffSeconds: 1.5,
+        voiceSeconds: 0.2,
+        backoffSeconds: 1,
       },
     }),
   });
