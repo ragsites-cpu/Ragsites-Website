@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Firecrawl from '@mendable/firecrawl-js';
 
 const VAPI_API_KEY = process.env.VAPI_API_KEY!;
 const VAPI_DEMO_PHONE_ID = process.env.VAPI_DEMO_PHONE_ID!;
+const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY!;
+
+const firecrawl = new Firecrawl({ apiKey: FIRECRAWL_API_KEY });
 
 export async function POST(req: NextRequest) {
   try {
@@ -49,52 +53,25 @@ async function scrapeWebsite(url: string): Promise<string | null> {
       normalizedUrl = `https://${normalizedUrl}`;
     }
 
-    const response = await fetch(normalizedUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; RagsitesBot/1.0)',
-      },
-      signal: AbortSignal.timeout(10000),
+    const result = await firecrawl.scrapeUrl(normalizedUrl, {
+      formats: ['markdown'],
     });
 
-    if (!response.ok) return null;
+    if (!result.success || !result.markdown) return null;
 
-    const html = await response.text();
-
-    // Extract meaningful text content from HTML
-    const text = html
-      // Remove scripts and styles
-      .replace(/<script[\s\S]*?<\/script>/gi, '')
-      .replace(/<style[\s\S]*?<\/style>/gi, '')
-      .replace(/<nav[\s\S]*?<\/nav>/gi, '')
-      .replace(/<footer[\s\S]*?<\/footer>/gi, '')
-      // Remove HTML tags
-      .replace(/<[^>]+>/g, ' ')
-      // Decode HTML entities
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/&nbsp;/g, ' ')
-      // Clean whitespace
-      .replace(/\s+/g, ' ')
-      .trim();
-
-    // Also extract title and meta description separately
-    const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-    const metaDescMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*?)["']/i);
-    const title = titleMatch?.[1]?.trim() || '';
-    const metaDesc = metaDescMatch?.[1]?.trim() || '';
+    const markdown = result.markdown;
+    const title = result.metadata?.title || '';
+    const description = result.metadata?.description || '';
 
     const header = [
       title && `Business Name/Title: ${title}`,
-      metaDesc && `Description: ${metaDesc}`,
+      description && `Description: ${description}`,
     ].filter(Boolean).join('\n');
 
     // Limit content length to avoid huge prompts
-    const truncatedText = text.substring(0, 4000);
+    const truncatedContent = markdown.substring(0, 4000);
 
-    return `${header}\n\nWebsite Content:\n${truncatedText}`;
+    return `${header}\n\nWebsite Content:\n${truncatedContent}`;
   } catch {
     return null;
   }
