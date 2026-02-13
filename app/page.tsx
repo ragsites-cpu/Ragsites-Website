@@ -210,8 +210,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats / Social Proof */}
+      {/* Metrics Section */}
       <section className="py-24 px-4 bg-cyber-gray/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="text-white">The Cost of </span>
+              <span className="gradient-text">Missed Calls</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Every unanswered call is revenue walking out the door
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="glass-card p-6 rounded-2xl text-center">
+              <p className="text-4xl md:text-5xl font-bold text-red-400 mb-2">62%</p>
+              <p className="text-sm text-gray-400">of calls to small businesses go unanswered</p>
+            </div>
+            <div className="glass-card p-6 rounded-2xl text-center">
+              <p className="text-4xl md:text-5xl font-bold gradient-text mb-2">85%</p>
+              <p className="text-sm text-gray-400">of customers won&apos;t call back if you miss their call</p>
+            </div>
+            <div className="glass-card p-6 rounded-2xl text-center">
+              <p className="text-4xl md:text-5xl font-bold text-cyber-cyan mb-2">$1.2K</p>
+              <p className="text-sm text-gray-400">average lifetime value lost per missed call</p>
+            </div>
+            <div className="glass-card p-6 rounded-2xl text-center">
+              <p className="text-4xl md:text-5xl font-bold text-cyber-purple mb-2">20-40%</p>
+              <p className="text-sm text-gray-400">revenue increase when every call is answered</p>
+            </div>
+          </div>
+
+          <div className="glass-card p-8 md:p-10 rounded-2xl border border-cyber-cyan/20 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div>
+                <p className="text-3xl md:text-4xl font-bold gradient-text mb-1">1/10th</p>
+                <p className="text-sm text-gray-400">the cost of a human receptionist</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-bold gradient-text mb-1">∞</p>
+                <p className="text-sm text-gray-400">parallel calls handled simultaneously</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-bold gradient-text mb-1">0</p>
+                <p className="text-sm text-gray-400">sick days, breaks, or bad moods</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI vs Traditional */}
+      <section className="py-24 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -274,6 +325,16 @@ export default function Home() {
                 </li>
               </ul>
             </div>
+          </div>
+
+          {/* Bottom stat callout */}
+          <div className="mt-16 text-center">
+            <p className="text-gray-400 text-lg">
+              Businesses using AI receptionists see an average
+              <span className="text-white font-bold"> 27% increase in booked appointments </span>
+              and
+              <span className="text-white font-bold"> 35% reduction in missed opportunities</span>.
+            </p>
           </div>
         </div>
       </section>
