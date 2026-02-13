@@ -125,9 +125,6 @@ export default function DemoWidget() {
                   </motion.p>
                 )}
 
-                <p className="mt-4 text-gray-500 text-sm text-center">
-                  We&apos;ll scan your site and build a custom AI receptionist in seconds
-                </p>
               </motion.form>
             )}
 
