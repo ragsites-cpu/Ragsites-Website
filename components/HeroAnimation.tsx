@@ -43,8 +43,11 @@ export default function HeroAnimation() {
             {conversation.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                animate={{ opacity: [0, 1, 1, 0], y: [15, 0, 0, 0], scale: [0.95, 1, 1, 1] }}
+                style={{ willChange: 'opacity, transform' }}
+                animate={{
+                  opacity: [0, 1, 1, 0],
+                  translateY: [10, 0, 0, 0],
+                }}
                 transition={{
                   duration: TOTAL_DURATION,
                   times: [
@@ -76,9 +79,9 @@ export default function HeroAnimation() {
             {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-0.5 rounded-full bg-cyber-cyan/60"
+                className="w-0.5 h-7 rounded-full bg-cyber-cyan/60 origin-bottom"
                 animate={{
-                  height: [4, 12 + (i % 3) * 8, 4],
+                  scaleY: [0.15, (0.4 + (i % 3) * 0.3), 0.15],
                 }}
                 transition={{
                   duration: 0.8,
