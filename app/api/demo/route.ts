@@ -164,7 +164,7 @@ IMPORTANT RULES:
       },
       voice: {
         provider: '11labs',
-        voiceId: 'EXAVITQu4vr4xnSDxMaL',
+        voiceId: 'BHr135B5EUBtaWheVj8S',
         model: 'eleven_turbo_v2_5',
         optimizeStreamingLatency: 4,
         stability: 0.5,
