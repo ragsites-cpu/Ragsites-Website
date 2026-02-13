@@ -9,6 +9,7 @@ import Pricing from '@/components/Pricing';
 import AuditForm from '@/components/AuditForm';
 import HeroAnimation from '@/components/HeroAnimation';
 import AnimatedCounter from '@/components/AnimatedCounter';
+import DemoWidget from '@/components/DemoWidget';
 
 const features = [
   {
@@ -188,6 +189,9 @@ export default function Home() {
           <ArrowDown className="w-6 h-6 text-cyber-cyan" />
         </motion.div>
       </section>
+
+      {/* Demo Widget */}
+      <DemoWidget />
 
       {/* How It Works - Steps */}
       <section id="how-it-works" className="py-24 px-4 bg-cyber-gray/30">

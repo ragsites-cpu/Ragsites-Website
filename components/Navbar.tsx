@@ -27,8 +27,8 @@ export default function Navbar() {
 
   const navItems = [
     { label: 'Home', id: 'hero-section' },
+    { label: 'Demo', id: 'demo-section' },
     { label: 'How It Works', id: 'how-it-works' },
-    { label: 'Features', id: 'features-section' },
     { label: 'Pricing', id: 'pricing-section' },
     { label: 'Contact', id: 'contact-section' },
   ];
