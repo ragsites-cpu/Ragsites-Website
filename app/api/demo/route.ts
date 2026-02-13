@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Firecrawl from '@mendable/firecrawl-js';
 
-const VAPI_API_KEY = process.env.VAPI_API_KEY!;
-const VAPI_DEMO_PHONE_ID = process.env.VAPI_DEMO_PHONE_ID!;
-const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY!;
+let firecrawl: Firecrawl;
 
-const firecrawl = new Firecrawl({ apiKey: FIRECRAWL_API_KEY });
+function getFirecrawl() {
+  if (!firecrawl) {
+    firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY! });
+  }
+  return firecrawl;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -53,7 +56,7 @@ async function scrapeWebsite(url: string): Promise<string | null> {
       normalizedUrl = `https://${normalizedUrl}`;
     }
 
-    const result = await firecrawl.scrape(normalizedUrl, {
+    const result = await getFirecrawl().scrape(normalizedUrl, {
       formats: ['markdown'],
     });
 
@@ -121,7 +124,7 @@ IMPORTANT RULES:
   const response = await fetch('https://api.vapi.ai/assistant', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${VAPI_API_KEY}`,
+      'Authorization': `Bearer ${process.env.VAPI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -183,10 +186,10 @@ IMPORTANT RULES:
 }
 
 async function assignAssistantToPhone(assistantId: string) {
-  const response = await fetch(`https://api.vapi.ai/phone-number/${VAPI_DEMO_PHONE_ID}`, {
+  const response = await fetch(`https://api.vapi.ai/phone-number/${process.env.VAPI_DEMO_PHONE_ID}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Bearer ${VAPI_API_KEY}`,
+      'Authorization': `Bearer ${process.env.VAPI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
