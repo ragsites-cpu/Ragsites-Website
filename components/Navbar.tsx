@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,8 +27,9 @@ export default function Navbar() {
 
   const navItems = [
     { label: 'Home', id: 'hero-section' },
-    { label: 'How It Works', id: 'dental-section' },
-    { label: 'Testimonials', id: 'testimonials-section' },
+    { label: 'How It Works', id: 'how-it-works' },
+    { label: 'Features', id: 'features-section' },
+    { label: 'Pricing', id: 'pricing-section' },
     { label: 'Contact', id: 'contact-section' },
   ];
 
@@ -65,17 +65,11 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Buttons (Desktop) */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/services"
-              className="px-5 py-2 rounded-full border border-white/20 text-gray-300 font-medium text-sm hover:bg-white/5 hover:text-white transition-all"
-            >
-              Other Services
-            </Link>
+          {/* CTA Button (Desktop) */}
+          <div className="hidden md:flex items-center">
             <button
               onClick={() => scrollToSection('contact-section')}
-              className="px-6 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm hover:scale-105 transition-transform"
+              className="px-6 py-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-semibold text-sm hover:scale-105 transition-transform"
             >
               Get Started
             </button>
@@ -107,15 +101,9 @@ export default function Navbar() {
                   {item.label}
                 </button>
               ))}
-              <Link
-                href="/services"
-                className="px-4 py-3 text-left text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-              >
-                Other Services
-              </Link>
               <button
                 onClick={() => scrollToSection('contact-section')}
-                className="mx-4 mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm"
+                className="mx-4 mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-semibold text-sm"
               >
                 Get Started
               </button>
