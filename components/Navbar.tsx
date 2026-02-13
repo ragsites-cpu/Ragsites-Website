@@ -48,7 +48,7 @@ export default function Navbar() {
             onClick={() => scrollToSection('hero-section')}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded" />
+            <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded-full" />
             <span className="text-xl font-bold gradient-text">RAGSITES</span>
           </button>
 
