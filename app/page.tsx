@@ -169,12 +169,11 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: Animation */}
+            {/* Right: Conversation Animation */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
-              className="hidden md:block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
             >
               <HeroAnimation />
             </motion.div>
