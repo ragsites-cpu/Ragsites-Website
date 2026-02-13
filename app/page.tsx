@@ -190,6 +190,67 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Audio Demo - Hear It First */}
+      <section className="py-24 px-4 bg-cyber-gray/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={fadeUp}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="text-white">Hear It </span>
+              <span className="gradient-text">In Action</span>
+            </h2>
+            <p className="text-xl text-gray-400">
+              Listen to a real 48-second conversation with our AI receptionist
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={fadeUp}
+              transition={{ duration: 0.6 }}
+              className="glass-card p-8 h-full flex flex-col justify-center"
+            >
+              <h3 className="text-2xl font-bold mb-4 text-white">Natural. Fast. Convincing.</h3>
+              <p className="text-gray-400 mb-6 text-lg">
+                This is what your customers will hear. No hold music. No robotic voice. Just a natural conversation.
+              </p>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
+                  Answers in under 1 second
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
+                  Books appointments on the call
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
+                  Knows your business inside out
+                </li>
+              </ul>
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-100px' }}
+              variants={fadeUp}
+              transition={{ duration: 0.6, delay: 0.15 }}
+            >
+              <AudioCard />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Demo Widget */}
       <DemoWidget />
 
@@ -236,53 +297,6 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Audio Demo */}
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-              className="glass-card p-8 h-full flex flex-col justify-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-cyber-cyan to-cyber-purple flex items-center justify-center mb-6">
-                <Phone className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4 text-white">Hear It In Action</h3>
-              <p className="text-gray-400 mb-6 text-lg">
-                Listen to a real conversation with our AI receptionist. Natural voice. Zero awkwardness.
-              </p>
-              <ul className="space-y-3 text-gray-300">
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
-                  Natural conversation flow
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
-                  Calendar integration
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
-                  Custom scripts for your business
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-cyber-cyan" />
-                  Works for any industry
-                </li>
-              </ul>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.15 }}
-            >
-              <AudioCard />
-            </motion.div>
-          </div>
         </div>
       </section>
 
