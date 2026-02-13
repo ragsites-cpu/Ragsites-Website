@@ -31,4 +31,46 @@
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-cyber-cyan to-cyber-purple;
   }
+
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      var(--border-angle, 0deg),
+      rgba(0, 240, 255, 0.4),
+      rgba(168, 85, 247, 0.4),
+      rgba(0, 240, 255, 0.1),
+      rgba(168, 85, 247, 0.4)
+    );
+    z-index: -1;
+    animation: rotate-border 4s linear infinite;
+  }
+
+  /* Pulse glow on hover */
+  .hover-glow {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15), 0 0 50px rgba(0, 240, 255, 0.05);
+  }
+}
+
+@keyframes rotate-border {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
