@@ -53,11 +53,11 @@ async function scrapeWebsite(url: string): Promise<string | null> {
       normalizedUrl = `https://${normalizedUrl}`;
     }
 
-    const result = await firecrawl.scrapeUrl(normalizedUrl, {
+    const result = await firecrawl.scrape(normalizedUrl, {
       formats: ['markdown'],
     });
 
-    if (!result.success || !result.markdown) return null;
+    if (!result.markdown) return null;
 
     const markdown = result.markdown;
     const title = result.metadata?.title || '';
