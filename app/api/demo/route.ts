@@ -101,11 +101,17 @@ async function scrapeWebsite(url: string): Promise<string | null> {
 function extractBusinessName(content: string, url: string): string {
   const titleMatch = content.match(/Business Name\/Title: (.+)/);
   if (titleMatch) {
-    // Clean up common title suffixes
-    return titleMatch[1]
-      .replace(/\s*[-|–—]\s*.+$/, '') // Remove " - Tagline" or " | Tagline"
-      .replace(/\s*Home\s*$/i, '')
-      .trim() || new URL(url.startsWith('http') ? url : `https://${url}`).hostname;
+    const raw = titleMatch[1].trim();
+    // Titles often follow "Page Name - Business Name" or "Business Name | Tagline"
+    const parts = raw.split(/\s*[-|–—]\s*/);
+    // Filter out generic page names
+    const generic = /^(home|welcome|about|contact|services)$/i;
+    const meaningful = parts.filter(p => p.trim() && !generic.test(p.trim()));
+    // Prefer the first meaningful part, or fallback to the longest part
+    const name = meaningful.length > 0
+      ? meaningful[0].trim()
+      : parts.sort((a, b) => b.length - a.length)[0]?.trim();
+    if (name) return name;
   }
   try {
     return new URL(url.startsWith('http') ? url : `https://${url}`).hostname;
