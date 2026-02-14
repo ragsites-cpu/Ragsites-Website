@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Firecrawl from '@mendable/firecrawl-js';
 
+const PHONE_ID = 'b7299266-b647-48d5-a857-5a2be13f65a4';
+
 let firecrawl: Firecrawl;
 
 function getFirecrawl() {
@@ -8,6 +10,13 @@ function getFirecrawl() {
     firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY!.trim() });
   }
   return firecrawl;
+}
+
+function vapiHeaders() {
+  return {
+    'Authorization': `Bearer ${process.env.VAPI_API_KEY?.trim()}`,
+    'Content-Type': 'application/json',
+  };
 }
 
 export async function POST(req: NextRequest) {
@@ -28,11 +37,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Create a VAPI assistant with the scraped content
+    // 2. Get the current assistant ID so we can delete it later
+    const oldAssistantId = await getCurrentAssistantId();
+
+    // 3. Create a new VAPI assistant with the scraped content
     const assistant = await createVapiAssistant(url, siteContent);
 
-    // 3. Assign the assistant to the demo phone number
+    // 4. Assign the new assistant to the demo phone number
     await assignAssistantToPhone(assistant.id);
+
+    // 5. Delete the old assistant (fire-and-forget, don't block the response)
+    if (oldAssistantId && oldAssistantId !== assistant.id) {
+      deleteAssistant(oldAssistantId).catch(() => {});
+    }
 
     return NextResponse.json({
       success: true,
@@ -97,6 +114,26 @@ function extractBusinessName(content: string, url: string): string {
   }
 }
 
+async function getCurrentAssistantId(): Promise<string | null> {
+  try {
+    const response = await fetch(`https://api.vapi.ai/phone-number/${PHONE_ID}`, {
+      headers: vapiHeaders(),
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.assistantId || null;
+  } catch {
+    return null;
+  }
+}
+
+async function deleteAssistant(assistantId: string) {
+  await fetch(`https://api.vapi.ai/assistant/${assistantId}`, {
+    method: 'DELETE',
+    headers: vapiHeaders(),
+  });
+}
+
 async function createVapiAssistant(url: string, siteContent: string) {
   const businessName = extractBusinessName(siteContent, url);
 
@@ -124,10 +161,7 @@ IMPORTANT RULES:
 
   const response = await fetch('https://api.vapi.ai/assistant', {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.VAPI_API_KEY?.trim()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: vapiHeaders(),
     body: JSON.stringify({
       name: `Demo - ${businessName}`,
       firstMessage: `Hi, thanks for calling ${businessName}! How can I help you today?`,
@@ -187,13 +221,9 @@ IMPORTANT RULES:
 }
 
 async function assignAssistantToPhone(assistantId: string) {
-  const phoneId = 'b7299266-b647-48d5-a857-5a2be13f65a4';
-  const response = await fetch(`https://api.vapi.ai/phone-number/${phoneId}`, {
+  const response = await fetch(`https://api.vapi.ai/phone-number/${PHONE_ID}`, {
     method: 'PATCH',
-    headers: {
-      'Authorization': `Bearer ${process.env.VAPI_API_KEY?.trim()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: vapiHeaders(),
     body: JSON.stringify({
       assistantId,
     }),
