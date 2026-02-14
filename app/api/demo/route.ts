@@ -41,9 +41,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Demo creation error:', error);
-    const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: `Something went wrong: ${message}` },
+      { error: 'Something went wrong. Please try again.' },
       { status: 500 }
     );
   }
@@ -187,16 +186,7 @@ IMPORTANT RULES:
 }
 
 async function assignAssistantToPhone(assistantId: string) {
-  const raw = process.env.VAPI_DEMO_PHONE_ID || '';
-  const phoneId = raw.trim();
-  if (!phoneId) {
-    throw new Error(`VAPI_DEMO_PHONE_ID is empty. Raw length: ${raw.length}`);
-  }
-  // Validate UUID format
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  if (!uuidRegex.test(phoneId)) {
-    throw new Error(`VAPI_DEMO_PHONE_ID is not a valid UUID. Value: "${phoneId}" (length: ${phoneId.length}, raw length: ${raw.length})`);
-  }
+  const phoneId = process.env.VAPI_DEMO_PHONE_ID?.trim();
   const response = await fetch(`https://api.vapi.ai/phone-number/${phoneId}`, {
     method: 'PATCH',
     headers: {
