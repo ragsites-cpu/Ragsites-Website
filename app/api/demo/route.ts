@@ -5,7 +5,7 @@ let firecrawl: Firecrawl;
 
 function getFirecrawl() {
   if (!firecrawl) {
-    firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY! });
+    firecrawl = new Firecrawl({ apiKey: process.env.FIRECRAWL_API_KEY!.trim() });
   }
   return firecrawl;
 }
@@ -125,7 +125,7 @@ IMPORTANT RULES:
   const response = await fetch('https://api.vapi.ai/assistant', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${process.env.VAPI_API_KEY}`,
+      'Authorization': `Bearer ${process.env.VAPI_API_KEY?.trim()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -187,10 +187,11 @@ IMPORTANT RULES:
 }
 
 async function assignAssistantToPhone(assistantId: string) {
-  const response = await fetch(`https://api.vapi.ai/phone-number/${process.env.VAPI_DEMO_PHONE_ID}`, {
+  const phoneId = process.env.VAPI_DEMO_PHONE_ID?.trim();
+  const response = await fetch(`https://api.vapi.ai/phone-number/${phoneId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Bearer ${process.env.VAPI_API_KEY}`,
+      'Authorization': `Bearer ${process.env.VAPI_API_KEY?.trim()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
