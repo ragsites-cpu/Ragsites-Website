@@ -187,7 +187,7 @@ IMPORTANT RULES:
 }
 
 async function assignAssistantToPhone(assistantId: string) {
-  const phoneId = process.env.VAPI_DEMO_PHONE_ID?.trim();
+  const phoneId = 'b7299266-b647-48d5-a857-5a2be13f65a4';
   const response = await fetch(`https://api.vapi.ai/phone-number/${phoneId}`, {
     method: 'PATCH',
     headers: {
