@@ -41,8 +41,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Demo creation error:', error);
+    const msg = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Something went wrong. Please try again.' },
+      { error: msg },
       { status: 500 }
     );
   }
