@@ -65,7 +65,7 @@ export default function DemoWidget() {
             <span className="gradient-text">Your Business</span>
           </h2>
           <p className="text-xl text-gray-400 max-w-xl mx-auto">
-            Drop your website URL and get a personalized AI receptionist demo in under 3 minutes
+            Drop your website URL and get a personalized AI receptionist demo in under 1 minute
           </p>
         </motion.div>
 
