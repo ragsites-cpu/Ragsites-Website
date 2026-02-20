@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'cyber-black': '#0a0a0a',
-        'cyber-gray': '#1a1a1a',
-        'cyber-cyan': '#00f0ff',
-        'cyber-purple': '#a855f7',
+        'brand-primary': '#0f172a',    // slate-900 for main text/bg
+        'brand-secondary': '#f8fafc',  // slate-50 for off-white backgrounds
+        'brand-accent': '#2563eb',     // blue-600 for primary CTA buttons
+        'brand-accent-hover': '#1d4ed8', // blue-700 for hover state
       },
       backgroundImage: {
-        'cyber-gradient': 'linear-gradient(135deg, #00f0ff 0%, #a855f7 100%)',
+        'subtle-gradient': 'linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)',
       },
     },
   },

@@ -68,19 +68,19 @@ export default function AuditForm() {
     if (status === 'success') {
         return (
             <div className="w-full max-w-2xl mx-auto">
-                <div className="glass-card p-8 md:p-10 cyber-glow text-center">
-                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-cyber-cyan/20 to-cyber-purple/20 flex items-center justify-center">
-                        <CheckCircle className="w-10 h-10 text-cyber-cyan" />
+                <div className="glass-card p-8 md:p-10 text-center">
+                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-50 flex items-center justify-center">
+                        <CheckCircle className="w-10 h-10 text-green-500" />
                     </div>
-                    <h2 className="text-3xl font-bold mb-4">
-                        <span className="gradient-text">Message Sent!</span>
+                    <h2 className="text-3xl font-bold mb-4 text-brand-primary">
+                        Message Sent!
                     </h2>
-                    <p className="text-gray-400 mb-8">
+                    <p className="text-slate-600 mb-8">
                         Thanks for reaching out. We&apos;ll get back to you within 24 hours.
                     </p>
                     <button
                         onClick={() => setStatus('idle')}
-                        className="px-6 py-3 rounded-full border border-cyber-cyan/50 text-cyber-cyan font-semibold hover:bg-cyber-cyan/10 transition-colors"
+                        className="px-6 py-3 rounded-xl border border-slate-200 text-brand-primary font-semibold hover:bg-slate-50 transition-colors"
                     >
                         Send Another Message
                     </button>
@@ -91,9 +91,9 @@ export default function AuditForm() {
 
     return (
         <div className="w-full max-w-2xl mx-auto">
-            <div className="glass-card p-8 md:p-10 cyber-glow">
-                <h2 className="text-3xl font-bold mb-8 text-center">
-                    <span className="gradient-text">We will respond within 24 hours</span>
+            <div className="glass-card p-8 md:p-10">
+                <h2 className="text-3xl font-bold mb-8 text-center text-brand-primary">
+                    We will respond within 24 hours
                 </h2>
 
                 {status === 'error' && (
@@ -106,14 +106,14 @@ export default function AuditForm() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label htmlFor="name" className="text-sm font-medium text-gray-300">
+                            <label htmlFor="name" className="text-sm font-medium text-slate-700">
                                 Name *
                             </label>
                             <input
                                 id="name"
                                 name="name"
                                 required
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition-colors"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
                                 placeholder="John Smith"
                                 value={formData.name}
                                 onChange={handleChange}
@@ -121,7 +121,7 @@ export default function AuditForm() {
                         </div>
 
                         <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium text-gray-300">
+                            <label htmlFor="email" className="text-sm font-medium text-slate-700">
                                 Email *
                             </label>
                             <input
@@ -129,7 +129,7 @@ export default function AuditForm() {
                                 name="email"
                                 type="email"
                                 required
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition-colors"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
                                 placeholder="john@company.com"
                                 value={formData.email}
                                 onChange={handleChange}
@@ -139,7 +139,7 @@ export default function AuditForm() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label htmlFor="phone" className="text-sm font-medium text-gray-300">
+                            <label htmlFor="phone" className="text-sm font-medium text-slate-700">
                                 Phone *
                             </label>
                             <input
@@ -147,7 +147,7 @@ export default function AuditForm() {
                                 name="phone"
                                 type="tel"
                                 required
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition-colors"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
                                 placeholder="(555) 000-0000"
                                 value={formData.phone}
                                 onChange={handleChange}
@@ -155,14 +155,14 @@ export default function AuditForm() {
                         </div>
 
                         <div className="space-y-2">
-                            <label htmlFor="businessName" className="text-sm font-medium text-gray-300">
+                            <label htmlFor="businessName" className="text-sm font-medium text-slate-700">
                                 Business Name *
                             </label>
                             <input
                                 id="businessName"
                                 name="businessName"
                                 required
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition-colors"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
                                 placeholder="Your Business"
                                 value={formData.businessName}
                                 onChange={handleChange}
@@ -171,14 +171,14 @@ export default function AuditForm() {
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="website" className="text-sm font-medium text-gray-300">
+                        <label htmlFor="website" className="text-sm font-medium text-slate-700">
                             Business Website
                         </label>
                         <input
                             id="website"
                             name="website"
                             type="url"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition-colors"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
                             placeholder="https://yourbusiness.com"
                             value={formData.website}
                             onChange={handleChange}
@@ -186,7 +186,7 @@ export default function AuditForm() {
                     </div>
 
                     <div className="space-y-2">
-                        <label htmlFor="message" className="text-sm font-medium text-gray-300">
+                        <label htmlFor="message" className="text-sm font-medium text-slate-700">
                             How can we help? *
                         </label>
                         <textarea
@@ -194,7 +194,7 @@ export default function AuditForm() {
                             name="message"
                             required
                             rows={4}
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition-colors resize-none"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors resize-none"
                             placeholder="Tell us about where you're wasting time and money the most..."
                             value={formData.message}
                             onChange={handleChange}
@@ -204,7 +204,7 @@ export default function AuditForm() {
                     <button
                         type="submit"
                         disabled={status === 'submitting'}
-                        className="w-full mt-4 group px-8 py-4 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-bold text-lg hover:scale-[1.02] transition-transform duration-200 shadow-xl disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                        className="w-full mt-4 group px-8 py-4 rounded-xl bg-brand-accent text-white font-bold text-lg hover:bg-brand-accent-hover transition-colors shadow-sm disabled:opacity-70 disabled:hover:bg-brand-accent flex items-center justify-center gap-2"
                     >
                         {status === 'submitting' ? (
                             <>

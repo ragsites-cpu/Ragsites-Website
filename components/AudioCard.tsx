@@ -123,11 +123,11 @@ export default function AudioCard() {
   };
 
   return (
-    <div className="glass-card p-6 hover:bg-white/10 transition-all duration-300 cyber-glow">
-      <h3 className="text-2xl font-bold mb-2 gradient-text">
+    <div className="glass-card p-6 border border-slate-200 hover:border-slate-300 transition-all duration-300 shadow-sm">
+      <h3 className="text-2xl font-bold mb-2 text-brand-primary">
         The Receptionist That Never Sleeps
       </h3>
-      <p className="text-gray-400 mb-6 text-sm">
+      <p className="text-slate-600 mb-6 text-sm">
         Listen to our AI handle a booking in real-time.
       </p>
 
@@ -146,30 +146,30 @@ export default function AudioCard() {
         <div className="flex items-center justify-center">
           <button
             onClick={togglePlay}
-            className="w-16 h-16 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple flex items-center justify-center hover:scale-110 transition-transform duration-200 shadow-lg"
+            className="w-16 h-16 rounded-full bg-brand-accent flex items-center justify-center hover:scale-110 transition-transform duration-200 shadow-lg hover:bg-brand-accent-hover"
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
-              <Pause className="w-8 h-8 text-black fill-black" />
+              <Pause className="w-8 h-8 text-white fill-white" />
             ) : (
-              <Play className="w-8 h-8 text-black fill-black ml-1" />
+              <Play className="w-8 h-8 text-white fill-white ml-1" />
             )}
           </button>
         </div>
 
         {/* Progress Bar */}
         <div
-          className="w-full h-2 bg-white/10 rounded-full cursor-pointer overflow-hidden"
+          className="w-full h-2 bg-slate-200 rounded-full cursor-pointer overflow-hidden"
           onClick={handleProgressClick}
         >
           <div
-            className="h-full bg-gradient-to-r from-cyber-cyan to-cyber-purple transition-all duration-100"
+            className="h-full bg-brand-accent transition-all duration-100"
             style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
           />
         </div>
 
         {/* Time Display */}
-        <div className="flex justify-between text-xs text-gray-400">
+        <div className="flex justify-between text-xs text-slate-500 font-medium">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(duration)}</span>
         </div>
@@ -182,7 +182,7 @@ export default function AudioCard() {
             return (
               <div
                 key={i}
-                className="w-1 bg-gradient-to-t from-cyber-cyan to-cyber-purple rounded-full transition-all duration-75"
+                className="w-1 bg-brand-accent rounded-full transition-all duration-75"
                 style={{
                   height: `${height}%`,
                 }}

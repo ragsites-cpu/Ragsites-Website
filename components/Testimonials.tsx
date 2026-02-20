@@ -81,9 +81,9 @@ export default function Testimonials() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">What Business Owners Say</span>
+            <span className="text-brand-primary">What Business Owners Say</span>
           </h2>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-slate-600">
             Real stories from real businesses
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function Testimonials() {
             <div
               key={index}
               ref={(el) => { cardRefs.current[index] = el; }}
-              className="glass-card p-8"
+              className="glass-card p-8 border border-slate-200 shadow-sm"
               style={{
                 opacity: visibleCards.has(index) ? 1 : 0,
                 transform: visibleCards.has(index) ? 'translateY(0) scale(1)' : 'translateY(60px) scale(0.95)',
@@ -102,18 +102,18 @@ export default function Testimonials() {
               }}
             >
               {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-cyber-cyan/30 mb-4" />
+              <Quote className="w-8 h-8 text-brand-accent/30 mb-4" />
 
               {/* Quote Text */}
-              <p className="text-lg text-gray-300 leading-relaxed mb-6 italic">
+              <p className="text-lg text-slate-700 leading-relaxed mb-6 italic">
                 &ldquo;{testimonial.quote}&rdquo;
               </p>
 
               {/* Author Info */}
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <p className="font-semibold text-white">{testimonial.name}</p>
-                  <p className="text-sm text-gray-400">
+                  <p className="font-bold text-brand-primary">{testimonial.name}</p>
+                  <p className="text-sm text-slate-500 font-medium">
                     {testimonial.business} · {testimonial.industry}
                   </p>
                 </div>
@@ -123,11 +123,10 @@ export default function Testimonials() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-4 h-4 ${
-                        i < testimonial.rating
-                          ? 'text-yellow-500 fill-yellow-500'
-                          : 'text-gray-600'
-                      }`}
+                      className={`w-4 h-4 ${i < testimonial.rating
+                          ? 'text-yellow-400 fill-yellow-400'
+                          : 'text-slate-200'
+                        }`}
                     />
                   ))}
                 </div>

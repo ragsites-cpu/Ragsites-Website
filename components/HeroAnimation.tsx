@@ -17,23 +17,23 @@ export default function HeroAnimation() {
   return (
     <div className="relative w-full max-w-sm mx-auto">
       {/* Phone frame */}
-      <div className="glass-card rounded-3xl p-1 border border-white/10 shadow-2xl shadow-cyber-cyan/10">
+      <div className="bg-white rounded-[32px] p-2 border border-slate-200 shadow-xl mx-auto ring-1 ring-slate-900/5">
         {/* Screen */}
-        <div className="bg-cyber-black/80 rounded-[20px] p-4 pb-6 min-h-[320px] md:min-h-[380px] flex flex-col">
+        <div className="bg-slate-50 rounded-[24px] p-4 pb-6 min-h-[320px] md:min-h-[380px] flex flex-col relative overflow-hidden ring-1 ring-slate-200">
           {/* Call header */}
-          <div className="flex items-center gap-3 mb-5 pb-3 border-b border-white/10">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple flex items-center justify-center">
-              <Phone className="w-4 h-4 text-black" />
+          <div className="flex items-center gap-3 mb-5 pb-3 border-b border-slate-200">
+            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+              <Phone className="w-5 h-5 text-brand-accent" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">AI Receptionist</p>
-              <div className="flex items-center gap-1.5">
+              <p className="text-sm font-bold text-brand-primary">AI Receptionist</p>
+              <div className="flex items-center gap-1.5 mt-0.5">
                 <motion.div
-                  className="w-1.5 h-1.5 rounded-full bg-green-400"
+                  className="w-1.5 h-1.5 rounded-full bg-emerald-500"
                   animate={{ opacity: [1, 0.4, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
-                <p className="text-xs text-green-400">Active call</p>
+                <p className="text-xs text-emerald-600 font-medium">Active call</p>
               </div>
             </div>
           </div>
@@ -62,11 +62,10 @@ export default function HeroAnimation() {
                 className={`flex ${msg.role === 'caller' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] px-3.5 py-2.5 text-sm leading-relaxed ${
-                    msg.role === 'ai'
-                      ? 'bg-white/10 text-gray-200 rounded-2xl rounded-tl-md'
-                      : 'bg-gradient-to-r from-cyber-cyan/20 to-cyber-purple/20 text-white rounded-2xl rounded-tr-md border border-cyber-cyan/20'
-                  }`}
+                  className={`max-w-[85%] px-3.5 py-2.5 text-sm leading-relaxed ${msg.role === 'ai'
+                      ? 'bg-white border border-slate-200 text-slate-700 rounded-2xl rounded-tl-sm shadow-sm'
+                      : 'bg-brand-accent text-white rounded-2xl rounded-tr-sm shadow-sm'
+                    }`}
                 >
                   {msg.text}
                 </div>
@@ -79,7 +78,7 @@ export default function HeroAnimation() {
             {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-0.5 h-7 rounded-full bg-cyber-cyan/60 origin-bottom"
+                className="w-0.5 h-7 rounded-full bg-brand-accent/60 origin-bottom"
                 animate={{
                   scaleY: [0.15, (0.4 + (i % 3) * 0.3), 0.15],
                 }}
