@@ -2,6 +2,31 @@ import { NextRequest, NextResponse } from 'next/server';
 import Firecrawl from '@mendable/firecrawl-js';
 
 const PHONE_ID = 'b7299266-b647-48d5-a857-5a2be13f65a4';
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX = 3; // max 3 requests per window per IP
+
+const rateLimitMap = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = rateLimitMap.get(ip) || [];
+  const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+  rateLimitMap.set(ip, recent);
+  if (recent.length >= RATE_LIMIT_MAX) return true;
+  recent.push(now);
+  rateLimitMap.set(ip, recent);
+  return false;
+}
+
+// Clean up stale entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, timestamps] of rateLimitMap) {
+    const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+    if (recent.length === 0) rateLimitMap.delete(ip);
+    else rateLimitMap.set(ip, recent);
+  }
+}, 5 * 60 * 1000);
 
 let firecrawl: Firecrawl;
 
@@ -21,6 +46,14 @@ function vapiHeaders() {
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please wait a minute before trying again.' },
+        { status: 429 }
+      );
+    }
+
     const { url } = await req.json();
 
     if (!url) {
@@ -58,9 +91,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Demo creation error:', error);
-    const msg = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: msg },
+      { error: 'Something went wrong. Please try again.' },
       { status: 500 }
     );
   }
