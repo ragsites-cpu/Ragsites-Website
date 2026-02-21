@@ -539,6 +539,18 @@ export default function Home() {
               <span className="font-bold text-brand-primary">RAGSITES</span>
             </div>
 
+            <div
+              className="trustpilot-widget"
+              data-locale="en-US"
+              data-template-id="56278e9abfbbba0bdcd568bc"
+              data-businessunit-id="69835559c5b7f0ff5cd3d69b"
+              data-style-height="52px"
+              data-style-width="100%"
+              data-token="b060e497-c593-4668-8f4e-0dbebe2522d8"
+            >
+              <a href="https://www.trustpilot.com/review/ragsites.com" target="_blank" rel="noopener noreferrer">Trustpilot</a>
+            </div>
+
             <p className="text-sm text-gray-500">
               Built by Ragsites. &copy; 2025
             </p>

@@ -70,6 +70,12 @@ export default function RootLayout({
           `}
         </Script>
 
+        {/* Trustpilot */}
+        <Script
+          src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+          strategy="afterInteractive"
+        />
+
         {children}
       </body>
     </html>
