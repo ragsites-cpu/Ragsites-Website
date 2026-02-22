@@ -87,7 +87,20 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section id="hero-section" className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-20">
+      <section id="hero-section" className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-20 bg-black">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4" type="video/mp4" />
+        </video>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/50 z-0 pointer-events-none"></div>
+
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left: Text */}
@@ -96,17 +109,17 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200"
+                className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
               >
                 <Phone className="w-5 h-5 text-brand-accent" />
-                <span className="text-sm font-semibold text-brand-primary">AI VOICE RECEPTIONIST</span>
+                <span className="text-sm font-semibold text-white">AI VOICE RECEPTIONIST</span>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
-                className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight text-brand-primary"
+                className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight text-white"
               >
                 Never Miss a Call.
                 <br />
@@ -117,7 +130,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.3 }}
-                className="text-xl md:text-2xl text-slate-600 mb-10 max-w-xl"
+                className="text-xl md:text-2xl text-slate-300 mb-10 max-w-xl font-light"
               >
                 AI that answers every call in 1 second, books appointments, and captures leads 24/7.
               </motion.p>
@@ -141,17 +154,17 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="mt-12 grid grid-cols-3 gap-4 max-w-sm md:max-w-md"
               >
-                <div className="glass-card p-3 rounded-xl text-center">
+                <div className="dark-glass-card p-3 rounded-xl text-center">
                   <p className="text-2xl font-bold text-brand-accent">24/7</p>
-                  <p className="text-xs text-slate-500 mt-1">Always On</p>
+                  <p className="text-xs text-slate-300 mt-1">Always On</p>
                 </div>
-                <div className="glass-card p-3 rounded-xl text-center">
+                <div className="dark-glass-card p-3 rounded-xl text-center">
                   <p className="text-2xl font-bold text-brand-accent">&lt;1s</p>
-                  <p className="text-xs text-slate-500 mt-1">Response Time</p>
+                  <p className="text-xs text-slate-300 mt-1">Response Time</p>
                 </div>
-                <div className="glass-card p-3 rounded-xl text-center">
+                <div className="dark-glass-card p-3 rounded-xl text-center">
                   <p className="text-2xl font-bold text-brand-accent">0</p>
-                  <p className="text-xs text-slate-500 mt-1">Missed Calls</p>
+                  <p className="text-xs text-slate-300 mt-1">Missed Calls</p>
                 </div>
               </motion.div>
             </div>
