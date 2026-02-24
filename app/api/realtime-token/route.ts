@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       const errText = await response.text();
       console.error('OpenAI session error:', errText);
       return NextResponse.json(
-        { error: 'Could not start voice session. Please try again.' },
+        { error: 'Could not start voice session. Please try again.', debug: { keyPresent: !!apiKey, keyLength: apiKey?.length, keyStart: apiKey?.slice(0, 8) } },
         { status: 500 }
       );
     }
