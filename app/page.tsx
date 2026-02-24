@@ -228,7 +228,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-brand-accent" />
-                  Powered by GPT Realtime 1.5
+                  Natural, human-like voice
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-brand-accent" />
