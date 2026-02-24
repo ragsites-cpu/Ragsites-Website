@@ -70,9 +70,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response.ok) {
-      console.error('OpenAI session error:', await response.text());
+      const errText = await response.text();
+      console.error('OpenAI session error:', errText);
       return NextResponse.json(
-        { error: 'Could not start voice session.' },
+        { error: `Voice session failed: ${errText}` },
         { status: 500 }
       );
     }
