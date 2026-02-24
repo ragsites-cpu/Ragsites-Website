@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowDown, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
-import AudioCard from '@/components/AudioCard';
+import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import Pricing from '@/components/Pricing';
 import AuditForm from '@/components/AuditForm';
 import HeroAnimation from '@/components/HeroAnimation';
@@ -189,7 +189,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Audio Demo - Hear It First */}
+      {/* Live Voice Demo */}
       <section className="py-24 px-4 section-bg-alt">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -201,10 +201,10 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-brand-primary">
-              Hear It <span className="text-brand-accent">In Action</span>
+              Try It <span className="text-brand-accent">Live</span>
             </h2>
             <p className="text-xl text-slate-600">
-              Listen to a real 48-second conversation with our AI receptionist
+              Have a real conversation with our AI receptionist — right now, in your browser
             </p>
           </motion.div>
 
@@ -217,22 +217,22 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="glass-card p-8 h-full flex flex-col justify-center"
             >
-              <h3 className="text-2xl font-bold mb-4 text-brand-primary">Natural. Fast. Convincing.</h3>
+              <h3 className="text-2xl font-bold mb-4 text-brand-primary">No Recording. No Script. 100% Live.</h3>
               <p className="text-slate-600 mb-6 text-lg">
-                This is what your customers will hear. No hold music. No robotic voice. Just a natural conversation.
+                This isn&apos;t a pre-recorded demo. Click the mic and talk to our AI receptionist in real time. Ask anything.
               </p>
               <ul className="space-y-3 text-slate-700">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-brand-accent" />
-                  Answers in under 1 second
+                  Responds in under 1 second
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-brand-accent" />
-                  Books appointments on the call
+                  Powered by GPT Realtime 1.5
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-brand-accent" />
-                  Knows your business inside out
+                  See the live transcript as you talk
                 </li>
               </ul>
             </motion.div>
@@ -243,7 +243,7 @@ export default function Home() {
               variants={fadeUp}
               transition={{ duration: 0.6, delay: 0.15 }}
             >
-              <AudioCard />
+              <LiveVoiceDemo />
             </motion.div>
           </div>
         </div>
