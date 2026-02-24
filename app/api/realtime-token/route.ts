@@ -47,10 +47,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const apiKey = process.env.OPENAI_API_KEY?.trim();
+    console.log('OPENAI_API_KEY present:', !!apiKey, 'length:', apiKey?.length, 'starts:', apiKey?.slice(0, 10));
+
     const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY?.trim()}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
