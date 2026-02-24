@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY?.trim()}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
       const errText = await response.text();
       console.error('OpenAI session error:', errText);
       return NextResponse.json(
-        { error: `Voice session failed: ${errText}` },
+        { error: 'Could not start voice session. Please try again.' },
         { status: 500 }
       );
     }
