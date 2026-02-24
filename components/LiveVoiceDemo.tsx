@@ -110,7 +110,7 @@ export default function LiveVoiceDemo() {
             </p>
 
             <motion.button
-              onClick={startCall}
+              onClick={() => startCall()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-16 h-16 rounded-full bg-brand-accent mx-auto flex items-center justify-center shadow-lg hover:bg-brand-accent-hover transition-colors"

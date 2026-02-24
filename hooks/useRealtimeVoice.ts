@@ -11,6 +11,11 @@ export interface TranscriptMessage {
   text: string;
 }
 
+export interface StartCallOptions {
+  token?: string;
+  greeting?: string;
+}
+
 export interface UseRealtimeVoiceReturn {
   callStatus: CallStatus;
   volumeLevel: number;
@@ -18,7 +23,7 @@ export interface UseRealtimeVoiceReturn {
   transcript: TranscriptMessage[];
   elapsedSeconds: number;
   error: string | null;
-  startCall: () => Promise<void>;
+  startCall: (options?: StartCallOptions) => Promise<void>;
   endCall: () => void;
   reset: () => void;
 }
@@ -94,7 +99,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     tick();
   }, []);
 
-  const startCall = useCallback(async () => {
+  const startCall = useCallback(async (options?: StartCallOptions) => {
     setError(null);
     setCallStatus('connecting');
     setTranscript([]);
@@ -106,11 +111,17 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
 
-      // 2. Get ephemeral token from our backend
-      const tokenRes = await fetch('/api/realtime-token', { method: 'POST' });
-      const tokenData = await tokenRes.json();
-      if (!tokenRes.ok || !tokenData.token) {
-        throw new Error(tokenData.error || 'Could not get session token.');
+      // 2. Get ephemeral token — use provided token or fetch from backend
+      let token: string;
+      if (options?.token) {
+        token = options.token;
+      } else {
+        const tokenRes = await fetch('/api/realtime-token', { method: 'POST' });
+        const tokenData = await tokenRes.json();
+        if (!tokenRes.ok || !tokenData.token) {
+          throw new Error(tokenData.error || 'Could not get session token.');
+        }
+        token = tokenData.token;
       }
 
       // 3. Create RTCPeerConnection
@@ -132,6 +143,20 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       // 4. Create data channel for events
       const dc = pc.createDataChannel('oai-events');
       dcRef.current = dc;
+
+      // If a greeting is provided, trigger the AI to speak it once the channel opens
+      if (options?.greeting) {
+        const greeting = options.greeting;
+        dc.onopen = () => {
+          dc.send(JSON.stringify({
+            type: 'response.create',
+            response: {
+              modalities: ['text', 'audio'],
+              instructions: `Say exactly this greeting to start the conversation: "${greeting}"`,
+            },
+          }));
+        };
+      }
 
       dc.onmessage = (e) => {
         try {
@@ -175,7 +200,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       const sdpRes = await fetch('https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2025-06-03', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${tokenData.token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/sdp',
         },
         body: offer.sdp,

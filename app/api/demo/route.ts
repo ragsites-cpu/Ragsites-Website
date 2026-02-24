@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Firecrawl from '@mendable/firecrawl-js';
 
-const PHONE_ID = 'b7299266-b647-48d5-a857-5a2be13f65a4';
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX = 3; // max 3 requests per window per IP
 
@@ -37,13 +36,6 @@ function getFirecrawl() {
   return firecrawl;
 }
 
-function vapiHeaders() {
-  return {
-    'Authorization': `Bearer ${process.env.VAPI_API_KEY?.trim()}`,
-    'Content-Type': 'application/json',
-  };
-}
-
 export async function POST(req: NextRequest) {
   try {
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
@@ -70,24 +62,48 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Get the current assistant ID so we can delete it later
-    const oldAssistantId = await getCurrentAssistantId();
+    const businessName = extractBusinessName(siteContent, url);
 
-    // 3. Create a new VAPI assistant with the scraped content
-    const assistant = await createVapiAssistant(url, siteContent);
+    // 2. Build a custom system prompt from the scraped content
+    const systemPrompt = buildSystemPrompt(businessName, siteContent);
 
-    // 4. Assign the new assistant to the demo phone number
-    await assignAssistantToPhone(assistant.id);
+    // 3. Get an ephemeral token from OpenAI Realtime API
+    const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY?.trim()}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-realtime-preview-2025-06-03',
+        voice: 'ash',
+        instructions: systemPrompt,
+        input_audio_transcription: {
+          model: 'gpt-4o-mini-transcribe',
+        },
+        turn_detection: {
+          type: 'server_vad',
+          threshold: 0.5,
+          prefix_padding_ms: 300,
+          silence_duration_ms: 500,
+        },
+      }),
+    });
 
-    // 5. Delete the old assistant (fire-and-forget, don't block the response)
-    if (oldAssistantId && oldAssistantId !== assistant.id) {
-      deleteAssistant(oldAssistantId).catch(() => {});
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('OpenAI session error:', errText);
+      return NextResponse.json(
+        { error: 'Could not start voice session. Please try again.' },
+        { status: 500 }
+      );
     }
 
+    const data = await response.json();
+
     return NextResponse.json({
-      success: true,
-      phoneNumber: '+1 (628) 253-2869',
-      businessName: extractBusinessName(siteContent, url),
+      token: data.client_secret?.value,
+      businessName,
     });
   } catch (error) {
     console.error('Demo creation error:', error);
@@ -96,6 +112,30 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+function buildSystemPrompt(businessName: string, siteContent: string): string {
+  return `You are a friendly and professional AI receptionist for ${businessName}. You are answering incoming phone calls for this business.
+
+Here is information about the business scraped from their website:
+---
+${siteContent}
+---
+
+Based on the above information, you should:
+1. Greet callers warmly and identify yourself as the AI receptionist for ${businessName}
+2. Answer questions about the business's services, hours, location, and other details based on what you know from the website
+3. If asked something you don't know, say you'd be happy to have someone from the team follow up with that information
+4. Collect the caller's name and phone number if they're interested in scheduling or learning more
+5. Keep responses concise and conversational - 1-2 sentences per response
+6. Be helpful, natural, and professional
+
+IMPORTANT RULES:
+- This is a DEMO call. If the caller asks, let them know this is a demo of the Ragsites AI receptionist service
+- Ask only ONE question at a time
+- Keep each response SHORT - 1-2 sentences max
+- Never use technical jargon or mention AI/automation unless asked
+- Sound natural and human-like`;
 }
 
 async function scrapeWebsite(url: string): Promise<string | null> {
@@ -150,127 +190,4 @@ function extractBusinessName(content: string, url: string): string {
   } catch {
     return url;
   }
-}
-
-async function getCurrentAssistantId(): Promise<string | null> {
-  try {
-    const response = await fetch(`https://api.vapi.ai/phone-number/${PHONE_ID}`, {
-      headers: vapiHeaders(),
-    });
-    if (!response.ok) return null;
-    const data = await response.json();
-    return data.assistantId || null;
-  } catch {
-    return null;
-  }
-}
-
-async function deleteAssistant(assistantId: string) {
-  await fetch(`https://api.vapi.ai/assistant/${assistantId}`, {
-    method: 'DELETE',
-    headers: vapiHeaders(),
-  });
-}
-
-async function createVapiAssistant(url: string, siteContent: string) {
-  const businessName = extractBusinessName(siteContent, url);
-
-  const systemPrompt = `You are a friendly and professional AI receptionist for ${businessName}. You are answering incoming phone calls for this business.
-
-Here is information about the business scraped from their website:
----
-${siteContent}
----
-
-Based on the above information, you should:
-1. Greet callers warmly and identify yourself as the AI receptionist for ${businessName}
-2. Answer questions about the business's services, hours, location, and other details based on what you know from the website
-3. If asked something you don't know, say you'd be happy to have someone from the team follow up with that information
-4. Collect the caller's name and phone number if they're interested in scheduling or learning more
-5. Keep responses concise and conversational - 1-2 sentences per response
-6. Be helpful, natural, and professional
-
-IMPORTANT RULES:
-- This is a DEMO call. If the caller asks, let them know this is a demo of the Ragsites AI receptionist service
-- Ask only ONE question at a time
-- Keep each response SHORT - 1-2 sentences max
-- Never use technical jargon or mention AI/automation unless asked
-- Sound natural and human-like`;
-
-  const response = await fetch('https://api.vapi.ai/assistant', {
-    method: 'POST',
-    headers: vapiHeaders(),
-    body: JSON.stringify({
-      name: `Demo - ${businessName}`,
-      firstMessage: `Hi, thanks for calling ${businessName}! How can I help you today?`,
-      model: {
-        provider: 'openai',
-        model: 'gpt-4o-mini',
-        temperature: 0.7,
-        maxTokens: 150,
-        messages: [
-          {
-            role: 'system',
-            content: systemPrompt,
-          },
-        ],
-      },
-      voice: {
-        provider: '11labs',
-        voiceId: 'BHr135B5EUBtaWheVj8S',
-        model: 'eleven_turbo_v2_5',
-        optimizeStreamingLatency: 4,
-        stability: 0.5,
-        similarityBoost: 0.75,
-      },
-      transcriber: {
-        provider: 'deepgram',
-        model: 'nova-3',
-        language: 'en',
-        endpointing: 100,
-      },
-      maxDurationSeconds: 300, // 5 min max for demos
-      silenceTimeoutSeconds: 30,
-      backgroundSound: 'office',
-      backgroundDenoisingEnabled: true,
-      startSpeakingPlan: {
-        waitSeconds: 0.2,
-        smartEndpointingEnabled: true,
-        transcriptionEndpointingPlan: {
-          onPunctuationSeconds: 0.05,
-          onNoPunctuationSeconds: 0.8,
-          onNumberSeconds: 0.3,
-        },
-      },
-      stopSpeakingPlan: {
-        numWords: 1,
-        voiceSeconds: 0.2,
-        backoffSeconds: 1,
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`VAPI assistant creation failed: ${errorText}`);
-  }
-
-  return response.json();
-}
-
-async function assignAssistantToPhone(assistantId: string) {
-  const response = await fetch(`https://api.vapi.ai/phone-number/${PHONE_ID}`, {
-    method: 'PATCH',
-    headers: vapiHeaders(),
-    body: JSON.stringify({
-      assistantId,
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`VAPI phone assignment failed: ${errorText}`);
-  }
-
-  return response.json();
 }
