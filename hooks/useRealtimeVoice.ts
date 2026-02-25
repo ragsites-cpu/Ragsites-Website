@@ -43,6 +43,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const maxDurationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const endCallTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const responseRecoveryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const greetingSendTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -54,6 +55,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const turnAwaitingResponseRef = useRef(false);
   const lastUserTranscriptRef = useRef('');
   const hasConfirmedUserTurnRef = useRef(false);
+  const lastSpeechStartedAtRef = useRef<number | null>(null);
+  const lastSpeechDurationMsRef = useRef(0);
   const dataChannelOpenRef = useRef(false);
   const remoteAudioReadyRef = useRef(false);
   const readyForUserInputRef = useRef(false);
@@ -64,6 +67,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     if (timerRef.current) clearInterval(timerRef.current);
     if (maxDurationRef.current) clearTimeout(maxDurationRef.current);
     if (endCallTimerRef.current) clearTimeout(endCallTimerRef.current);
+    if (responseRecoveryTimerRef.current) clearTimeout(responseRecoveryTimerRef.current);
     if (greetingSendTimerRef.current) clearTimeout(greetingSendTimerRef.current);
     if (pcRef.current) {
       pcRef.current.close();
@@ -88,6 +92,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     timerRef.current = null;
     maxDurationRef.current = null;
     endCallTimerRef.current = null;
+    responseRecoveryTimerRef.current = null;
     greetingSendTimerRef.current = null;
   }, []);
 
@@ -141,6 +146,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     turnAwaitingResponseRef.current = false;
     lastUserTranscriptRef.current = '';
     hasConfirmedUserTurnRef.current = false;
+    lastSpeechStartedAtRef.current = null;
+    lastSpeechDurationMsRef.current = 0;
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = !Boolean(options?.greeting);
@@ -262,8 +269,9 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             if (!trimmed) return false;
             const words = trimmed.split(/\s+/).filter(Boolean);
             const letterOrDigitCount = Array.from(trimmed).filter(ch => /[\p{L}\p{N}]/u.test(ch)).length;
+            const enoughSpeechDuration = lastSpeechDurationMsRef.current >= 320;
             // Filter common echo/noise fragments before the caller has actually engaged.
-            return words.length >= 2 || letterOrDigitCount >= 8;
+            return words.length >= 2 || letterOrDigitCount >= 8 || (enoughSpeechDuration && letterOrDigitCount >= 3);
           };
 
           // Trigger greeting as soon as session is ready
@@ -272,6 +280,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           }
 
           if (event.type === 'input_audio_buffer.speech_started') {
+            if (isAssistantSpeakingRef.current) return;
             if (
               readyForUserInputRef.current &&
               hasConfirmedUserTurnRef.current &&
@@ -279,11 +288,20 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             ) {
               turnAwaitingResponseRef.current = true;
             }
+            lastSpeechStartedAtRef.current = Date.now();
           }
 
           if (event.type === 'input_audio_buffer.speech_stopped' || event.type === 'input_audio_buffer.committed') {
+            if (lastSpeechStartedAtRef.current) {
+              lastSpeechDurationMsRef.current = Date.now() - lastSpeechStartedAtRef.current;
+              lastSpeechStartedAtRef.current = null;
+            }
             if (turnAwaitingResponseRef.current) {
-              requestAssistantResponse();
+              if (lastSpeechDurationMsRef.current >= 220) {
+                requestAssistantResponse();
+              } else {
+                turnAwaitingResponseRef.current = false;
+              }
             }
           }
 
@@ -305,6 +323,13 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           if (event.type === 'conversation.item.input_audio_transcription.completed') {
             const text = (event.transcript || '').trim();
             if (text) {
+              if (isAssistantSpeakingRef.current) {
+                return;
+              }
+              if (Date.now() < ignoreUserTranscriptsUntilRef.current) {
+                return;
+              }
+
               if (!hasConfirmedUserTurnRef.current && !isValidFirstUserTurn(text)) {
                 return;
               }
@@ -325,15 +350,23 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
           if (event.type === 'response.created') {
             isAssistantSpeakingRef.current = true;
-            setMicrophoneEnabled(false);
             assistantTextRef.current = '';
             setIsSpeaking(true);
+            if (responseRecoveryTimerRef.current) clearTimeout(responseRecoveryTimerRef.current);
+            responseRecoveryTimerRef.current = setTimeout(() => {
+              responseRecoveryTimerRef.current = null;
+              isAssistantSpeakingRef.current = false;
+              pendingAssistantResponseRef.current = false;
+              turnAwaitingResponseRef.current = false;
+              setIsSpeaking(false);
+            }, 10000);
           }
 
           if (event.type === 'response.done') {
+            if (responseRecoveryTimerRef.current) clearTimeout(responseRecoveryTimerRef.current);
+            responseRecoveryTimerRef.current = null;
             isAssistantSpeakingRef.current = false;
             pendingAssistantResponseRef.current = false;
-            setTimeout(() => setMicrophoneEnabled(true), 220);
             setIsSpeaking(false);
             const text = assistantTextRef.current.trim();
             if (text) {
@@ -343,7 +376,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             turnAwaitingResponseRef.current = false;
 
             // Ignore immediate speaker bleed after any assistant utterance.
-            const generalBleedGuardMs = 500;
+            const generalBleedGuardMs = 900;
             ignoreUserTranscriptsUntilRef.current = Math.max(
               ignoreUserTranscriptsUntilRef.current,
               Date.now() + generalBleedGuardMs
@@ -366,9 +399,10 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           }
 
           if (event.type === 'response.canceled' || event.type === 'response.cancelled' || event.type === 'response.failed') {
+            if (responseRecoveryTimerRef.current) clearTimeout(responseRecoveryTimerRef.current);
+            responseRecoveryTimerRef.current = null;
             isAssistantSpeakingRef.current = false;
             pendingAssistantResponseRef.current = false;
-            setMicrophoneEnabled(true);
             setIsSpeaking(false);
             assistantTextRef.current = '';
             turnAwaitingResponseRef.current = false;
@@ -458,6 +492,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     turnAwaitingResponseRef.current = false;
     lastUserTranscriptRef.current = '';
     hasConfirmedUserTurnRef.current = false;
+    lastSpeechStartedAtRef.current = null;
+    lastSpeechDurationMsRef.current = 0;
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = false;
