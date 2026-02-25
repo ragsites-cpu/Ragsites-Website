@@ -53,6 +53,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const pendingAssistantResponseRef = useRef(false);
   const turnAwaitingResponseRef = useRef(false);
   const lastUserTranscriptRef = useRef('');
+  const hasConfirmedUserTurnRef = useRef(false);
   const dataChannelOpenRef = useRef(false);
   const remoteAudioReadyRef = useRef(false);
   const readyForUserInputRef = useRef(false);
@@ -139,6 +140,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     pendingAssistantResponseRef.current = false;
     turnAwaitingResponseRef.current = false;
     lastUserTranscriptRef.current = '';
+    hasConfirmedUserTurnRef.current = false;
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = !Boolean(options?.greeting);
@@ -216,7 +218,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
               instructions: `Say exactly this greeting and nothing else: "${options.greeting}". Then stop and wait for the caller to respond.`,
             },
           }));
-        }, 120);
+        }, 280);
       };
 
       dc.onopen = () => {
@@ -255,13 +257,26 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             return true;
           };
 
+          const isValidFirstUserTurn = (text: string) => {
+            const trimmed = text.trim();
+            if (!trimmed) return false;
+            const words = trimmed.split(/\s+/).filter(Boolean);
+            const letterOrDigitCount = Array.from(trimmed).filter(ch => /[\p{L}\p{N}]/u.test(ch)).length;
+            // Filter common echo/noise fragments before the caller has actually engaged.
+            return words.length >= 2 || letterOrDigitCount >= 8;
+          };
+
           // Trigger greeting as soon as session is ready
           if (event.type === 'session.created') {
             maybeSendGreetingIfReady();
           }
 
           if (event.type === 'input_audio_buffer.speech_started') {
-            if (readyForUserInputRef.current && Date.now() >= ignoreUserTranscriptsUntilRef.current) {
+            if (
+              readyForUserInputRef.current &&
+              hasConfirmedUserTurnRef.current &&
+              Date.now() >= ignoreUserTranscriptsUntilRef.current
+            ) {
               turnAwaitingResponseRef.current = true;
             }
           }
@@ -290,10 +305,16 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           if (event.type === 'conversation.item.input_audio_transcription.completed') {
             const text = (event.transcript || '').trim();
             if (text) {
+              if (!hasConfirmedUserTurnRef.current && !isValidFirstUserTurn(text)) {
+                return;
+              }
+
               if (text !== lastUserTranscriptRef.current) {
                 setTranscript(prev => [...prev, { role: 'user', text }]);
                 lastUserTranscriptRef.current = text;
               }
+
+              hasConfirmedUserTurnRef.current = true;
 
               if (!isAssistantSpeakingRef.current && readyForUserInputRef.current && Date.now() >= ignoreUserTranscriptsUntilRef.current) {
                 // Fallback for clients/sessions where turn-end events are delayed/missing
@@ -312,13 +333,21 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           if (event.type === 'response.done') {
             isAssistantSpeakingRef.current = false;
             pendingAssistantResponseRef.current = false;
-            setTimeout(() => setMicrophoneEnabled(true), 150);
+            setTimeout(() => setMicrophoneEnabled(true), 220);
             setIsSpeaking(false);
             const text = assistantTextRef.current.trim();
             if (text) {
               setTranscript(prev => [...prev, { role: 'assistant', text }]);
             }
             assistantTextRef.current = '';
+            turnAwaitingResponseRef.current = false;
+
+            // Ignore immediate speaker bleed after any assistant utterance.
+            const generalBleedGuardMs = 500;
+            ignoreUserTranscriptsUntilRef.current = Math.max(
+              ignoreUserTranscriptsUntilRef.current,
+              Date.now() + generalBleedGuardMs
+            );
 
             if (options?.greeting && hasSentGreetingRef.current && !readyForUserInputRef.current) {
               readyForUserInputRef.current = true;
@@ -342,6 +371,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             setMicrophoneEnabled(true);
             setIsSpeaking(false);
             assistantTextRef.current = '';
+            turnAwaitingResponseRef.current = false;
             if (options?.greeting && hasSentGreetingRef.current && !readyForUserInputRef.current) {
               readyForUserInputRef.current = true;
             }
@@ -427,6 +457,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     pendingAssistantResponseRef.current = false;
     turnAwaitingResponseRef.current = false;
     lastUserTranscriptRef.current = '';
+    hasConfirmedUserTurnRef.current = false;
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = false;
