@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
           {
             type: 'function',
             name: 'end_call',
-            description: 'End the phone call after saying goodbye. Use this when the conversation is complete and the caller has no more questions.',
+            description: 'End the phone call after saying goodbye. Use this when the caller asks to hang up/end the call, or when the conversation is complete.',
             parameters: { type: 'object', properties: {} },
           },
         ],
@@ -147,7 +147,7 @@ IMPORTANT RULES:
 - Sound natural and human-like
 - After asking a question, STOP and wait for the caller's next reply before speaking again
 
-CALL ENDING: Once you've helped the caller and they have no more questions, first say one complete goodbye sentence. Only after finishing that spoken sentence, call the end_call function to hang up.`;
+CALL ENDING: If the caller explicitly asks to end the call, hang up, or says they are done, first say one complete goodbye sentence. Only after finishing that spoken sentence, call the end_call function to hang up.`;
 }
 
 async function scrapeWebsite(url: string): Promise<string | null> {

@@ -212,6 +212,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             type: 'response.create',
             response: {
               modalities: ['text', 'audio'],
+              tool_choice: 'auto',
               instructions: `Say exactly this greeting and nothing else: "${options.greeting}". Then stop and wait for the caller to respond.`,
             },
           }));
@@ -227,6 +228,16 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
         try {
           const event = JSON.parse(e.data);
 
+          const scheduleEndCall = () => {
+            if (endCallTimerRef.current) return;
+            // Give outbound audio extra time to finish playback before teardown.
+            const hangupDelayMs = 1800;
+            endCallTimerRef.current = setTimeout(() => {
+              endCallTimerRef.current = null;
+              endCallInternal();
+            }, hangupDelayMs);
+          };
+
           const requestAssistantResponse = () => {
             if (!readyForUserInputRef.current) return false;
             if (isAssistantSpeakingRef.current) return false;
@@ -238,6 +249,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
               type: 'response.create',
               response: {
                 modalities: ['text', 'audio'],
+                tool_choice: 'auto',
               },
             }));
             return true;
@@ -262,6 +274,17 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
           if (event.type === 'response.audio_transcript.delta') {
             assistantTextRef.current += event.delta || '';
+          }
+
+          if (event.type === 'response.function_call_arguments.done' && event.name === 'end_call') {
+            scheduleEndCall();
+          }
+
+          if (event.type === 'response.output_item.done') {
+            const item = event.item;
+            if (item?.type === 'function_call' && item.name === 'end_call') {
+              scheduleEndCall();
+            }
           }
 
           if (event.type === 'conversation.item.input_audio_transcription.completed') {
@@ -307,14 +330,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             const outputs = event.response?.output || [];
             for (const item of outputs) {
               if (item.type === 'function_call' && item.name === 'end_call') {
-                if (!endCallTimerRef.current) {
-                  // Give outbound audio extra time to finish playback before teardown.
-                  const hangupDelayMs = 1800;
-                  endCallTimerRef.current = setTimeout(() => {
-                    endCallTimerRef.current = null;
-                    endCallInternal();
-                  }, hangupDelayMs);
-                }
+                scheduleEndCall();
                 break;
               }
             }
