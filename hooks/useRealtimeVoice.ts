@@ -205,7 +205,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       const offer = await pc.createOffer();
       await pc.setLocalDescription(offer);
 
-      const sdpRes = await fetch('https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2025-06-03', {
+      const sdpRes = await fetch('https://api.openai.com/v1/realtime?model=gpt-realtime-1.5', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
