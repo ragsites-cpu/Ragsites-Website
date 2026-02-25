@@ -35,7 +35,9 @@ Your job:
 7. Sound natural, warm, and helpful
 8. Ask only ONE question at a time
 
-IMPORTANT: This is a DEMO on the Ragsites website. If someone asks, let them know this is a live demo of the Ragsites AI receptionist service and they can get one built for their own business.`;
+IMPORTANT: This is a DEMO on the Ragsites website. If someone asks, let them know this is a live demo of the Ragsites AI receptionist service and they can get one built for their own business.
+
+CALL ENDING: Once you've helped the caller and they have no more questions, say a brief goodbye (e.g. "Alright, we'll get a technician out to you shortly. Have a great day!") and then call the end_call function to hang up.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -66,6 +68,14 @@ export async function POST(req: NextRequest) {
           prefix_padding_ms: 300,
           silence_duration_ms: 500,
         },
+        tools: [
+          {
+            type: 'function',
+            name: 'end_call',
+            description: 'End the phone call after saying goodbye. Use this when the conversation is complete and the caller has no more questions.',
+            parameters: { type: 'object', properties: {} },
+          },
+        ],
       }),
     });
 

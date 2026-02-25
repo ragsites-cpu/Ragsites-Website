@@ -87,6 +87,14 @@ export async function POST(req: NextRequest) {
           prefix_padding_ms: 300,
           silence_duration_ms: 500,
         },
+        tools: [
+          {
+            type: 'function',
+            name: 'end_call',
+            description: 'End the phone call after saying goodbye. Use this when the conversation is complete and the caller has no more questions.',
+            parameters: { type: 'object', properties: {} },
+          },
+        ],
       }),
     });
 
@@ -135,7 +143,9 @@ IMPORTANT RULES:
 - Ask only ONE question at a time
 - Keep each response SHORT - 1-2 sentences max
 - Never use technical jargon or mention AI/automation unless asked
-- Sound natural and human-like`;
+- Sound natural and human-like
+
+CALL ENDING: Once you've helped the caller and they have no more questions, say a brief goodbye and then call the end_call function to hang up.`;
 }
 
 async function scrapeWebsite(url: string): Promise<string | null> {

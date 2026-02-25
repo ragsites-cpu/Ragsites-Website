@@ -187,6 +187,14 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
           if (event.type === 'response.done') {
             setIsSpeaking(false);
+            // Check if the AI called the end_call function
+            const outputs = event.response?.output || [];
+            for (const item of outputs) {
+              if (item.type === 'function_call' && item.name === 'end_call') {
+                setTimeout(() => endCallInternal(), 500);
+                break;
+              }
+            }
           }
         } catch {
           // ignore parse errors
