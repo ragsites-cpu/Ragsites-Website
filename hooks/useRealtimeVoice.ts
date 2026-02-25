@@ -39,17 +39,26 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const pcRef = useRef<RTCPeerConnection | null>(null);
   const dcRef = useRef<RTCDataChannel | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const audioElRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const maxDurationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const greetingSendTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const rafRef = useRef<number | null>(null);
   const assistantTextRef = useRef('');
+  const hasSentGreetingRef = useRef(false);
+  const isAssistantSpeakingRef = useRef(false);
+  const dataChannelOpenRef = useRef(false);
+  const remoteAudioReadyRef = useRef(false);
+  const readyForUserInputRef = useRef(false);
+  const ignoreUserTranscriptsUntilRef = useRef(0);
 
   const cleanup = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     if (timerRef.current) clearInterval(timerRef.current);
     if (maxDurationRef.current) clearTimeout(maxDurationRef.current);
+    if (greetingSendTimerRef.current) clearTimeout(greetingSendTimerRef.current);
     if (pcRef.current) {
       pcRef.current.close();
       pcRef.current = null;
@@ -57,6 +66,11 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(t => t.stop());
       streamRef.current = null;
+    }
+    if (audioElRef.current) {
+      audioElRef.current.pause();
+      audioElRef.current.srcObject = null;
+      audioElRef.current = null;
     }
     if (audioContextRef.current) {
       audioContextRef.current.close();
@@ -67,6 +81,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     rafRef.current = null;
     timerRef.current = null;
     maxDurationRef.current = null;
+    greetingSendTimerRef.current = null;
   }, []);
 
   // Cleanup on unmount
@@ -99,32 +114,54 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     tick();
   }, []);
 
+  const setMicrophoneEnabled = useCallback((enabled: boolean) => {
+    const stream = streamRef.current;
+    if (!stream) return;
+    stream.getAudioTracks().forEach(track => {
+      track.enabled = enabled;
+    });
+  }, []);
+
   const startCall = useCallback(async (options?: StartCallOptions) => {
     setError(null);
     setCallStatus('connecting');
     setTranscript([]);
     setElapsedSeconds(0);
     assistantTextRef.current = '';
+    hasSentGreetingRef.current = false;
+    isAssistantSpeakingRef.current = false;
+    dataChannelOpenRef.current = false;
+    remoteAudioReadyRef.current = false;
+    readyForUserInputRef.current = !Boolean(options?.greeting);
+    ignoreUserTranscriptsUntilRef.current = 0;
+    greetingSendTimerRef.current = null;
 
     try {
-      // 1. Get mic access
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const streamPromise = navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      });
+
+      const tokenPromise = options?.token
+        ? Promise.resolve(options.token)
+        : (async () => {
+            const tokenRes = await fetch('/api/realtime-token', { method: 'POST' });
+            const tokenData = await tokenRes.json();
+            if (!tokenRes.ok || !tokenData.token) {
+              throw new Error(tokenData.error || 'Could not get session token.');
+            }
+            return tokenData.token as string;
+          })();
+
+      // 1. Get mic access + token in parallel to reduce call setup latency
+      const [stream, token] = await Promise.all([streamPromise, tokenPromise]);
       streamRef.current = stream;
+      setMicrophoneEnabled(true);
 
-      // 2. Get ephemeral token — use provided token or fetch from backend
-      let token: string;
-      if (options?.token) {
-        token = options.token;
-      } else {
-        const tokenRes = await fetch('/api/realtime-token', { method: 'POST' });
-        const tokenData = await tokenRes.json();
-        if (!tokenRes.ok || !tokenData.token) {
-          throw new Error(tokenData.error || 'Could not get session token.');
-        }
-        token = tokenData.token;
-      }
-
-      // 3. Create RTCPeerConnection
+      // 2. Create RTCPeerConnection
       const pc = new RTCPeerConnection();
       pcRef.current = pc;
 
@@ -134,56 +171,104 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       // Handle remote audio (AI voice)
       const audioEl = document.createElement('audio');
       audioEl.autoplay = true;
+      audioElRef.current = audioEl;
       pc.ontrack = (e) => {
+        remoteAudioReadyRef.current = true;
         audioEl.srcObject = e.streams[0];
+        void audioEl.play().catch(() => {
+          // ignore autoplay/playback errors
+        });
         // Analyze remote audio for visualizer
         startVolumeAnalysis(e.streams[0]);
+        maybeSendGreetingIfReady();
       };
 
-      // 4. Create data channel for events
+      // 3. Create data channel for events
       const dc = pc.createDataChannel('oai-events');
       dcRef.current = dc;
+
+      const maybeSendGreetingIfReady = () => {
+        if (!options?.greeting || hasSentGreetingRef.current) return;
+        if (!dataChannelOpenRef.current || !remoteAudioReadyRef.current) return;
+        if (greetingSendTimerRef.current) return;
+
+        // Small buffer so remote playback is fully primed before first audio arrives
+        greetingSendTimerRef.current = setTimeout(() => {
+          greetingSendTimerRef.current = null;
+          if (!options?.greeting || hasSentGreetingRef.current || dc.readyState !== 'open') return;
+          hasSentGreetingRef.current = true;
+          readyForUserInputRef.current = false;
+          dc.send(JSON.stringify({
+            type: 'response.create',
+            response: {
+              modalities: ['text', 'audio'],
+              instructions: `Say exactly this greeting and nothing else: "${options.greeting}". Then stop and wait for the caller to respond.`,
+            },
+          }));
+        }, 120);
+      };
+
+      dc.onopen = () => {
+        dataChannelOpenRef.current = true;
+        maybeSendGreetingIfReady();
+      };
 
       dc.onmessage = (e) => {
         try {
           const event = JSON.parse(e.data);
 
           // Trigger greeting as soon as session is ready
-          if (event.type === 'session.created' && options?.greeting) {
-            dc.send(JSON.stringify({
-              type: 'response.create',
-              response: {
-                modalities: ['text', 'audio'],
-                instructions: `Greet the caller: "${options.greeting}"`,
-              },
-            }));
+          if (event.type === 'session.created') {
+            maybeSendGreetingIfReady();
           }
 
           if (event.type === 'response.audio_transcript.delta') {
             assistantTextRef.current += event.delta || '';
           }
 
-          if (event.type === 'response.audio_transcript.done') {
+          if (event.type === 'conversation.item.input_audio_transcription.completed') {
+            const text = (event.transcript || '').trim();
+            if (text) {
+              if (isAssistantSpeakingRef.current) return;
+              if (!readyForUserInputRef.current) return;
+              if (Date.now() < ignoreUserTranscriptsUntilRef.current) return;
+
+              setTranscript(prev => [...prev, { role: 'user', text }]);
+
+              if (dc.readyState === 'open' && !isAssistantSpeakingRef.current) {
+                dc.send(JSON.stringify({
+                  type: 'response.create',
+                  response: {
+                    modalities: ['text', 'audio'],
+                  },
+                }));
+              }
+            }
+          }
+
+          if (event.type === 'response.created') {
+            isAssistantSpeakingRef.current = true;
+            setMicrophoneEnabled(false);
+            assistantTextRef.current = '';
+            setIsSpeaking(true);
+          }
+
+          if (event.type === 'response.done') {
+            isAssistantSpeakingRef.current = false;
+            setTimeout(() => setMicrophoneEnabled(true), 150);
+            setIsSpeaking(false);
             const text = assistantTextRef.current.trim();
             if (text) {
               setTranscript(prev => [...prev, { role: 'assistant', text }]);
             }
             assistantTextRef.current = '';
-          }
 
-          if (event.type === 'conversation.item.input_audio_transcription.completed') {
-            const text = (event.transcript || '').trim();
-            if (text) {
-              setTranscript(prev => [...prev, { role: 'user', text }]);
+            if (options?.greeting && hasSentGreetingRef.current && !readyForUserInputRef.current) {
+              readyForUserInputRef.current = true;
+              // Ignore immediate tail bleed from the speaker right after greeting audio ends
+              ignoreUserTranscriptsUntilRef.current = Date.now() + 700;
             }
-          }
 
-          if (event.type === 'response.created') {
-            setIsSpeaking(true);
-          }
-
-          if (event.type === 'response.done') {
-            setIsSpeaking(false);
             // Check if the AI called the end_call function
             const outputs = event.response?.output || [];
             for (const item of outputs) {
@@ -193,12 +278,22 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
               }
             }
           }
+
+          if (event.type === 'response.canceled' || event.type === 'response.cancelled' || event.type === 'response.failed') {
+            isAssistantSpeakingRef.current = false;
+            setMicrophoneEnabled(true);
+            setIsSpeaking(false);
+            assistantTextRef.current = '';
+            if (options?.greeting && hasSentGreetingRef.current && !readyForUserInputRef.current) {
+              readyForUserInputRef.current = true;
+            }
+          }
         } catch {
           // ignore parse errors
         }
       };
 
-      // 5. SDP handshake
+      // 4. SDP handshake
       const offer = await pc.createOffer();
       await pc.setLocalDescription(offer);
 
@@ -217,8 +312,9 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
       const answerSdp = await sdpRes.text();
       await pc.setRemoteDescription({ type: 'answer', sdp: answerSdp });
+      maybeSendGreetingIfReady();
 
-      // 6. Connected — start timers
+      // 5. Connected — start timers
       setCallStatus('active');
 
       timerRef.current = setInterval(() => {
@@ -246,7 +342,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       }
       setCallStatus('idle');
     }
-  }, [cleanup, startVolumeAnalysis]);
+  }, [cleanup, setMicrophoneEnabled, startVolumeAnalysis]);
 
   const endCallInternal = useCallback(() => {
     cleanup();
@@ -268,6 +364,13 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     setElapsedSeconds(0);
     setError(null);
     assistantTextRef.current = '';
+    hasSentGreetingRef.current = false;
+    isAssistantSpeakingRef.current = false;
+    dataChannelOpenRef.current = false;
+    remoteAudioReadyRef.current = false;
+    readyForUserInputRef.current = false;
+    ignoreUserTranscriptsUntilRef.current = 0;
+    greetingSendTimerRef.current = null;
   }, [cleanup]);
 
   return {

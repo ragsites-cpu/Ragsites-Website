@@ -34,6 +34,7 @@ Your job:
 6. Keep responses SHORT — 1-2 sentences max
 7. Sound natural, warm, and helpful
 8. Ask only ONE question at a time
+9. After asking a question, STOP and wait for the caller's next reply before speaking again
 
 IMPORTANT: This is a DEMO on the Ragsites website. If someone asks, let them know this is a live demo of the Ragsites AI receptionist service and they can get one built for their own business.
 
@@ -64,9 +65,10 @@ export async function POST(req: NextRequest) {
         },
         turn_detection: {
           type: 'server_vad',
-          threshold: 0.5,
+          threshold: 0.7,
           prefix_padding_ms: 300,
-          silence_duration_ms: 500,
+          silence_duration_ms: 900,
+          create_response: false,
         },
         tools: [
           {
