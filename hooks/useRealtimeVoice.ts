@@ -144,23 +144,20 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
       const dc = pc.createDataChannel('oai-events');
       dcRef.current = dc;
 
-      // If a greeting is provided, trigger the AI to speak it once the channel opens
-      if (options?.greeting) {
-        const greeting = options.greeting;
-        dc.onopen = () => {
-          dc.send(JSON.stringify({
-            type: 'response.create',
-            response: {
-              modalities: ['text', 'audio'],
-              instructions: `Say exactly this greeting to start the conversation: "${greeting}"`,
-            },
-          }));
-        };
-      }
-
       dc.onmessage = (e) => {
         try {
           const event = JSON.parse(e.data);
+
+          // Trigger greeting as soon as session is ready
+          if (event.type === 'session.created' && options?.greeting) {
+            dc.send(JSON.stringify({
+              type: 'response.create',
+              response: {
+                modalities: ['text', 'audio'],
+                instructions: `Greet the caller: "${options.greeting}"`,
+              },
+            }));
+          }
 
           if (event.type === 'response.audio_transcript.delta') {
             assistantTextRef.current += event.delta || '';
