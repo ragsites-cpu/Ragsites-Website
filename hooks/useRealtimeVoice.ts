@@ -42,6 +42,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const maxDurationRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const endCallTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const greetingSendTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -51,6 +52,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const isAssistantSpeakingRef = useRef(false);
   const pendingAssistantResponseRef = useRef(false);
   const turnAwaitingResponseRef = useRef(false);
+  const lastUserTranscriptRef = useRef('');
   const dataChannelOpenRef = useRef(false);
   const remoteAudioReadyRef = useRef(false);
   const readyForUserInputRef = useRef(false);
@@ -60,6 +62,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     if (timerRef.current) clearInterval(timerRef.current);
     if (maxDurationRef.current) clearTimeout(maxDurationRef.current);
+    if (endCallTimerRef.current) clearTimeout(endCallTimerRef.current);
     if (greetingSendTimerRef.current) clearTimeout(greetingSendTimerRef.current);
     if (pcRef.current) {
       pcRef.current.close();
@@ -83,6 +86,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     rafRef.current = null;
     timerRef.current = null;
     maxDurationRef.current = null;
+    endCallTimerRef.current = null;
     greetingSendTimerRef.current = null;
   }, []);
 
@@ -134,6 +138,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     isAssistantSpeakingRef.current = false;
     pendingAssistantResponseRef.current = false;
     turnAwaitingResponseRef.current = false;
+    lastUserTranscriptRef.current = '';
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = !Boolean(options?.greeting);
@@ -262,13 +267,15 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           if (event.type === 'conversation.item.input_audio_transcription.completed') {
             const text = (event.transcript || '').trim();
             if (text) {
-              if (isAssistantSpeakingRef.current) return;
-              if (!readyForUserInputRef.current) return;
-              if (Date.now() < ignoreUserTranscriptsUntilRef.current) return;
+              if (text !== lastUserTranscriptRef.current) {
+                setTranscript(prev => [...prev, { role: 'user', text }]);
+                lastUserTranscriptRef.current = text;
+              }
 
-              setTranscript(prev => [...prev, { role: 'user', text }]);
-              // Fallback for clients/sessions where turn-end events are delayed/missing
-              requestAssistantResponse();
+              if (!isAssistantSpeakingRef.current && readyForUserInputRef.current && Date.now() >= ignoreUserTranscriptsUntilRef.current) {
+                // Fallback for clients/sessions where turn-end events are delayed/missing
+                requestAssistantResponse();
+              }
             }
           }
 
@@ -300,7 +307,14 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             const outputs = event.response?.output || [];
             for (const item of outputs) {
               if (item.type === 'function_call' && item.name === 'end_call') {
-                setTimeout(() => endCallInternal(), 500);
+                if (!endCallTimerRef.current) {
+                  // Give outbound audio extra time to finish playback before teardown.
+                  const hangupDelayMs = 1800;
+                  endCallTimerRef.current = setTimeout(() => {
+                    endCallTimerRef.current = null;
+                    endCallInternal();
+                  }, hangupDelayMs);
+                }
                 break;
               }
             }
@@ -396,6 +410,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     isAssistantSpeakingRef.current = false;
     pendingAssistantResponseRef.current = false;
     turnAwaitingResponseRef.current = false;
+    lastUserTranscriptRef.current = '';
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = false;

@@ -38,7 +38,7 @@ Your job:
 
 IMPORTANT: This is a DEMO on the Ragsites website. If someone asks, let them know this is a live demo of the Ragsites AI receptionist service and they can get one built for their own business.
 
-CALL ENDING: Once you've helped the caller and they have no more questions, say a brief goodbye (e.g. "Alright, we'll get a technician out to you shortly. Have a great day!") and then call the end_call function to hang up.`;
+CALL ENDING: Once you've helped the caller and they have no more questions, first say one complete goodbye sentence (e.g. "Alright, we'll get a technician out to you shortly. Have a great day!"). Only after finishing that spoken sentence, call the end_call function to hang up.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
         voice: 'marin',
         instructions: SYSTEM_PROMPT,
         input_audio_transcription: {
-          model: 'gpt-4o-mini-transcribe',
+          model: 'gpt-4o-transcribe',
         },
         turn_detection: {
           type: 'server_vad',

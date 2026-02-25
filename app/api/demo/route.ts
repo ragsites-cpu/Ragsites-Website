@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
         voice: 'marin',
         instructions: systemPrompt,
         input_audio_transcription: {
-          model: 'gpt-4o-mini-transcribe',
+          model: 'gpt-4o-transcribe',
         },
         turn_detection: {
           type: 'server_vad',
@@ -147,7 +147,7 @@ IMPORTANT RULES:
 - Sound natural and human-like
 - After asking a question, STOP and wait for the caller's next reply before speaking again
 
-CALL ENDING: Once you've helped the caller and they have no more questions, say a brief goodbye and then call the end_call function to hang up.`;
+CALL ENDING: Once you've helped the caller and they have no more questions, first say one complete goodbye sentence. Only after finishing that spoken sentence, call the end_call function to hang up.`;
 }
 
 async function scrapeWebsite(url: string): Promise<string | null> {
