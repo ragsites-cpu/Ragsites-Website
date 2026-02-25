@@ -58,16 +58,16 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: 'gpt-realtime-1.5',
-        voice: 'ash',
+        voice: 'marin',
         instructions: SYSTEM_PROMPT,
         input_audio_transcription: {
           model: 'gpt-4o-mini-transcribe',
         },
         turn_detection: {
           type: 'server_vad',
-          threshold: 0.7,
-          prefix_padding_ms: 300,
-          silence_duration_ms: 900,
+          threshold: 0.6,
+          prefix_padding_ms: 200,
+          silence_duration_ms: 450,
           create_response: false,
         },
         tools: [

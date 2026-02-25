@@ -49,6 +49,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
   const assistantTextRef = useRef('');
   const hasSentGreetingRef = useRef(false);
   const isAssistantSpeakingRef = useRef(false);
+  const pendingAssistantResponseRef = useRef(false);
+  const turnAwaitingResponseRef = useRef(false);
   const dataChannelOpenRef = useRef(false);
   const remoteAudioReadyRef = useRef(false);
   const readyForUserInputRef = useRef(false);
@@ -130,6 +132,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     assistantTextRef.current = '';
     hasSentGreetingRef.current = false;
     isAssistantSpeakingRef.current = false;
+    pendingAssistantResponseRef.current = false;
+    turnAwaitingResponseRef.current = false;
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = !Boolean(options?.greeting);
@@ -198,6 +202,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
           if (!options?.greeting || hasSentGreetingRef.current || dc.readyState !== 'open') return;
           hasSentGreetingRef.current = true;
           readyForUserInputRef.current = false;
+          pendingAssistantResponseRef.current = true;
           dc.send(JSON.stringify({
             type: 'response.create',
             response: {
@@ -217,9 +222,37 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
         try {
           const event = JSON.parse(e.data);
 
+          const requestAssistantResponse = () => {
+            if (!readyForUserInputRef.current) return false;
+            if (isAssistantSpeakingRef.current) return false;
+            if (pendingAssistantResponseRef.current) return false;
+            if (dc.readyState !== 'open') return false;
+            pendingAssistantResponseRef.current = true;
+            turnAwaitingResponseRef.current = false;
+            dc.send(JSON.stringify({
+              type: 'response.create',
+              response: {
+                modalities: ['text', 'audio'],
+              },
+            }));
+            return true;
+          };
+
           // Trigger greeting as soon as session is ready
           if (event.type === 'session.created') {
             maybeSendGreetingIfReady();
+          }
+
+          if (event.type === 'input_audio_buffer.speech_started') {
+            if (readyForUserInputRef.current && Date.now() >= ignoreUserTranscriptsUntilRef.current) {
+              turnAwaitingResponseRef.current = true;
+            }
+          }
+
+          if (event.type === 'input_audio_buffer.speech_stopped' || event.type === 'input_audio_buffer.committed') {
+            if (turnAwaitingResponseRef.current) {
+              requestAssistantResponse();
+            }
           }
 
           if (event.type === 'response.audio_transcript.delta') {
@@ -234,15 +267,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
               if (Date.now() < ignoreUserTranscriptsUntilRef.current) return;
 
               setTranscript(prev => [...prev, { role: 'user', text }]);
-
-              if (dc.readyState === 'open' && !isAssistantSpeakingRef.current) {
-                dc.send(JSON.stringify({
-                  type: 'response.create',
-                  response: {
-                    modalities: ['text', 'audio'],
-                  },
-                }));
-              }
+              // Fallback for clients/sessions where turn-end events are delayed/missing
+              requestAssistantResponse();
             }
           }
 
@@ -255,6 +281,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
           if (event.type === 'response.done') {
             isAssistantSpeakingRef.current = false;
+            pendingAssistantResponseRef.current = false;
             setTimeout(() => setMicrophoneEnabled(true), 150);
             setIsSpeaking(false);
             const text = assistantTextRef.current.trim();
@@ -281,6 +308,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
           if (event.type === 'response.canceled' || event.type === 'response.cancelled' || event.type === 'response.failed') {
             isAssistantSpeakingRef.current = false;
+            pendingAssistantResponseRef.current = false;
             setMicrophoneEnabled(true);
             setIsSpeaking(false);
             assistantTextRef.current = '';
@@ -366,6 +394,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
     assistantTextRef.current = '';
     hasSentGreetingRef.current = false;
     isAssistantSpeakingRef.current = false;
+    pendingAssistantResponseRef.current = false;
+    turnAwaitingResponseRef.current = false;
     dataChannelOpenRef.current = false;
     remoteAudioReadyRef.current = false;
     readyForUserInputRef.current = false;
