@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield } from 'lucide-react';
+import { ArrowDown, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield, Globe, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
@@ -28,19 +28,19 @@ const features = [
     description: 'Asks the right questions to filter serious customers from tire kickers before they reach you.',
   },
   {
-    icon: Zap,
-    title: 'Transfers Calls',
-    description: 'Seamlessly transfers to your team when a human touch is needed. Smart routing built in.',
+    icon: Globe,
+    title: '50+ Languages',
+    description: 'Fluently converses in over 50 languages — covering 97% of the world\'s speakers. No translation lag.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'HIPAA Compliant',
+    description: 'Enterprise-grade security and HIPAA compliance built in. Your data stays protected at every step.',
   },
   {
     icon: BarChart3,
     title: 'Analytics & Insights',
     description: 'Detailed call summaries, sentiment analysis, and performance metrics delivered to your inbox.',
-  },
-  {
-    icon: Shield,
-    title: 'Custom AI Scripts',
-    description: 'Tailored to your business. Your AI receptionist knows your services, pricing, and FAQs.',
   },
 ];
 
