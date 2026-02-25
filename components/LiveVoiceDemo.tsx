@@ -110,7 +110,7 @@ export default function LiveVoiceDemo() {
             </p>
 
             <motion.button
-              onClick={() => startCall({ greeting: "Hi, thanks for calling Mike's Locksmith Services! How can I help you today?" })}
+              onClick={() => startCall({ greeting: "Hi, thanks for calling Mike's Plumbing Services! How can I help you today?" })}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-16 h-16 rounded-full bg-brand-accent mx-auto flex items-center justify-center shadow-lg hover:bg-brand-accent-hover transition-colors"
