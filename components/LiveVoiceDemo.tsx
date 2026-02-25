@@ -71,7 +71,7 @@ export default function LiveVoiceDemo() {
   const transcriptEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [transcript]);
 
   const scrollToContact = () => {

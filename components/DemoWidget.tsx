@@ -76,7 +76,7 @@ export default function DemoWidget() {
   const transcriptEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [transcript]);
 
   const handleSubmit = async (e: React.FormEvent) => {
