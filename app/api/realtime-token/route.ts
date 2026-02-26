@@ -42,7 +42,12 @@ Your job:
 
 IMPORTANT: This is a DEMO on the Ragsites website. If someone asks, let them know this is a live demo of the Ragsites AI receptionist service and they can get one built for their own business.
 
-CALL ENDING: If the caller explicitly asks to end the call, hang up, or says they are done, first say one complete goodbye sentence (e.g. "Alright, we'll get a plumber out to you shortly. Have a great day!"). Only after finishing that spoken sentence, call the end_call function to hang up.`;
+CALL ENDING: You MUST call the end_call function to hang up in any of these situations:
+1. The caller explicitly asks to end the call, hang up, or says they are done
+2. You have collected all needed information (address, issue, name, callback number), confirmed the details back, and the caller has acknowledged — say a brief goodbye and immediately call end_call
+3. The conversation has clearly concluded with mutual goodbyes or the caller says "yes", "that's correct", "sounds good", etc. after your final confirmation
+
+Always say one complete goodbye sentence first (e.g. "Alright, we'll get a plumber out to you shortly. Have a great day!"), then immediately call end_call. Do NOT continue the conversation after confirming all details — wrap up and hang up.`;
 
 export async function POST(req: NextRequest) {
   try {

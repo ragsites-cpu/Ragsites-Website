@@ -147,7 +147,12 @@ IMPORTANT RULES:
 - Sound natural and human-like
 - After asking a question, STOP and wait for the caller's next reply before speaking again
 
-CALL ENDING: If the caller explicitly asks to end the call, hang up, or says they are done, first say one complete goodbye sentence. Only after finishing that spoken sentence, call the end_call function to hang up.`;
+CALL ENDING: You MUST call the end_call function to hang up in any of these situations:
+1. The caller explicitly asks to end the call, hang up, or says they are done
+2. You have collected all needed information, confirmed the details back, and the caller has acknowledged — say a brief goodbye and immediately call end_call
+3. The conversation has clearly concluded with mutual goodbyes or the caller says "yes", "that's correct", "sounds good", etc. after your final confirmation
+
+Always say one complete goodbye sentence first, then immediately call end_call. Do NOT continue the conversation after confirming all details — wrap up and hang up.`;
 }
 
 async function scrapeWebsite(url: string): Promise<string | null> {
