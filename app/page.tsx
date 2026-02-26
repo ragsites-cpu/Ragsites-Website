@@ -208,6 +208,18 @@ export default function Home() {
             viewport={{ once: true, margin: '-100px' }}
             variants={fadeUp}
             transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-brand-primary">
+              From Call to <span className="text-brand-accent">Cash</span>
+            </h2>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={fadeUp}
+            transition={{ duration: 0.6, delay: 0.15 }}
           >
             <video
               className="w-full rounded-2xl shadow-xl"
