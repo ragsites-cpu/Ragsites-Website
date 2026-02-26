@@ -199,6 +199,30 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Demo Video */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={fadeUp}
+            transition={{ duration: 0.6 }}
+          >
+            <video
+              className="w-full rounded-2xl shadow-xl"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            >
+              <source src="/RagsitesDemo.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Live Voice Demo */}
       <section className="py-24 px-4 section-bg-alt">
         <div className="max-w-6xl mx-auto">
