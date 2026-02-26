@@ -174,12 +174,13 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             return tokenData.token as string;
           })();
 
-      // 1. Get mic access + token in parallel to reduce call setup latency
-      const [stream, token] = await Promise.all([streamPromise, tokenPromise]);
+      // 1. Get mic access first (usually faster), then set up WebRTC while token may still be in flight
+      const stream = await streamPromise;
       streamRef.current = stream;
-      setMicrophoneEnabled(true);
+      // Keep mic muted during greeting to prevent echo from triggering server VAD interruption
+      setMicrophoneEnabled(!options?.greeting);
 
-      // 2. Create RTCPeerConnection
+      // 2. Create RTCPeerConnection while token fetch may still be running
       const pc = new RTCPeerConnection();
       pcRef.current = pc;
 
@@ -225,7 +226,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
               instructions: `Say exactly this greeting and nothing else: "${options.greeting}". Then stop and wait for the caller to respond.`,
             },
           }));
-        }, 280);
+        }, 50);
       };
 
       dc.onopen = () => {
@@ -384,6 +385,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
 
             if (options?.greeting && hasSentGreetingRef.current && !readyForUserInputRef.current) {
               readyForUserInputRef.current = true;
+              setMicrophoneEnabled(true);
               // Ignore immediate tail bleed from the speaker right after greeting audio ends
               ignoreUserTranscriptsUntilRef.current = Date.now() + 700;
             }
@@ -408,6 +410,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
             turnAwaitingResponseRef.current = false;
             if (options?.greeting && hasSentGreetingRef.current && !readyForUserInputRef.current) {
               readyForUserInputRef.current = true;
+              setMicrophoneEnabled(true);
             }
           }
         } catch {
@@ -415,9 +418,10 @@ export function useRealtimeVoice(): UseRealtimeVoiceReturn {
         }
       };
 
-      // 4. SDP handshake
+      // 4. SDP handshake — create offer while token may still be fetching
       const offer = await pc.createOffer();
       await pc.setLocalDescription(offer);
+      const token = await tokenPromise;
 
       const sdpRes = await fetch('https://api.openai.com/v1/realtime?model=gpt-realtime-1.5', {
         method: 'POST',
