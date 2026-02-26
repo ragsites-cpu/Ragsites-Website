@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
+import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight, Star } from 'lucide-react';
 
 /* ─── Quiz Data ─── */
 
@@ -65,6 +65,116 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
 ];
+
+/* ─── Testimonials ─── */
+
+const TESTIMONIALS = [
+  {
+    name: 'Maria Santos',
+    business: 'Glow & Grace Salon',
+    quote: 'Every call gets answered now and my books are fuller than ever. My clients even compliment how easy it is to schedule.',
+  },
+  {
+    name: 'Mike Thompson',
+    business: 'Thompson Plumbing Co.',
+    quote: 'Last month alone, it booked 23 jobs I would\'ve missed. Pays for itself ten times over.',
+  },
+  {
+    name: 'Dr. Priya Sharma',
+    business: 'Bright Smile Dental',
+    quote: 'The AI handles routine calls now, so my staff can focus on patients. Wait times are down, satisfaction is up.',
+  },
+  {
+    name: 'Carlos Rivera',
+    business: 'Rivera HVAC Services',
+    quote: 'A customer called at 2am during a heat wave and got their appointment booked. That\'s a customer for life.',
+  },
+];
+
+function TestimonialCard({ name, business, quote }: { name: string; business: string; quote: string }) {
+  return (
+    <div className="flex-shrink-0 w-80 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <div className="flex gap-0.5 mb-3">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+        ))}
+      </div>
+      <p className="text-slate-700 text-sm leading-relaxed mb-4">&ldquo;{quote}&rdquo;</p>
+      <div>
+        <p className="font-semibold text-brand-primary text-sm">{name}</p>
+        <p className="text-slate-500 text-xs">{business}</p>
+      </div>
+    </div>
+  );
+}
+
+const HEARTS = [
+  { left: '5%', size: 18, duration: '7s', delay: '0s', color: 'text-red-400' },
+  { left: '15%', size: 14, duration: '5.5s', delay: '1.2s', color: 'text-pink-300' },
+  { left: '28%', size: 20, duration: '8s', delay: '0.5s', color: 'text-red-500' },
+  { left: '40%', size: 12, duration: '6s', delay: '2.5s', color: 'text-pink-400' },
+  { left: '52%', size: 16, duration: '7.5s', delay: '1s', color: 'text-red-300' },
+  { left: '65%', size: 22, duration: '6.5s', delay: '3s', color: 'text-pink-500' },
+  { left: '75%', size: 14, duration: '5s', delay: '0.8s', color: 'text-red-400' },
+  { left: '88%', size: 18, duration: '7s', delay: '2s', color: 'text-pink-300' },
+  { left: '95%', size: 12, duration: '6s', delay: '1.5s', color: 'text-red-300' },
+  { left: '35%', size: 10, duration: '8.5s', delay: '3.5s', color: 'text-pink-400' },
+  { left: '58%', size: 16, duration: '5.8s', delay: '0.3s', color: 'text-red-500' },
+  { left: '82%', size: 20, duration: '7.2s', delay: '2.8s', color: 'text-pink-300' },
+];
+
+function FloatingHearts() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {HEARTS.map((h, i) => (
+        <span
+          key={i}
+          className={`absolute bottom-0 animate-float-heart ${h.color}`}
+          style={{
+            left: h.left,
+            fontSize: h.size,
+            '--heart-duration': h.duration,
+            '--heart-delay': h.delay,
+          } as React.CSSProperties}
+        >
+          &#x2764;&#xFE0F;
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function TestimonialsMarquee() {
+  // Double the array for seamless loop
+  const row1 = [...TESTIMONIALS, ...TESTIMONIALS];
+  const row2 = [...[...TESTIMONIALS].reverse(), ...[...TESTIMONIALS].reverse()];
+
+  return (
+    <div className="mt-12 space-y-4 relative">
+      <FloatingHearts />
+
+      <p className="text-center text-sm font-semibold text-emerald-600 tracking-wide">Testimonials</p>
+      <h3 className="text-2xl md:text-3xl font-extrabold text-brand-primary text-center">
+        See Why Business Owners Love Us
+      </h3>
+
+      <div className="mt-8 space-y-4 overflow-hidden">
+        {/* Row 1 — scrolls left */}
+        <div className="animate-marquee-left flex gap-4 w-max">
+          {row1.map((t, i) => (
+            <TestimonialCard key={`r1-${i}`} {...t} />
+          ))}
+        </div>
+        {/* Row 2 — scrolls right */}
+        <div className="animate-marquee-right flex gap-4 w-max">
+          {row2.map((t, i) => (
+            <TestimonialCard key={`r2-${i}`} {...t} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ─── Types ─── */
 
@@ -154,7 +264,7 @@ export default function QuizPage() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex items-center justify-center px-4 py-8">
+      <div className={`flex-1 flex flex-col items-center px-4 py-8 ${step === 'form' ? 'justify-start' : 'justify-center'}`}>
         <AnimatePresence mode="wait">
           {/* ─── Quiz Questions ─── */}
           {step === 'quiz' && (
@@ -246,9 +356,9 @@ export default function QuizPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="w-full max-w-3xl"
+              className="w-full max-w-4xl"
             >
-              <div className="quiz-card rounded-3xl p-8 md:p-12">
+              <div className="quiz-card rounded-3xl p-8 md:p-12 max-w-3xl mx-auto">
                 <p className="text-center text-emerald-600 font-bold text-sm tracking-wide">
                   Congratulations &mdash; You Qualify!
                 </p>
@@ -348,6 +458,8 @@ export default function QuizPage() {
                   </button>
                 </form>
               </div>
+
+              <TestimonialsMarquee />
             </motion.div>
           )}
 
