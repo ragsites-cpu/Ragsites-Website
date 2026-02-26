@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield, Globe, ShieldCheck } from 'lucide-react';
+import { ArrowDown, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield, Globe, ShieldCheck, Truck, CreditCard } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
@@ -33,9 +33,19 @@ const features = [
     description: 'Fluently converses in over 50 languages — covering 97% of the world\'s speakers. No translation lag.',
   },
   {
+    icon: Truck,
+    title: 'Smart Dispatch',
+    description: 'AI checks your CRM for available workers, finds the best match by location and skill, and dispatches them — all during the call.',
+  },
+  {
+    icon: CreditCard,
+    title: 'Payments on the Call',
+    description: 'Collect deposits, process payments, and confirm transactions in real-time while the AI is still on the phone with your customer.',
+  },
+  {
     icon: ShieldCheck,
     title: 'HIPAA Compliant',
-    description: 'Enterprise-grade security and HIPAA compliance built in. Your data stays protected at every step.',
+    description: 'Enterprise-grade security and HIPAA compliance built in. Safe for healthcare, dental, and any business handling sensitive data.',
   },
   {
     icon: BarChart3,
@@ -321,7 +331,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {features.map((feature) => (
               <motion.div
