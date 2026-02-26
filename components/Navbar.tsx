@@ -66,12 +66,12 @@ export default function Navbar() {
 
           {/* CTA Button (Desktop) */}
           <div className="hidden md:flex items-center">
-            <button
-              onClick={() => scrollToSection('contact-section')}
+            <a
+              href="/quiz"
               className="px-6 py-2 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-semibold text-sm hover:scale-105 transition-transform"
             >
               Get Started
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,12 +100,12 @@ export default function Navbar() {
                   {item.label}
                 </button>
               ))}
-              <button
-                onClick={() => scrollToSection('contact-section')}
-                className="mx-4 mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-semibold text-sm"
+              <a
+                href="/quiz"
+                className="mx-4 mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyber-cyan to-cyber-purple text-black font-semibold text-sm text-center"
               >
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
         )}

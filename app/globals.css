@@ -53,4 +53,16 @@
   .section-bg-alt {
     @apply bg-slate-50 border-y border-slate-100;
   }
+
+  .quiz-card {
+    background: linear-gradient(
+      135deg,
+      rgba(248, 250, 252, 0.95) 0%,
+      rgba(243, 232, 255, 0.4) 25%,
+      rgba(252, 231, 243, 0.4) 50%,
+      rgba(220, 252, 231, 0.3) 75%,
+      rgba(248, 250, 252, 0.95) 100%
+    );
+    @apply border border-slate-200/60 shadow-sm;
+  }
 }
