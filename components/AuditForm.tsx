@@ -9,9 +9,6 @@ export default function AuditForm() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
-        businessName: '',
-        website: '',
         message: '',
     });
     const [status, setStatus] = useState<FormStatus>('idle');
@@ -26,11 +23,8 @@ export default function AuditForm() {
         submitData.append("access_key", "a9e80fab-4da4-44c6-b31f-3369557abdbe");
         submitData.append("name", formData.name);
         submitData.append("email", formData.email);
-        submitData.append("phone", formData.phone);
-        submitData.append("business_name", formData.businessName);
-        submitData.append("website", formData.website);
         submitData.append("message", formData.message);
-        submitData.append("subject", `New Lead from ${formData.businessName}`);
+        submitData.append("subject", `New Lead from ${formData.name}`);
 
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
@@ -45,9 +39,6 @@ export default function AuditForm() {
                 setFormData({
                     name: '',
                     email: '',
-                    phone: '',
-                    businessName: '',
-                    website: '',
                     message: '',
                 });
             } else {
@@ -135,54 +126,6 @@ export default function AuditForm() {
                                 onChange={handleChange}
                             />
                         </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label htmlFor="phone" className="text-sm font-medium text-slate-700">
-                                Phone *
-                            </label>
-                            <input
-                                id="phone"
-                                name="phone"
-                                type="tel"
-                                required
-                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
-                                placeholder="(555) 000-0000"
-                                value={formData.phone}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label htmlFor="businessName" className="text-sm font-medium text-slate-700">
-                                Business Name *
-                            </label>
-                            <input
-                                id="businessName"
-                                name="businessName"
-                                required
-                                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
-                                placeholder="Your Business"
-                                value={formData.businessName}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label htmlFor="website" className="text-sm font-medium text-slate-700">
-                            Business Website
-                        </label>
-                        <input
-                            id="website"
-                            name="website"
-                            type="url"
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors"
-                            placeholder="https://yourbusiness.com"
-                            value={formData.website}
-                            onChange={handleChange}
-                        />
                     </div>
 
                     <div className="space-y-2">
