@@ -139,17 +139,15 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => {
-                  document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm ${plan.popular
+              <a
+                href="/quiz"
+                className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block ${plan.popular
                     ? 'bg-brand-accent text-white hover:bg-brand-accent-hover'
                     : 'bg-white border border-slate-200 text-brand-primary hover:bg-slate-50 hover:border-slate-300'
                   }`}
               >
                 {plan.cta}
-              </button>
+              </a>
             </div>
           ))}
         </div>
