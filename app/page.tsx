@@ -69,6 +69,31 @@ const steps = [
     title: 'Go Live 24/7',
     description: 'Your AI starts answering calls, booking appointments, and capturing leads instantly.',
   },
+  {
+    number: '04',
+    title: 'CRM & Transaction Processing',
+    description: 'Every call, lead, and payment flows into your CRM automatically — no manual entry.',
+  },
+  {
+    number: '05',
+    title: 'Chat Support on CRM',
+    description: 'Your AI handles customer chats directly inside your CRM, keeping everything in one place.',
+  },
+  {
+    number: '06',
+    title: 'Custom Sales Agent',
+    description: 'A dedicated AI sales agent that follows up with leads, qualifies prospects, and closes deals.',
+  },
+  {
+    number: '07',
+    title: 'Business Manager',
+    description: 'A personal business manager to oversee your account, optimize performance, and scale with you.',
+  },
+  {
+    number: '08',
+    title: 'AI Engineer',
+    description: 'A dedicated AI engineer to customize, fine-tune, and evolve your AI as your business grows.',
+  },
 ];
 
 // Reusable animation variants
@@ -316,29 +341,33 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-8 mb-20"
-          >
-            {steps.map((step) => (
+          <div className="relative max-w-2xl mx-auto">
+            {/* Timeline line */}
+            <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-slate-200" />
+
+            {steps.map((step, i) => (
               <motion.div
                 key={step.number}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-50px' }}
                 variants={fadeUp}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                className="glass-card p-8 rounded-2xl text-center"
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                className="relative flex gap-6 md:gap-8 mb-12 last:mb-0"
               >
-                <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-lg font-bold text-brand-accent">{step.number}</span>
+                {/* Step number circle */}
+                <div className="relative z-10 flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-brand-accent flex items-center justify-center shadow-lg">
+                  <span className="text-sm md:text-lg font-bold text-white">{step.number}</span>
                 </div>
-                <h3 className="text-xl font-bold text-brand-primary mb-3">{step.title}</h3>
-                <p className="text-slate-600">{step.description}</p>
+
+                {/* Content card */}
+                <div className="glass-card p-6 md:p-8 rounded-2xl flex-1 mt-1">
+                  <h3 className="text-xl font-bold text-brand-primary mb-2">{step.title}</h3>
+                  <p className="text-slate-600">{step.description}</p>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
