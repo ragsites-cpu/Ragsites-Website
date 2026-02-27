@@ -201,8 +201,16 @@ function QuizContent() {
   const [agreed, setAgreed] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [formError, setFormError] = useState('');
+  const [loadingMsg, setLoadingMsg] = useState(0);
   const searchParams = useSearchParams();
   const isPremium = searchParams.get('tier') === 'premium';
+
+  const loadingMessages = [
+    'Analyzing your answers...',
+    'Matching you with the right plan...',
+    'Calculating your potential ROI...',
+    'You\'re a great fit!',
+  ];
 
   const handleOptionClick = (option: QuizOption) => {
     const q = QUESTIONS[questionIndex];
@@ -215,11 +223,21 @@ function QuizContent() {
     }
   };
 
-  // Auto-advance from "done" screen to form after 2.5s
+  // Cycle through loading messages then advance to form
   useEffect(() => {
     if (step !== 'done') return;
-    const timer = setTimeout(() => setStep('form'), 2500);
-    return () => clearTimeout(timer);
+    const msgInterval = setInterval(() => {
+      setLoadingMsg((prev) => {
+        if (prev < 3) return prev + 1;
+        return prev;
+      });
+    }, 1200);
+    const timer = setTimeout(() => setStep('form'), 5000);
+    return () => {
+      clearInterval(msgInterval);
+      clearTimeout(timer);
+      setLoadingMsg(0);
+    };
   }, [step]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -341,21 +359,38 @@ function QuizContent() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-                  className="w-20 h-20 rounded-full bg-emerald-500 flex items-center justify-center mx-auto"
+                  className="w-20 h-20 rounded-full bg-brand-accent flex items-center justify-center mx-auto"
                 >
-                  <CheckCircle className="w-10 h-10 text-white" />
+                  {loadingMsg < 3 ? (
+                    <Loader2 className="w-10 h-10 text-white animate-spin" />
+                  ) : (
+                    <CheckCircle className="w-10 h-10 text-white" />
+                  )}
                 </motion.div>
 
-                <h2 className="text-2xl font-bold text-brand-primary mt-6">Done!</h2>
-                <p className="text-slate-500 mt-1">You&apos;re a great fit</p>
+                <div className="mt-6 h-16 flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={loadingMsg}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <h2 className="text-2xl font-bold text-brand-primary">
+                        {loadingMessages[loadingMsg]}
+                      </h2>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
                 {/* Loading bar */}
-                <div className="mt-6 mx-auto w-48 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                <div className="mt-6 mx-auto w-64 h-1.5 bg-slate-200 rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-brand-accent rounded-full"
                     initial={{ width: '0%' }}
                     animate={{ width: '100%' }}
-                    transition={{ duration: 2.2, ease: 'easeInOut' }}
+                    transition={{ duration: 4.8, ease: 'easeInOut' }}
                   />
                 </div>
               </div>
