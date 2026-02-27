@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 
-const plans = [
+type Category = 'standard' | 'premium';
+
+const standardPlans = [
   {
     name: 'Starter',
     description: 'For small businesses getting started',
@@ -60,8 +62,61 @@ const plans = [
   },
 ];
 
+const premiumPlans = [
+  {
+    name: 'Starter',
+    description: 'Premium features for small teams',
+    features: [
+      '60 phone conversations/mo',
+      '120 text conversations/mo',
+      'CRM integration',
+      'HIPAA compliance',
+      'Call transfer',
+      'Email summaries',
+      'Basic analytics',
+    ],
+    cta: 'Get a Quote',
+    popular: false,
+  },
+  {
+    name: 'Growth',
+    description: 'Full-featured for growing businesses',
+    features: [
+      '200 phone conversations/mo',
+      '400 text conversations/mo',
+      'CRM integration',
+      'Live Dispatch',
+      'HIPAA compliance',
+      'Calendar integration',
+      'Custom AI scripts',
+      'Advanced analytics',
+      'Priority support',
+    ],
+    cta: 'Get a Quote',
+    popular: true,
+  },
+  {
+    name: 'Business',
+    description: 'Enterprise-grade for large operations',
+    features: [
+      '800 phone conversations/mo',
+      '1,600 text conversations/mo',
+      'CRM integration',
+      'Live Dispatch',
+      'HIPAA compliance',
+      'Custom integrations',
+      'Multilingual support',
+      'Dedicated account manager',
+      '24/7 priority support',
+    ],
+    cta: 'Get a Quote',
+    popular: false,
+  },
+];
+
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
+  const [category, setCategory] = useState<Category>('standard');
 
   return (
     <section id="pricing-section" className="py-24 px-4">
@@ -76,94 +131,177 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Toggle */}
-        <div className="flex items-center justify-center gap-4 mb-16">
-          <span className={`text-sm font-medium ${!isYearly ? 'text-brand-primary' : 'text-slate-500'}`}>Monthly</span>
+        {/* Category Toggle */}
+        <div className="flex items-center justify-center gap-2 mb-8">
           <button
-            onClick={() => setIsYearly(!isYearly)}
-            className={`relative w-14 h-7 rounded-full transition-colors duration-300 ${isYearly ? 'bg-brand-accent' : 'bg-slate-300'
-              }`}
+            onClick={() => setCategory('standard')}
+            className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+              category === 'standard'
+                ? 'bg-brand-accent text-white shadow-sm'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }`}
           >
-            <div
-              className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full transition-transform duration-300 shadow-sm ${isYearly ? 'translate-x-7' : 'translate-x-0'
-                }`}
-            />
+            Standard
           </button>
-          <span className={`text-sm font-medium ${isYearly ? 'text-brand-primary' : 'text-slate-500'}`}>
-            Yearly
-            <span className="ml-2 text-xs text-brand-accent font-semibold bg-blue-50 px-2 py-1 rounded-full">Save 20%</span>
-          </span>
+          <button
+            onClick={() => setCategory('premium')}
+            className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+              category === 'premium'
+                ? 'bg-brand-accent text-white shadow-sm'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }`}
+          >
+            Premium
+          </button>
         </div>
 
-        {/* Plans */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${plan.popular
-                  ? 'glass-card border-2 border-brand-accent shadow-xl'
-                  : 'glass-card'
+        {/* Monthly/Yearly Toggle — only for standard */}
+        {category === 'standard' && (
+          <div className="flex items-center justify-center gap-4 mb-16">
+            <span className={`text-sm font-medium ${!isYearly ? 'text-brand-primary' : 'text-slate-500'}`}>Monthly</span>
+            <button
+              onClick={() => setIsYearly(!isYearly)}
+              className={`relative w-14 h-7 rounded-full transition-colors duration-300 ${isYearly ? 'bg-brand-accent' : 'bg-slate-300'
                 }`}
             >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-accent text-white text-xs font-bold uppercase tracking-wider shadow-sm">
-                  Most Popular
-                </div>
-              )}
+              <div
+                className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full transition-transform duration-300 shadow-sm ${isYearly ? 'translate-x-7' : 'translate-x-0'
+                  }`}
+              />
+            </button>
+            <span className={`text-sm font-medium ${isYearly ? 'text-brand-primary' : 'text-slate-500'}`}>
+              Yearly
+              <span className="ml-2 text-xs text-brand-accent font-semibold bg-blue-50 px-2 py-1 rounded-full">Save 20%</span>
+            </span>
+          </div>
+        )}
 
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-brand-primary mb-1">{plan.name}</h3>
-                <p className="text-sm text-slate-500">{plan.description}</p>
-              </div>
-
-              <div className="mb-8">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-bold text-brand-primary">
-                    ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                  </span>
-                  <span className="text-slate-500">/mo</span>
-                </div>
-                {isYearly && (
-                  <p className="text-sm text-slate-500 mt-1">
-                    Billed annually
-                  </p>
-                )}
-              </div>
-
-              <ul className="space-y-3 mb-8 flex-1">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-brand-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-slate-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="/quiz"
-                className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-brand-accent text-white hover:bg-brand-accent-hover"
-              >
-                {plan.cta}
-              </a>
-            </div>
-          ))}
-        </div>
-
-        {/* Enterprise CTA */}
-        <div className="mt-12 text-center glass-card p-8 rounded-2xl bg-blue-50 border-blue-100">
-          <h3 className="text-xl font-bold text-brand-primary mb-2">Need more volume?</h3>
-          <p className="text-slate-600 mb-6">
-            Contact us for a custom Enterprise plan with unlimited conversations and dedicated support.
+        {/* Premium subtitle */}
+        {category === 'premium' && (
+          <p className="text-center text-sm text-slate-500 mb-16">
+            Includes CRM, Live Dispatch, HIPAA compliance &amp; more. Custom pricing tailored to your needs.
           </p>
-          <button
-            onClick={() => {
-              document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="px-8 py-3 rounded-xl bg-white border border-slate-200 text-brand-primary font-semibold text-sm hover:bg-slate-50 transition-colors shadow-sm"
-          >
-            Contact Sales
-          </button>
-        </div>
+        )}
+
+        {/* Standard Plans */}
+        {category === 'standard' && (
+          <div className="grid md:grid-cols-3 gap-8">
+            {standardPlans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${plan.popular
+                    ? 'glass-card border-2 border-brand-accent shadow-xl'
+                    : 'glass-card'
+                  }`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-accent text-white text-xs font-bold uppercase tracking-wider shadow-sm">
+                    Most Popular
+                  </div>
+                )}
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-brand-primary mb-1">{plan.name}</h3>
+                  <p className="text-sm text-slate-500">{plan.description}</p>
+                </div>
+
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-5xl font-bold text-brand-primary">
+                      ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                    </span>
+                    <span className="text-slate-500">/mo</span>
+                  </div>
+                  {isYearly && (
+                    <p className="text-sm text-slate-500 mt-1">
+                      Billed annually
+                    </p>
+                  )}
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-1">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-brand-accent flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-slate-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="/quiz"
+                  className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-brand-accent text-white hover:bg-brand-accent-hover"
+                >
+                  {plan.cta}
+                </a>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Premium Plans */}
+        {category === 'premium' && (
+          <div className="grid md:grid-cols-3 gap-8">
+            {premiumPlans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${plan.popular
+                    ? 'glass-card border-2 border-brand-accent shadow-xl'
+                    : 'glass-card'
+                  }`}
+              >
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-accent text-white text-xs font-bold uppercase tracking-wider shadow-sm">
+                    Most Popular
+                  </div>
+                )}
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-brand-primary mb-1">{plan.name}</h3>
+                  <p className="text-sm text-slate-500">{plan.description}</p>
+                </div>
+
+                <div className="mb-8">
+                  <span className="text-3xl font-bold text-brand-primary">Custom Pricing</span>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-1">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-brand-accent flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-slate-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="/quiz?tier=premium"
+                  className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-brand-accent text-white hover:bg-brand-accent-hover"
+                >
+                  {plan.cta}
+                </a>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Enterprise CTA — only for standard */}
+        {category === 'standard' && (
+          <div className="mt-12 text-center glass-card p-8 rounded-2xl bg-blue-50 border-blue-100">
+            <h3 className="text-xl font-bold text-brand-primary mb-2">Need more volume?</h3>
+            <p className="text-slate-600 mb-6">
+              Contact us for a custom Enterprise plan with unlimited conversations and dedicated support.
+            </p>
+            <button
+              onClick={() => {
+                document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-8 py-3 rounded-xl bg-white border border-slate-200 text-brand-primary font-semibold text-sm hover:bg-slate-50 transition-colors shadow-sm"
+            >
+              Contact Sales
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight, Star } from 'lucide-react';
@@ -192,6 +193,8 @@ export default function QuizPage() {
   const [agreed, setAgreed] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [formError, setFormError] = useState('');
+  const searchParams = useSearchParams();
+  const isPremium = searchParams.get('tier') === 'premium';
 
   const handleOptionClick = (option: QuizOption) => {
     const q = QUESTIONS[questionIndex];
@@ -227,8 +230,11 @@ export default function QuizPage() {
 
     const body = new FormData();
     body.append('access_key', 'a9e80fab-4da4-44c6-b31f-3369557abdbe');
-    body.append('subject', `Quiz Lead: ${formData.businessName || formData.name}`);
+    body.append('subject', isPremium ? `Quiz Lead [Premium]: ${formData.businessName || formData.name}` : `Quiz Lead: ${formData.businessName || formData.name}`);
     body.append('from_name', 'Ragsites Quiz');
+    if (isPremium) {
+      body.append('premium_interest', 'CRM, Live Dispatch, HIPAA Compliance');
+    }
     body.append('name', formData.name);
     body.append('email', formData.email);
     body.append('phone', formData.phone);
