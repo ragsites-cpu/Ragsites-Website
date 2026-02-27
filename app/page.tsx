@@ -122,7 +122,7 @@ export default function Home() {
           </motion.div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight text-white">
-            {'Never Miss a Call.'.split('').map((char, i) => (
+            {'Never Miss a Customer.'.split('').map((char, i) => (
               <motion.span
                 key={`line1-${i}`}
                 initial={{ opacity: 0 }}
@@ -138,7 +138,7 @@ export default function Home() {
                 key={`line2-${i}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.03, delay: 0.4 + 19 * 0.05 + i * 0.05 }}
+                transition={{ duration: 0.03, delay: 0.4 + 23 * 0.05 + i * 0.05 }}
                 className="text-brand-accent"
               >
                 {char}
