@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -186,6 +186,14 @@ type FormStatus = 'idle' | 'submitting';
 /* ─── Component ─── */
 
 export default function QuizPage() {
+  return (
+    <Suspense>
+      <QuizContent />
+    </Suspense>
+  );
+}
+
+function QuizContent() {
   const [step, setStep] = useState<Step>('quiz');
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
