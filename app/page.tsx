@@ -7,7 +7,6 @@ import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import Pricing from '@/components/Pricing';
 import AuditForm from '@/components/AuditForm';
-import HeroAnimation from '@/components/HeroAnimation';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import DemoWidget from '@/components/DemoWidget';
 
@@ -111,83 +110,83 @@ export default function Home() {
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/50 z-0 pointer-events-none"></div>
 
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left: Text */}
-            <div className="text-center md:text-left">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
-              >
-                <Phone className="w-5 h-5 text-brand-accent" />
-                <span className="text-sm font-semibold text-white">AI VOICE RECEPTIONIST</span>
-              </motion.div>
+        <div className="relative z-10 max-w-4xl mx-auto w-full text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
+          >
+            <Phone className="w-5 h-5 text-brand-accent" />
+            <span className="text-sm font-semibold text-white">AI VOICE RECEPTIONIST</span>
+          </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.15 }}
-                className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight text-white"
-              >
-                Never Miss a Call.
-                <br />
-                <span className="text-brand-accent">Ever Again.</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="text-xl md:text-2xl text-slate-300 mb-10 max-w-xl font-light"
-              >
-                AI that answers every call in 1 second, books appointments, and captures leads 24/7.
-              </motion.p>
-
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.45 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={scrollToContact}
-                className="primary-button text-lg px-8 py-4 gap-3 group"
-              >
-                Get Started
-                <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-              </motion.button>
-
-              <motion.div
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight text-white">
+            {'Never Miss a Call.'.split('').map((char, i) => (
+              <motion.span
+                key={`line1-${i}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="mt-12 grid grid-cols-3 gap-4 max-w-sm md:max-w-md"
+                transition={{ duration: 0.03, delay: 0.4 + i * 0.05 }}
               >
-                <div className="dark-glass-card p-3 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-brand-accent">24/7</p>
-                  <p className="text-xs text-slate-300 mt-1">Always On</p>
-                </div>
-                <div className="dark-glass-card p-3 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-brand-accent">&lt;1s</p>
-                  <p className="text-xs text-slate-300 mt-1">Response Time</p>
-                </div>
-                <div className="dark-glass-card p-3 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-brand-accent">0</p>
-                  <p className="text-xs text-slate-300 mt-1">Missed Calls</p>
-                </div>
-              </motion.div>
-            </div>
+                {char}
+              </motion.span>
+            ))}
+            <br />
+            {'Ever Again.'.split('').map((char, i) => (
+              <motion.span
+                key={`line2-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.03, delay: 0.4 + 19 * 0.05 + i * 0.05 }}
+                className="text-brand-accent"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </h1>
 
-            {/* Right: Conversation Animation */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-            >
-              <HeroAnimation />
-            </motion.div>
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 2.0 }}
+            className="text-xl md:text-2xl text-slate-300 mb-10 max-w-xl mx-auto font-light"
+          >
+            AI that answers every call in 1 second, books appointments, and captures leads 24/7.
+          </motion.p>
+
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 2.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={scrollToContact}
+            className="primary-button text-lg px-8 py-4 gap-3 group"
+          >
+            Get Started
+            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+          </motion.button>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 2.4 }}
+            className="mt-12 grid grid-cols-3 gap-4 max-w-md mx-auto"
+          >
+            <div className="dark-glass-card p-3 rounded-xl text-center">
+              <p className="text-2xl font-bold text-brand-accent">24/7</p>
+              <p className="text-xs text-slate-300 mt-1">Always On</p>
+            </div>
+            <div className="dark-glass-card p-3 rounded-xl text-center">
+              <p className="text-2xl font-bold text-brand-accent">&lt;1s</p>
+              <p className="text-xs text-slate-300 mt-1">Response Time</p>
+            </div>
+            <div className="dark-glass-card p-3 rounded-xl text-center">
+              <p className="text-2xl font-bold text-brand-accent">0</p>
+              <p className="text-xs text-slate-300 mt-1">Missed Calls</p>
+            </div>
+          </motion.div>
         </div>
 
         <motion.div
