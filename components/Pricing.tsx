@@ -62,57 +62,6 @@ const standardPlans = [
   },
 ];
 
-const premiumPlans = [
-  {
-    name: 'Starter',
-    description: 'Premium features for small teams',
-    features: [
-      '60 phone conversations/mo',
-      '120 text conversations/mo',
-      'CRM integration',
-      'HIPAA compliance',
-      'Call transfer',
-      'Email summaries',
-      'Basic analytics',
-    ],
-    cta: 'Get a Quote',
-    popular: false,
-  },
-  {
-    name: 'Growth',
-    description: 'Full-featured for growing businesses',
-    features: [
-      '200 phone conversations/mo',
-      '400 text conversations/mo',
-      'CRM integration',
-      'Live Dispatch',
-      'HIPAA compliance',
-      'Calendar integration',
-      'Custom AI scripts',
-      'Advanced analytics',
-      'Priority support',
-    ],
-    cta: 'Get a Quote',
-    popular: true,
-  },
-  {
-    name: 'Business',
-    description: 'Enterprise-grade for large operations',
-    features: [
-      '800 phone conversations/mo',
-      '1,600 text conversations/mo',
-      'CRM integration',
-      'Live Dispatch',
-      'HIPAA compliance',
-      'Custom integrations',
-      'Multilingual support',
-      'Dedicated account manager',
-      '24/7 priority support',
-    ],
-    cta: 'Get a Quote',
-    popular: false,
-  },
-];
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
@@ -176,11 +125,28 @@ export default function Pricing() {
           </div>
         )}
 
-        {/* Premium subtitle */}
+        {/* Premium CTA */}
         {category === 'premium' && (
-          <p className="text-center text-sm text-slate-500 mb-16">
-            Includes CRM, Live Dispatch, HIPAA compliance &amp; more. Custom pricing tailored to your needs.
-          </p>
+          <div className="text-center glass-card p-10 rounded-2xl max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-brand-primary mb-3">Everything in Standard, plus:</h3>
+            <div className="flex flex-wrap justify-center gap-3 mb-6">
+              {['CRM Integration', 'Live Dispatch', 'HIPAA Compliance', 'Custom Integrations', 'Dedicated Account Manager'].map((feature) => (
+                <span key={feature} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-sm font-medium text-brand-primary">
+                  <Check className="w-4 h-4 text-brand-accent" />
+                  {feature}
+                </span>
+              ))}
+            </div>
+            <p className="text-slate-600 mb-8">
+              Custom pricing tailored to your needs. Fill out a quick questionnaire and we&apos;ll get back to you within 24 hours.
+            </p>
+            <a
+              href="/quiz?tier=premium"
+              className="inline-block px-10 py-4 rounded-xl bg-brand-accent text-white font-bold text-lg hover:bg-brand-accent-hover transition-all duration-200 hover:scale-[1.02] shadow-sm"
+            >
+              Get a Quote
+            </a>
+          </div>
         )}
 
         {/* Standard Plans */}
@@ -230,52 +196,6 @@ export default function Pricing() {
 
                 <a
                   href="/quiz"
-                  className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-brand-accent text-white hover:bg-brand-accent-hover"
-                >
-                  {plan.cta}
-                </a>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Premium Plans */}
-        {category === 'premium' && (
-          <div className="grid md:grid-cols-3 gap-8">
-            {premiumPlans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${plan.popular
-                    ? 'glass-card border-2 border-brand-accent shadow-xl'
-                    : 'glass-card'
-                  }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-accent text-white text-xs font-bold uppercase tracking-wider shadow-sm">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold text-brand-primary mb-1">{plan.name}</h3>
-                  <p className="text-sm text-slate-500">{plan.description}</p>
-                </div>
-
-                <div className="mb-8">
-                  <span className="text-3xl font-bold text-brand-primary">Custom Pricing</span>
-                </div>
-
-                <ul className="space-y-3 mb-8 flex-1">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-brand-accent flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-slate-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href="/quiz?tier=premium"
                   className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-brand-accent text-white hover:bg-brand-accent-hover"
                 >
                   {plan.cta}
