@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield, Globe, ShieldCheck, Truck, CreditCard } from 'lucide-react';
+import { ArrowDown, ArrowRight, Phone, Calendar, MessageSquare, BarChart3, Zap, Clock, Shield, Globe, ShieldCheck, Truck, CreditCard } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
@@ -116,6 +116,10 @@ export default function Home() {
     document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToDemo = () => {
+    document.getElementById('live-demo-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -180,18 +184,27 @@ export default function Home() {
             AI that answers every call in 1 second, books appointments, and captures leads 24/7.
           </motion.p>
 
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 2.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={scrollToContact}
-            className="primary-button text-lg px-8 py-4 gap-3 group"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            Get Started
-            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-          </motion.button>
+            <a
+              href="/quiz"
+              className="primary-button text-lg px-8 py-4 gap-3 group"
+            >
+              Get Started
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <button
+              onClick={scrollToDemo}
+              className="flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-semibold text-white border border-white/30 hover:bg-white/10 transition-all duration-200"
+            >
+              <Phone className="w-5 h-5 text-brand-accent" />
+              Talk to Our AI
+            </button>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -260,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* Live Voice Demo */}
-      <section className="py-24 px-4 section-bg-alt">
+      <section id="live-demo-section" className="py-24 px-4 section-bg-alt">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
