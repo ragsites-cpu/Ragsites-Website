@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Phone,
   ArrowRight,
-  Star,
   Loader2,
   X,
   User,
@@ -13,7 +12,6 @@ import {
   Globe,
   MapPin,
   Zap,
-  Building2,
   CheckCircle,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -22,45 +20,18 @@ import Image from 'next/image';
 
 const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gzNCy8e40o7y8qafZynN';
 
-/* ─── Placeholder Reviews (replace with real ones later) ─── */
+/* ─── Review Images ─── */
 
-const REVIEWS = [
-  {
-    name: 'John M.',
-    business: 'Apex Roofing Co.',
-    quote:
-      'We booked 34 jobs in our first month. This is the real deal — best investment we ever made.',
-  },
-  {
-    name: 'Sarah K.',
-    business: 'Premier Roof Solutions',
-    quote:
-      'Went from struggling to find leads to having a full schedule. Our revenue doubled in 60 days.',
-  },
-  {
-    name: 'Mike D.',
-    business: 'StormShield Roofing',
-    quote:
-      'Skeptical at first, but the results speak for themselves. 28 jobs closed in the first 30 days.',
-  },
-  {
-    name: 'Carlos R.',
-    business: 'Rivera Roofing & Exteriors',
-    quote:
-      'Their AI handles calls while my crew is on the roof. No more missed opportunities.',
-  },
-  {
-    name: 'James T.',
-    business: 'Thompson Roofing LLC',
-    quote:
-      'The guarantee made it a no-brainer. We hit 30 jobs in 26 days. Couldn\'t be happier.',
-  },
-  {
-    name: 'David L.',
-    business: 'Patriot Roofing',
-    quote:
-      'Best lead gen system we\'ve used in 15 years of business. Consistent, qualified homeowners every week.',
-  },
+const REVIEW_IMAGES = [
+  '/reveiw1.jpeg',
+  '/review2.jpeg',
+  '/review3.jpeg',
+  '/review4.jpeg',
+  '/review5.jpeg',
+  '/review6.jpeg',
+  '/review7.jpeg',
+  '/review8.jpeg',
+  '/review9.jpeg',
 ];
 
 /* ─── Floating Hearts ─── */
@@ -101,30 +72,11 @@ function FloatingHearts() {
   );
 }
 
-/* ─── Review Card ─── */
-
-function ReviewCard({ name, business, quote }: { name: string; business: string; quote: string }) {
-  return (
-    <div className="flex-shrink-0 w-80 dark-glass-card p-5 border-white/10 bg-white/5">
-      <div className="flex gap-0.5 mb-3">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-        ))}
-      </div>
-      <p className="text-slate-300 text-sm leading-relaxed mb-4">&ldquo;{quote}&rdquo;</p>
-      <div>
-        <p className="font-semibold text-white text-sm">{name}</p>
-        <p className="text-slate-500 text-xs">{business}</p>
-      </div>
-    </div>
-  );
-}
-
 /* ─── Reviews Carousel ─── */
 
 function ReviewsCarousel() {
-  const row1 = [...REVIEWS, ...REVIEWS];
-  const row2 = [...[...REVIEWS].reverse(), ...[...REVIEWS].reverse()];
+  const row1 = [...REVIEW_IMAGES, ...REVIEW_IMAGES];
+  const row2 = [...[...REVIEW_IMAGES].reverse(), ...[...REVIEW_IMAGES].reverse()];
 
   return (
     <section className="py-20 px-4 relative overflow-hidden">
@@ -140,13 +92,17 @@ function ReviewsCarousel() {
 
         <div className="space-y-4 overflow-hidden">
           <div className="animate-marquee-left flex gap-4 w-max">
-            {row1.map((r, i) => (
-              <ReviewCard key={`r1-${i}`} {...r} />
+            {row1.map((src, i) => (
+              <div key={`r1-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
+              </div>
             ))}
           </div>
           <div className="animate-marquee-right flex gap-4 w-max">
-            {row2.map((r, i) => (
-              <ReviewCard key={`r2-${i}`} {...r} />
+            {row2.map((src, i) => (
+              <div key={`r2-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
+              </div>
             ))}
           </div>
         </div>
