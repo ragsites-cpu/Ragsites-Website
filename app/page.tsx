@@ -61,23 +61,29 @@ export default function Home() {
             <span className="text-sm font-bold tracking-widest text-[#40c9ff] uppercase">The Voice AI Revenue Engine</span>
           </motion.div>
 
-          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="block"
-            >
-              Talk to Our AI
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="block text-gradient-skye"
-            >
-              Right Now
-            </motion.span>
+          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white">
+            {'The Voice AI'.split('').map((char, i) => (
+              <motion.span
+                key={`line1-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.03, delay: 0.2 + i * 0.05 }}
+              >
+                {char}
+              </motion.span>
+            ))}
+            <br />
+            {'Revenue Engine.'.split('').map((char, i) => (
+              <motion.span
+                key={`line2-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.03, delay: 0.2 + 12 * 0.05 + i * 0.05 }}
+                className="text-gradient-skye inline-block"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </h1>
 
           <motion.p
