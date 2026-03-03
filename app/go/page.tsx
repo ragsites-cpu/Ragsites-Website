@@ -507,6 +507,71 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   );
 }
 
+/* ─── FAQs ─── */
+
+const FAQS = [
+  {
+    question: 'What Do You Guys Do?',
+    answer:
+      'Ragsites is a leading AI-powered lead generation solution dedicated to helping roofers grow their business. We dominate both organic and paid traffic to establish you as a trusted pillar in your community, crafting compelling ads and personalized AI lead qualification systems that ensure a successful launch and rapid results. Our streamlined, automated system pre-qualifies your leads before you go out for estimates, allowing you to focus on closing deals and scaling your roofing business with confidence.',
+  },
+  {
+    question: 'How Much Does It Cost?',
+    answer:
+      "How much is it worth to you? If we added an additional $150k to your top line in the next 3 months, what would you be willing to pay?\n\nWe don't have a one-size-fits-all approach. We build a customized game plan tailored to your specific needs and will try to work within your budget if possible.\n\nIf you are a tire-kicker looking for the cheapest way to \"get more leads\" — we are not a good fit for you. If you want serious, pre-qualified exclusive booked estimates — we've got you.",
+  },
+  {
+    question: 'Do You Pre-Qualify Leads?',
+    answer:
+      "Every lead we deliver is thoroughly pre-qualified through a proven system of targeted assessments and AI-powered filters that verify each prospect's intent, interest, and readiness to buy. By ensuring only serious homeowners make it through, we save your team time, increase the efficiency of your sales process, and maximize your chances of closing successful deals.",
+  },
+  {
+    question: 'Do I Own Everything?',
+    answer:
+      'We believe in giving our clients complete ownership and control. Every system we build and integrate into your business is 100% yours, providing the freedom and flexibility to manage and operate it independently if you choose. Our goal is to ensure you have full command over the tools and strategies we implement, so your business can continue to grow and thrive with or without our direct involvement.',
+  },
+  {
+    question: 'How Do You Guarantee Results?',
+    answer:
+      "Our confidence in delivering results comes from a proven track record of success. We've refined our AI-driven systems into a set of strategies that consistently produce measurable outcomes. By leveraging these tested methods, we ensure every client experiences significant improvements in both operations and sales — allowing us to confidently guarantee 30 roof replacement jobs in 30 days or you don't pay.",
+  },
+];
+
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-white/10">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between py-6 text-left group"
+      >
+        <span className="text-lg font-bold text-white group-hover:text-[#40c9ff] transition-colors pr-4">
+          {question}
+        </span>
+        <span className={`text-2xl text-slate-400 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
+          +
+        </span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-slate-400 leading-relaxed whitespace-pre-line">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 /* ─── Main Page ─── */
 
 export default function RoofingLanding() {
@@ -645,6 +710,23 @@ export default function RoofingLanding() {
             Book Call Now
             <ArrowRight className="w-7 h-7" />
           </button>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="py-20 px-4 bg-black">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
+            Got A <span className="text-gradient-skye">Question?</span>
+          </h2>
+          <p className="text-slate-400 text-center mb-12">
+            Here are some of the most common questions we get.
+          </p>
+          <div>
+            {FAQS.map((faq) => (
+              <FaqItem key={faq.question} {...faq} />
+            ))}
+          </div>
         </div>
       </section>
 
