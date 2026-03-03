@@ -1,0 +1,781 @@
+'use client';
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Phone,
+  ArrowRight,
+  Star,
+  Loader2,
+  X,
+  User,
+  Mail,
+  Globe,
+  MapPin,
+  Zap,
+  Building2,
+  CheckCircle,
+} from 'lucide-react';
+import Image from 'next/image';
+
+/* ─── Configuration ─── */
+
+const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gzNCy8e40o7y8qafZynN';
+
+/* ─── Placeholder Reviews (replace with real ones later) ─── */
+
+const REVIEWS = [
+  {
+    name: 'John M.',
+    business: 'Apex Roofing Co.',
+    quote:
+      'We booked 34 jobs in our first month. This is the real deal — best investment we ever made.',
+  },
+  {
+    name: 'Sarah K.',
+    business: 'Premier Roof Solutions',
+    quote:
+      'Went from struggling to find leads to having a full schedule. Our revenue doubled in 60 days.',
+  },
+  {
+    name: 'Mike D.',
+    business: 'StormShield Roofing',
+    quote:
+      'Skeptical at first, but the results speak for themselves. 28 jobs closed in the first 30 days.',
+  },
+  {
+    name: 'Carlos R.',
+    business: 'Rivera Roofing & Exteriors',
+    quote:
+      'Their AI handles calls while my crew is on the roof. No more missed opportunities.',
+  },
+  {
+    name: 'James T.',
+    business: 'Thompson Roofing LLC',
+    quote:
+      'The guarantee made it a no-brainer. We hit 30 jobs in 26 days. Couldn\'t be happier.',
+  },
+  {
+    name: 'David L.',
+    business: 'Patriot Roofing',
+    quote:
+      'Best lead gen system we\'ve used in 15 years of business. Consistent, qualified homeowners every week.',
+  },
+];
+
+/* ─── Floating Hearts ─── */
+
+const HEARTS = [
+  { left: '5%', size: 18, duration: '7s', delay: '0s', color: 'text-red-400' },
+  { left: '15%', size: 14, duration: '5.5s', delay: '1.2s', color: 'text-pink-300' },
+  { left: '28%', size: 20, duration: '8s', delay: '0.5s', color: 'text-red-500' },
+  { left: '40%', size: 12, duration: '6s', delay: '2.5s', color: 'text-pink-400' },
+  { left: '52%', size: 16, duration: '7.5s', delay: '1s', color: 'text-red-300' },
+  { left: '65%', size: 22, duration: '6.5s', delay: '3s', color: 'text-pink-500' },
+  { left: '75%', size: 14, duration: '5s', delay: '0.8s', color: 'text-red-400' },
+  { left: '88%', size: 18, duration: '7s', delay: '2s', color: 'text-pink-300' },
+  { left: '95%', size: 12, duration: '6s', delay: '1.5s', color: 'text-red-300' },
+  { left: '35%', size: 10, duration: '8.5s', delay: '3.5s', color: 'text-pink-400' },
+  { left: '58%', size: 16, duration: '5.8s', delay: '0.3s', color: 'text-red-500' },
+  { left: '82%', size: 20, duration: '7.2s', delay: '2.8s', color: 'text-pink-300' },
+];
+
+function FloatingHearts() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {HEARTS.map((h, i) => (
+        <span
+          key={i}
+          className={`absolute bottom-0 animate-float-heart ${h.color}`}
+          style={{
+            left: h.left,
+            fontSize: h.size,
+            '--heart-duration': h.duration,
+            '--heart-delay': h.delay,
+          } as React.CSSProperties}
+        >
+          &#x2764;&#xFE0F;
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Review Card ─── */
+
+function ReviewCard({ name, business, quote }: { name: string; business: string; quote: string }) {
+  return (
+    <div className="flex-shrink-0 w-80 dark-glass-card p-5 border-white/10 bg-white/5">
+      <div className="flex gap-0.5 mb-3">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+        ))}
+      </div>
+      <p className="text-slate-300 text-sm leading-relaxed mb-4">&ldquo;{quote}&rdquo;</p>
+      <div>
+        <p className="font-semibold text-white text-sm">{name}</p>
+        <p className="text-slate-500 text-xs">{business}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Reviews Carousel ─── */
+
+function ReviewsCarousel() {
+  const row1 = [...REVIEWS, ...REVIEWS];
+  const row2 = [...[...REVIEWS].reverse(), ...[...REVIEWS].reverse()];
+
+  return (
+    <section className="py-20 px-4 relative overflow-hidden">
+      <FloatingHearts />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <p className="text-center text-sm font-semibold text-[#40c9ff] tracking-wide uppercase mb-2">
+          Real Results
+        </p>
+        <h2 className="text-3xl md:text-4xl font-black text-center mb-10">
+          What Roofing Contractors <span className="text-gradient-skye">Are Saying</span>
+        </h2>
+
+        <div className="space-y-4 overflow-hidden">
+          <div className="animate-marquee-left flex gap-4 w-max">
+            {row1.map((r, i) => (
+              <ReviewCard key={`r1-${i}`} {...r} />
+            ))}
+          </div>
+          <div className="animate-marquee-right flex gap-4 w-max">
+            {row2.map((r, i) => (
+              <ReviewCard key={`r2-${i}`} {...r} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Questionnaire Modal ─── */
+
+const BUSINESS_SIZES = [
+  'Less than $200k',
+  '$200k - $400k',
+  '$400k - $1M',
+  '$1M - $10M',
+  '$10M+ per year',
+];
+
+type QuizStep = 'size' | 'contact' | 'roi' | 'disclaimers' | 'submitting' | 'done';
+
+function QuestionnaireModal({ onClose }: { onClose: () => void }) {
+  const [step, setStep] = useState<QuizStep>('size');
+  const [businessSize, setBusinessSize] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    website: '',
+    city: '',
+  });
+  const [canInvest, setCanInvest] = useState<boolean | null>(null);
+  const [meetingCommit, setMeetingCommit] = useState(false);
+  const [spamConsent, setSpamConsent] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSizeSelect = (size: string) => {
+    setBusinessSize(size);
+    setTimeout(() => setStep('contact'), 300);
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStep('roi');
+  };
+
+  const handleRoiSelect = (value: boolean) => {
+    setCanInvest(value);
+    setTimeout(() => setStep('disclaimers'), 300);
+  };
+
+  const handleFinalSubmit = async () => {
+    if (!meetingCommit) {
+      setError('Please confirm you can attend the call.');
+      return;
+    }
+    if (!spamConsent) {
+      setError('Please provide consent to continue.');
+      return;
+    }
+    setError('');
+    setStep('submitting');
+
+    const body = new FormData();
+    body.append('access_key', 'a9e80fab-4da4-44c6-b31f-3369557abdbe');
+    body.append('subject', `Roofing Lead: ${formData.name} — ${formData.city}`);
+    body.append('from_name', 'Ragsites Roofing Landing');
+    body.append('name', formData.name);
+    body.append('phone', formData.phone);
+    body.append('email', formData.email);
+    body.append('website', formData.website);
+    body.append('city', formData.city);
+    body.append('business_size', businessSize);
+    body.append('can_invest_1000_roi', canInvest ? 'Yes' : 'No');
+    body.append('campaign', '30 Roofs in 30 Days');
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body,
+      });
+      if (res.ok) {
+        setStep('done');
+        setTimeout(() => {
+          window.location.href = BOOKING_URL;
+        }, 2000);
+      } else {
+        setError('Something went wrong. Please try again.');
+        setStep('disclaimers');
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
+      setStep('disclaimers');
+    }
+  };
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (error) setError('');
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+
+      {/* Modal */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.3 }}
+        className="relative z-10 w-full max-w-lg dark-glass-card p-8 md:p-10 border-white/10 bg-[#0a0a0a] overflow-y-auto max-h-[90vh]"
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+        >
+          <X className="w-4 h-4 text-white" />
+        </button>
+
+        <AnimatePresence mode="wait">
+          {/* ─── Step 1: Business Size ─── */}
+          {step === 'size' && (
+            <motion.div
+              key="size"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+                Step 1 of 4
+              </p>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                What&apos;s the size of your business?
+              </h3>
+              <p className="text-slate-400 text-sm mb-8">Annual revenue</p>
+
+              <div className="space-y-3">
+                {BUSINESS_SIZES.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => handleSizeSelect(size)}
+                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Step 2: Contact Info ─── */}
+          {step === 'contact' && (
+            <motion.div
+              key="contact"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+                Step 2 of 4
+              </p>
+              <h3 className="text-2xl font-bold text-white mb-2">Your Contact Details</h3>
+              <p className="text-slate-400 text-sm mb-8">
+                So we can reach out and schedule your strategy call
+              </p>
+
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                  <input
+                    name="name"
+                    required
+                    placeholder="Full name"
+                    value={formData.name}
+                    onChange={handleFormChange}
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                  />
+                </div>
+                <div className="relative">
+                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                  <input
+                    name="phone"
+                    type="tel"
+                    required
+                    placeholder="Phone number"
+                    value={formData.phone}
+                    onChange={handleFormChange}
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                  />
+                </div>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="Email address"
+                    value={formData.email}
+                    onChange={handleFormChange}
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                  />
+                </div>
+                <div className="relative">
+                  <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                  <input
+                    name="website"
+                    placeholder="Company website"
+                    value={formData.website}
+                    onChange={handleFormChange}
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                  />
+                </div>
+                <div className="relative">
+                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                  <input
+                    name="city"
+                    required
+                    placeholder="City"
+                    value={formData.city}
+                    onChange={handleFormChange}
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(232,28,255,0.3)] flex items-center justify-center gap-2 mt-2"
+                >
+                  Continue
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </form>
+            </motion.div>
+          )}
+
+          {/* ─── Step 3: ROI Question ─── */}
+          {step === 'roi' && (
+            <motion.div
+              key="roi"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+                Step 3 of 4
+              </p>
+              <h3 className="text-2xl font-bold text-white mb-2">One Quick Question</h3>
+              <p className="text-slate-300 text-lg mt-6 mb-8 leading-relaxed">
+                If there was a 1000% <span className="text-[#40c9ff] font-bold">GUARANTEED</span>{' '}
+                ROI &mdash; do you have the financial ability to invest?
+              </p>
+
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  onClick={() => handleRoiSelect(true)}
+                  className="px-6 py-5 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => handleRoiSelect(false)}
+                  className="px-6 py-5 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg hover:bg-white/10 hover:border-white/20 transition-all duration-200 hover:scale-[1.02]"
+                >
+                  No
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Step 4: Disclaimers ─── */}
+          {step === 'disclaimers' && (
+            <motion.div
+              key="disclaimers"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+                Step 4 of 4
+              </p>
+              <h3 className="text-2xl font-bold text-white mb-6">Almost There!</h3>
+
+              {/* Meeting Disclaimer */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-5 mb-4">
+                <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                  <span className="text-white font-bold">DISCLAIMER:</span> This meeting will be
+                  hosted on Google Meet, the link will be sent in the confirmation email. We have a
+                  waiting list and limit the number of clients we take on each month. If you need to
+                  reschedule, you must let us know 24h prior to our call.
+                </p>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={meetingCommit}
+                    onChange={(e) => {
+                      setMeetingCommit(e.target.checked);
+                      if (error) setError('');
+                    }}
+                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#40c9ff] focus:ring-[#40c9ff] bg-transparent"
+                  />
+                  <span className="text-sm text-slate-300">
+                    Will you be able to commit and attend to this call at the time of this booking?
+                  </span>
+                </label>
+              </div>
+
+              {/* Spam Disclaimer */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-5 mb-6">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={spamConsent}
+                    onChange={(e) => {
+                      setSpamConsent(e.target.checked);
+                      if (error) setError('');
+                    }}
+                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#40c9ff] focus:ring-[#40c9ff] bg-transparent"
+                  />
+                  <span className="text-sm text-slate-300">
+                    We hate spammers and will never spam you. Do you consent to us reaching out in a
+                    meaningful way regarding this offer?
+                  </span>
+                </label>
+              </div>
+
+              {error && <p className="text-red-400 text-sm text-center mb-4">{error}</p>}
+
+              <button
+                onClick={handleFinalSubmit}
+                className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(232,28,255,0.3)] flex items-center justify-center gap-2"
+              >
+                Book My Call Now
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </motion.div>
+          )}
+
+          {/* ─── Submitting ─── */}
+          {step === 'submitting' && (
+            <motion.div
+              key="submitting"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center py-8"
+            >
+              <Loader2 className="w-12 h-12 text-[#40c9ff] animate-spin mx-auto mb-4" />
+              <p className="text-white font-bold text-lg">Reserving your spot...</p>
+            </motion.div>
+          )}
+
+          {/* ─── Done ─── */}
+          {step === 'done' && (
+            <motion.div
+              key="done"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center py-8"
+            >
+              <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-8 h-8 text-emerald-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">You&apos;re In!</h3>
+              <p className="text-slate-400 text-sm">
+                Redirecting you to book your call...
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Progress dots */}
+        {!['submitting', 'done'].includes(step) && (
+          <div className="flex justify-center gap-2 mt-8">
+            {(['size', 'contact', 'roi', 'disclaimers'] as const).map((s, i) => (
+              <div
+                key={s}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  s === step
+                    ? 'w-8 bg-gradient-skye'
+                    : i < ['size', 'contact', 'roi', 'disclaimers'].indexOf(step)
+                    ? 'w-2 bg-[#40c9ff]/60'
+                    : 'w-2 bg-white/20'
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ─── Main Page ─── */
+
+export default function RoofingLanding() {
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  return (
+    <main className="min-h-screen bg-black text-white">
+      {/* Simple top bar */}
+      <div className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded-full" />
+            <span className="text-xl font-bold text-white">RAGSITES</span>
+          </div>
+          <button
+            onClick={() => setShowQuiz(true)}
+            className="px-5 py-2 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_15px_rgba(232,28,255,0.4)] hover:scale-105 transition-all"
+          >
+            Book Call Now
+          </button>
+        </div>
+      </div>
+
+      {/* Hero Section — matching main page style */}
+      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-24 pb-16">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4"
+            type="video/mp4"
+          />
+        </video>
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black z-0 pointer-events-none" />
+
+        {/* Glow orbs */}
+        <div className="glow-orb glow-orb-purple w-[600px] h-[600px] top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-40 z-0" />
+        <div className="glow-orb glow-orb-blue w-[500px] h-[500px] bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 opacity-30 z-0" />
+
+        <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
+          >
+            <Zap className="w-5 h-5 text-[#40c9ff]" />
+            <span className="text-sm font-bold tracking-widest text-[#40c9ff] uppercase">
+              Roofing Contractors Only
+            </span>
+          </motion.div>
+
+          <h1 className="text-5xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white">
+            {'30 Roof Replacement'.split('').map((char, i) => (
+              <motion.span
+                key={`line1-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.03, delay: 0.2 + i * 0.04 }}
+              >
+                {char}
+              </motion.span>
+            ))}
+            <br />
+            {'Jobs in 30 Days.'.split('').map((char, i) => (
+              <motion.span
+                key={`line2-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  duration: 0.03,
+                  delay: 0.2 + 20 * 0.04 + i * 0.04,
+                }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.8 }}
+            className="text-2xl md:text-4xl font-black mb-10"
+          >
+            <span className="text-gradient-skye">Or You Don&apos;t Pay.</span>
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 2.0 }}
+            className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto font-light"
+          >
+            We use cutting-edge Voice AI to fill your pipeline with qualified homeowners who need
+            roof replacements. Guaranteed results or it&apos;s free.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 2.2 }}
+            className="flex flex-col items-center gap-6"
+          >
+            <button
+              onClick={() => setShowQuiz(true)}
+              className="group relative flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
+            >
+              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+              <Phone className="w-8 h-8 animate-pulse" />
+              Book Call Now
+            </button>
+            <p className="text-slate-400 flex items-center gap-2 text-sm">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              Limited spots available &mdash; only 5 new clients per month
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="py-12 px-4 bg-black border-t border-white/5">
+        <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
+          <div>
+            <p className="text-4xl font-black text-white mb-1">30+</p>
+            <p className="text-xs text-slate-400 uppercase tracking-wider">Jobs Guaranteed</p>
+          </div>
+          <div>
+            <p className="text-4xl font-black text-[#e81cff] mb-1">$0</p>
+            <p className="text-xs text-slate-400 uppercase tracking-wider">Risk To You</p>
+          </div>
+          <div>
+            <p className="text-4xl font-black text-white mb-1">14</p>
+            <p className="text-xs text-slate-400 uppercase tracking-wider">Day Setup</p>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works — quick 3-step */}
+      <section className="py-20 px-4 relative">
+        <div className="glow-orb glow-orb-pink w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-15" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-black mb-16">
+            How We Get You <span className="text-gradient-skye">30 Jobs</span>
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                num: '01',
+                title: 'AI Answers Every Call',
+                desc: 'Our Voice AI picks up every inbound call in under 1 second — nights, weekends, holidays. No more missed leads.',
+              },
+              {
+                num: '02',
+                title: 'Qualifies & Books',
+                desc: 'The AI asks the right questions, qualifies the homeowner, and books the roof inspection directly on your calendar.',
+              },
+              {
+                num: '03',
+                title: 'You Close the Deal',
+                desc: 'Show up to pre-qualified appointments with homeowners who need a new roof and are ready to move forward.',
+              },
+            ].map((step) => (
+              <div
+                key={step.num}
+                className="dark-glass-card p-8 border-white/10 bg-white/5 text-left"
+              >
+                <span className="text-[#e81cff] font-black text-sm">{step.num}</span>
+                <h3 className="text-xl font-bold text-white mt-3 mb-3">{step.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Carousel */}
+      <ReviewsCarousel />
+
+      {/* Final CTA */}
+      <section className="py-24 px-4 relative overflow-hidden">
+        <div className="glow-orb glow-orb-purple w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-black mb-6">
+            Ready for 30 Jobs <span className="text-gradient-skye">This Month?</span>
+          </h2>
+          <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto">
+            Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
+            guaranteed.
+          </p>
+          <button
+            onClick={() => setShowQuiz(true)}
+            className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
+          >
+            <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+            Book Call Now
+            <ArrowRight className="w-7 h-7" />
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-4 border-t border-white/10 bg-black">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Ragsites" width={20} height={20} className="rounded-full" />
+            <span className="text-sm font-bold text-white">RAGSITES</span>
+          </div>
+          <p className="text-xs text-slate-500">
+            &copy; 2026 Ragsites. All rights reserved. Results may vary.
+          </p>
+        </div>
+      </footer>
+
+      {/* Questionnaire Modal */}
+      <AnimatePresence>
+        {showQuiz && <QuestionnaireModal onClose={() => setShowQuiz(false)} />}
+      </AnimatePresence>
+    </main>
+  );
+}
