@@ -147,7 +147,7 @@ export default function Home() {
             className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
           >
             <Phone className="w-5 h-5 text-brand-accent" />
-            <span className="text-sm font-semibold text-white">AI VOICE RECEPTIONIST</span>
+            <span className="text-sm font-semibold text-white">AI REVENUE ENGINE</span>
           </motion.div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight text-white">
@@ -217,7 +217,7 @@ export default function Home() {
               <p className="text-xs text-slate-300 mt-1">Businesses Powered</p>
             </div>
             <div className="dark-glass-card p-3 rounded-xl text-center">
-              <p className="text-2xl font-bold text-brand-accent">$3M+</p>
+              <p className="text-2xl font-bold text-brand-accent">$2M+</p>
               <p className="text-xs text-slate-300 mt-1">Revenue Generated</p>
             </div>
             <div className="dark-glass-card p-3 rounded-xl text-center">
