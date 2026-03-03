@@ -601,16 +601,6 @@ export default function RoofingLanding() {
             <span className="text-gradient-skye">Or You Don&apos;t Pay.</span>
           </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.0 }}
-            className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto font-light"
-          >
-            We use cutting-edge Voice AI to fill your pipeline with qualified homeowners who need
-            roof replacements. Guaranteed results or it&apos;s free.
-          </motion.p>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
