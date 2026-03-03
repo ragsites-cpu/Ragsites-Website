@@ -32,7 +32,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-20">
+      <section className="relative min-h-[110vh] flex items-center justify-center px-4 overflow-hidden pt-32 pb-24">
         {/* Background Video */}
         <video
           autoPlay
@@ -43,14 +43,14 @@ export default function Home() {
         >
           <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4" type="video/mp4" />
         </video>
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none"></div>
+        {/* Dark Overlay - Gradient to let center shine and fade to black at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black z-0 pointer-events-none"></div>
 
         {/* Glowing Orbs for Skye AI Vibe */}
         <div className="glow-orb glow-orb-purple w-[600px] h-[600px] top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-40 z-0" />
         <div className="glow-orb glow-orb-blue w-[500px] h-[500px] bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 opacity-30 z-0" />
 
-        <div className="relative z-10 max-w-5xl mx-auto w-full text-center mt-10">
+        <div className="relative z-10 max-w-5xl mx-auto w-full text-center mt-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
