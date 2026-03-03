@@ -623,63 +623,6 @@ export default function RoofingLanding() {
         </div>
       </section>
 
-      {/* Trust Badges */}
-      <section className="py-12 px-4 bg-black border-t border-white/5">
-        <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
-          <div>
-            <p className="text-4xl font-black text-white mb-1">30+</p>
-            <p className="text-xs text-slate-400 uppercase tracking-wider">Jobs Guaranteed</p>
-          </div>
-          <div>
-            <p className="text-4xl font-black text-[#e81cff] mb-1">$0</p>
-            <p className="text-xs text-slate-400 uppercase tracking-wider">Risk To You</p>
-          </div>
-          <div>
-            <p className="text-4xl font-black text-white mb-1">14</p>
-            <p className="text-xs text-slate-400 uppercase tracking-wider">Day Setup</p>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works — quick 3-step */}
-      <section className="py-20 px-4 relative">
-        <div className="glow-orb glow-orb-pink w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-15" />
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-black mb-16">
-            How We Get You <span className="text-gradient-skye">30 Jobs</span>
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                num: '01',
-                title: 'AI Answers Every Call',
-                desc: 'Our Voice AI picks up every inbound call in under 1 second — nights, weekends, holidays. No more missed leads.',
-              },
-              {
-                num: '02',
-                title: 'Qualifies & Books',
-                desc: 'The AI asks the right questions, qualifies the homeowner, and books the roof inspection directly on your calendar.',
-              },
-              {
-                num: '03',
-                title: 'You Close the Deal',
-                desc: 'Show up to pre-qualified appointments with homeowners who need a new roof and are ready to move forward.',
-              },
-            ].map((step) => (
-              <div
-                key={step.num}
-                className="dark-glass-card p-8 border-white/10 bg-white/5 text-left"
-              >
-                <span className="text-[#e81cff] font-black text-sm">{step.num}</span>
-                <h3 className="text-xl font-bold text-white mt-3 mb-3">{step.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Reviews Carousel */}
       <ReviewsCarousel />
 
@@ -706,14 +649,18 @@ export default function RoofingLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/10 bg-black">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Ragsites" width={20} height={20} className="rounded-full" />
-            <span className="text-sm font-bold text-white">RAGSITES</span>
+      <footer className="py-10 px-4 border-t border-white/10 bg-black">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <p className="text-sm text-slate-400">
+            Ragsites &copy; 2025 - All Rights Reserved
+          </p>
+          <div className="flex items-center justify-center gap-4 text-sm">
+            <a href="#" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</a>
+            <span className="text-slate-600">|</span>
+            <a href="#" className="text-slate-400 hover:text-white transition-colors">Terms</a>
           </div>
-          <p className="text-xs text-slate-500">
-            &copy; 2026 Ragsites. All rights reserved. Results may vary.
+          <p className="text-xs text-slate-600 max-w-2xl mx-auto leading-relaxed mt-4">
+            This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
           </p>
         </div>
       </footer>

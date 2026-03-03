@@ -132,11 +132,11 @@
 }
 
 .animate-marquee-left {
-  animation: marquee-left 35s linear infinite;
+  animation: marquee-left 55s linear infinite;
 }
 
 .animate-marquee-right {
-  animation: marquee-right 40s linear infinite;
+  animation: marquee-right 60s linear infinite;
 }
 
 @keyframes float-heart {
