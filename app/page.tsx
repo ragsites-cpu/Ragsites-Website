@@ -210,19 +210,19 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 2.4 }}
-            className="mt-12 grid grid-cols-3 gap-4 max-w-md mx-auto"
+            className="mt-12 grid grid-cols-3 gap-4 max-w-lg mx-auto"
           >
             <div className="dark-glass-card p-3 rounded-xl text-center">
-              <p className="text-2xl font-bold text-brand-accent">24/7</p>
-              <p className="text-xs text-slate-300 mt-1">Always On</p>
+              <p className="text-2xl font-bold text-brand-accent">30+</p>
+              <p className="text-xs text-slate-300 mt-1">Businesses Powered</p>
             </div>
             <div className="dark-glass-card p-3 rounded-xl text-center">
-              <p className="text-2xl font-bold text-brand-accent">&lt;1s</p>
-              <p className="text-xs text-slate-300 mt-1">Response Time</p>
+              <p className="text-2xl font-bold text-brand-accent">$3M+</p>
+              <p className="text-xs text-slate-300 mt-1">Revenue Generated</p>
             </div>
             <div className="dark-glass-card p-3 rounded-xl text-center">
-              <p className="text-2xl font-bold text-brand-accent">0</p>
-              <p className="text-xs text-slate-300 mt-1">Missed Calls</p>
+              <p className="text-2xl font-bold text-brand-accent">3K+</p>
+              <p className="text-xs text-slate-300 mt-1">Calls Booked</p>
             </div>
           </motion.div>
         </div>
