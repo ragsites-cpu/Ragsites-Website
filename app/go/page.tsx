@@ -79,7 +79,7 @@ function ReviewsCarousel() {
   const row2 = [...[...REVIEW_IMAGES].reverse(), ...[...REVIEW_IMAGES].reverse()];
 
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
+    <section className="py-10 px-4 relative overflow-hidden">
       <FloatingHearts />
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -531,7 +531,7 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section — matching main page style */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-24 pb-16">
+      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-24 pb-8">
         {/* Background Video */}
         <video
           autoPlay
