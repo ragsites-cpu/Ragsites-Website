@@ -55,26 +55,80 @@
   }
 
   .quiz-card {
-    background: linear-gradient(
-      135deg,
-      rgba(248, 250, 252, 0.95) 0%,
-      rgba(243, 232, 255, 0.4) 25%,
-      rgba(252, 231, 243, 0.4) 50%,
-      rgba(220, 252, 231, 0.3) 75%,
-      rgba(248, 250, 252, 0.95) 100%
-    );
+    background: linear-gradient(135deg,
+        rgba(248, 250, 252, 0.95) 0%,
+        rgba(243, 232, 255, 0.4) 25%,
+        rgba(252, 231, 243, 0.4) 50%,
+        rgba(220, 252, 231, 0.3) 75%,
+        rgba(248, 250, 252, 0.95) 100%);
     @apply border border-slate-200/60 shadow-sm;
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-vibrant {
+    background: linear-gradient(135deg, #EC008C 0%, #FC6767 50%, #FF8E53 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-skye {
+    background: linear-gradient(to right, #e81cff 0%, #40c9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-skye {
+    background: linear-gradient(to right, #e81cff 0%, #40c9ff 100%);
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .glow-orb-purple {
+    background: rgba(147, 51, 234, 0.3);
+  }
+
+  .glow-orb-blue {
+    background: rgba(59, 130, 246, 0.3);
+  }
+
+  .glow-orb-pink {
+    background: rgba(236, 72, 153, 0.3);
   }
 }
 
+
 @keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes marquee-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .animate-marquee-left {
@@ -90,12 +144,15 @@
     transform: translateY(0) scale(1) rotate(0deg);
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.8;
   }
+
   100% {
     transform: translateY(-420px) scale(0.6) rotate(25deg);
     opacity: 0;
