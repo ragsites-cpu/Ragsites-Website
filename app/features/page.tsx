@@ -143,7 +143,7 @@ export default function FeaturesPage() {
                 </div>
             </section>
 
-            <div className="bg-slate-50 text-brand-primary">
+            <div id="pricing-section" className="bg-slate-50 text-brand-primary">
                 <Pricing />
             </div>
 
