@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { Phone, Calendar, MessageSquare, BarChart3, Globe, ShieldCheck, Truck, CreditCard, Zap, Server } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Pricing from '@/components/Pricing';
 import Image from 'next/image';
 
 const features = [
@@ -142,10 +141,6 @@ export default function FeaturesPage() {
                     </motion.div>
                 </div>
             </section>
-
-            <div id="pricing-section" className="bg-slate-50 text-brand-primary">
-                <Pricing />
-            </div>
 
             <footer className="py-12 px-4 border-t border-white/10 bg-black">
                 <div className="max-w-7xl mx-auto">
