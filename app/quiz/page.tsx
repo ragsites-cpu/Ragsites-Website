@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight, Star } from 'lucide-react';
+import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
 
 /* ─── Quiz Data ─── */
 
@@ -19,6 +19,8 @@ interface QuizQuestion {
   options: QuizOption[];
   key: string;
 }
+
+const BOOKING_URL = 'https://cal.com/ragsite/30min?user=ragsite';
 
 const QUESTIONS: QuizQuestion[] = [
   {
@@ -67,47 +69,39 @@ const QUESTIONS: QuizQuestion[] = [
   },
 ];
 
-/* ─── Testimonials ─── */
+/* ─── Analytics Helper ─── */
 
-const TESTIMONIALS = [
-  {
-    name: 'Maria Santos',
-    business: 'Glow & Grace Salon',
-    quote: 'Every call gets answered now and my books are fuller than ever. My clients even compliment how easy it is to schedule.',
-  },
-  {
-    name: 'Mike Thompson',
-    business: 'Thompson Plumbing Co.',
-    quote: 'Last month alone, it booked 23 jobs I would\'ve missed. Pays for itself ten times over.',
-  },
-  {
-    name: 'Dr. Priya Sharma',
-    business: 'Bright Smile Dental',
-    quote: 'The AI handles routine calls now, so my staff can focus on patients. Wait times are down, satisfaction is up.',
-  },
-  {
-    name: 'Carlos Rivera',
-    business: 'Rivera HVAC Services',
-    quote: 'A customer called at 2am during a heat wave and got their appointment booked. That\'s a customer for life.',
-  },
-];
-
-function TestimonialCard({ name, business, quote }: { name: string; business: string; quote: string }) {
-  return (
-    <div className="flex-shrink-0 w-80 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-      <div className="flex gap-0.5 mb-3">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-        ))}
-      </div>
-      <p className="text-slate-700 text-sm leading-relaxed mb-4">&ldquo;{quote}&rdquo;</p>
-      <div>
-        <p className="font-semibold text-brand-primary text-sm">{name}</p>
-        <p className="text-slate-500 text-xs">{business}</p>
-      </div>
-    </div>
-  );
+function trackEvent(eventName: string, params?: Record<string, string>) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  }
 }
+
+function trackMeta(eventName: string, params?: Record<string, string>) {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('trackCustom', eventName, params);
+  }
+}
+
+function trackMetaStandard(eventName: string, params?: Record<string, string>) {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('track', eventName, params);
+  }
+}
+
+/* ─── Review Images ─── */
+
+const REVIEW_IMAGES = [
+  '/reveiw1.jpeg',
+  '/review2.jpeg',
+  '/review3.jpeg',
+  '/review4.jpeg',
+  '/review5.jpeg',
+  '/review6.jpeg',
+  '/review7.jpeg',
+  '/review8.jpeg',
+  '/review9.jpeg',
+];
 
 const HEARTS = [
   { left: '5%', size: 18, duration: '7s', delay: '0s', color: 'text-red-400' },
@@ -145,16 +139,15 @@ function FloatingHearts() {
   );
 }
 
-function TestimonialsMarquee() {
-  // Double the array for seamless loop
-  const row1 = [...TESTIMONIALS, ...TESTIMONIALS];
-  const row2 = [...[...TESTIMONIALS].reverse(), ...[...TESTIMONIALS].reverse()];
+function ReviewsMarquee() {
+  const row1 = [...REVIEW_IMAGES, ...REVIEW_IMAGES];
+  const row2 = [...[...REVIEW_IMAGES].reverse(), ...[...REVIEW_IMAGES].reverse()];
 
   return (
     <div className="mt-12 space-y-4 relative">
       <FloatingHearts />
 
-      <p className="text-center text-sm font-semibold text-emerald-600 tracking-wide">Testimonials</p>
+      <p className="text-center text-sm font-semibold text-emerald-600 tracking-wide">Real Results</p>
       <h3 className="text-2xl md:text-3xl font-extrabold text-brand-primary text-center">
         See Why Business Owners Love Us
       </h3>
@@ -162,14 +155,18 @@ function TestimonialsMarquee() {
       <div className="mt-8 space-y-4 overflow-hidden">
         {/* Row 1 — scrolls left */}
         <div className="animate-marquee-left flex gap-4 w-max">
-          {row1.map((t, i) => (
-            <TestimonialCard key={`r1-${i}`} {...t} />
+          {row1.map((src, i) => (
+            <div key={`r1-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+              <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
+            </div>
           ))}
         </div>
         {/* Row 2 — scrolls right */}
         <div className="animate-marquee-right flex gap-4 w-max">
-          {row2.map((t, i) => (
-            <TestimonialCard key={`r2-${i}`} {...t} />
+          {row2.map((src, i) => (
+            <div key={`r2-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+              <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
+            </div>
           ))}
         </div>
       </div>
@@ -215,10 +212,14 @@ function QuizContent() {
   const handleOptionClick = (option: QuizOption) => {
     const q = QUESTIONS[questionIndex];
     setAnswers((prev) => ({ ...prev, [q.key]: option.label }));
+    trackEvent('quiz_step', { step: q.key, value: option.label, question_number: String(questionIndex + 1) });
+    trackMeta('QuizStep', { step: q.key, value: option.label });
 
     if (questionIndex < QUESTIONS.length - 1) {
       setTimeout(() => setQuestionIndex((i) => i + 1), 300);
     } else {
+      trackEvent('quiz_complete', { source: 'main_quiz' });
+      trackMeta('QuizComplete', { source: 'main_quiz' });
       setTimeout(() => setStep('done'), 300);
     }
   };
@@ -274,7 +275,14 @@ function QuizContent() {
     try {
       const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body });
       if (res.ok) {
+        trackEvent('generate_lead', { source: 'main_quiz', business: formData.businessName });
+        trackMetaStandard('Lead', { content_name: 'AI Receptionist Quiz', content_category: 'main_quiz' });
         setStep('success');
+        setTimeout(() => {
+          trackEvent('booking_redirect', { source: 'main_quiz' });
+          trackMetaStandard('Schedule', { content_name: 'Cal.com Booking' });
+          window.location.href = BOOKING_URL;
+        }, 2000);
       } else {
         setFormError('Something went wrong. Please try again.');
         setFormStatus('idle');
@@ -508,7 +516,7 @@ function QuizContent() {
                 </form>
               </div>
 
-              <TestimonialsMarquee />
+              <ReviewsMarquee />
             </motion.div>
           )}
 
@@ -533,15 +541,8 @@ function QuizContent() {
 
                 <h2 className="text-2xl font-bold text-brand-primary mt-6">You&apos;re All Set!</h2>
                 <p className="text-slate-500 mt-2 max-w-md mx-auto">
-                  We&apos;ll be in touch within 24 hours to schedule your free AI receptionist consultation.
+                  Redirecting you to book your call...
                 </p>
-
-                <button
-                  onClick={() => (window.location.href = '/')}
-                  className="mt-8 px-8 py-3 rounded-xl border border-slate-200 text-brand-primary font-semibold hover:bg-slate-50 transition-colors"
-                >
-                  Back to Home
-                </button>
               </div>
             </motion.div>
           )}

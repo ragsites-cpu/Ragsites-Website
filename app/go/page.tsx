@@ -20,6 +20,26 @@ import Image from 'next/image';
 
 const BOOKING_URL = 'https://cal.com/ragsite/30min?user=ragsite';
 
+/* ─── Analytics Helper ─── */
+
+function trackEvent(eventName: string, params?: Record<string, string>) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  }
+}
+
+function trackMeta(eventName: string, params?: Record<string, string | boolean>) {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('trackCustom', eventName, params);
+  }
+}
+
+function trackMetaStandard(eventName: string, params?: Record<string, string>) {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('track', eventName, params);
+  }
+}
+
 /* ─── Review Images ─── */
 
 const REVIEW_IMAGES = [
@@ -140,16 +160,22 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
   const handleSizeSelect = (size: string) => {
     setBusinessSize(size);
+    trackEvent('quiz_step', { step: 'business_size', value: size });
+    trackMeta('QuizStep', { step: 'business_size', value: size });
     setTimeout(() => setStep('contact'), 300);
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    trackEvent('quiz_step', { step: 'contact_info' });
+    trackMeta('QuizStep', { step: 'contact_info' });
     setStep('roi');
   };
 
   const handleRoiSelect = (value: boolean) => {
     setCanInvest(value);
+    trackEvent('quiz_step', { step: 'roi_question', value: value ? 'yes' : 'no' });
+    trackMeta('QuizStep', { step: 'roi_question', value: value ? 'yes' : 'no' });
     setTimeout(() => setStep('disclaimers'), 300);
   };
 
@@ -184,8 +210,12 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         body,
       });
       if (res.ok) {
+        trackEvent('generate_lead', { source: 'roofing_landing', business_size: businessSize });
+        trackMetaStandard('Lead', { content_name: '30 Roofs in 30 Days', content_category: 'roofing_landing' });
         setStep('done');
         setTimeout(() => {
+          trackEvent('booking_redirect', { source: 'roofing_landing' });
+          trackMetaStandard('Schedule', { content_name: 'Cal.com Booking' });
           window.location.href = BOOKING_URL;
         }, 2000);
       } else {
@@ -577,6 +607,12 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 export default function RoofingLanding() {
   const [showQuiz, setShowQuiz] = useState(false);
 
+  const openQuiz = (source: string) => {
+    trackEvent('cta_click', { source });
+    trackMetaStandard('ViewContent', { content_name: 'Book Call CTA', content_category: source });
+    setShowQuiz(true);
+  };
+
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Simple top bar */}
@@ -587,7 +623,7 @@ export default function RoofingLanding() {
             <span className="text-xl font-bold text-white">RAGSITES</span>
           </div>
           <button
-            onClick={() => setShowQuiz(true)}
+            onClick={() => openQuiz('navbar')}
             className="px-5 py-2 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_15px_rgba(232,28,255,0.4)] hover:scale-105 transition-all"
           >
             Book Call Now
@@ -673,7 +709,7 @@ export default function RoofingLanding() {
             className="flex flex-col items-center gap-6"
           >
             <button
-              onClick={() => setShowQuiz(true)}
+              onClick={() => openQuiz('hero')}
               className="group relative flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
             >
               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
@@ -703,7 +739,7 @@ export default function RoofingLanding() {
             guaranteed.
           </p>
           <button
-            onClick={() => setShowQuiz(true)}
+            onClick={() => openQuiz('bottom_cta')}
             className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
           >
             <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
