@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, Calendar, MessageSquare, BarChart3, Globe, ShieldCheck, Truck, CreditCard, Zap, Server } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, BarChart3, Globe, ShieldCheck, Truck, CreditCard, Zap, Server, Users, AudioLines, PhoneOutgoing, Brain } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 
@@ -45,6 +45,26 @@ const features = [
         icon: BarChart3,
         title: 'Deep Analytics & Insights',
         description: 'Transcripts, sentiment analysis, call summaries, and actionable performance metrics synced back to your CRM automatically.',
+    },
+    {
+        icon: Users,
+        title: '30 Concurrent Calls',
+        description: 'Handles up to 30 live calls simultaneously with zero degradation in quality. Peak hours, holiday rushes, marketing spikes — never miss a single lead.',
+    },
+    {
+        icon: AudioLines,
+        title: 'Proprietary Barge-In Handling',
+        description: 'Our custom-built model detects when callers interrupt mid-sentence and responds naturally — no awkward pauses, no talking over people.',
+    },
+    {
+        icon: PhoneOutgoing,
+        title: 'Outbound Lead Follow-Up',
+        description: 'Automatically follows up with missed calls, abandoned quotes, and cold leads. Re-engages prospects with personalized outbound calls on your schedule.',
+    },
+    {
+        icon: Brain,
+        title: 'Self-Learning AI Memory',
+        description: 'Remembers returning callers, past conversations, and preferences. Gets smarter with every interaction to deliver increasingly personalized service.',
     },
 ];
 
