@@ -18,7 +18,7 @@ import Image from 'next/image';
 
 /* ─── Configuration ─── */
 
-const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gzNCy8e40o7y8qafZynN';
+const BOOKING_URL = 'https://cal.com/ragsite/30min?user=ragsite';
 
 /* ─── Review Images ─── */
 
