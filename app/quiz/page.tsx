@@ -99,7 +99,7 @@ const REVIEW_IMAGES = [
   '/review7.jpeg',
   '/review8.jpeg',
   '/review9.jpeg',
-  '/review10.jpeg',
+  '/review10.png',
 ];
 
 const HEARTS = [
