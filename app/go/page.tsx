@@ -541,7 +541,7 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section — matching main page style */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-24 pb-8">
+      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-16 pb-8">
         {/* Background Video */}
         <video
           autoPlay
@@ -634,7 +634,7 @@ export default function RoofingLanding() {
       </section>
 
       {/* Reviews */}
-      <section className="py-20 px-4 bg-black">
+      <section className="pt-16 pb-8 px-4 bg-black">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-sm font-semibold text-[#40c9ff] tracking-wide uppercase mb-2">
             Real Results
@@ -653,7 +653,7 @@ export default function RoofingLanding() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 px-4 relative overflow-hidden">
+      <section className="pt-12 pb-24 px-4 relative overflow-hidden">
         <div className="glow-orb glow-orb-purple w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-black mb-6">
