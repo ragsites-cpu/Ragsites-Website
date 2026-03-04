@@ -193,7 +193,6 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       });
       if (res.ok) {
         trackEvent('generate_lead', { source: 'roofing_landing', business_size: businessSize });
-        trackMetaGo('Lead', { content_name: 'Roofing Quiz Submit', content_category: 'roofing_landing' });
         setStep('done');
         setTimeout(() => {
           trackEvent('booking_redirect', { source: 'roofing_landing' });
