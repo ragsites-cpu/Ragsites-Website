@@ -5,6 +5,7 @@ import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-reac
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
+import DemoWidget from '@/components/DemoWidget';
 import AnimatedCounter from '@/components/AnimatedCounter';
 
 // Reusable animation variants
@@ -209,6 +210,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Custom Demo Widget */}
+      <DemoWidget />
+
       {/* Metrics Section */}
       <section className="py-24 px-4 bg-black border-t border-white/5">
         <div className="max-w-5xl mx-auto">
@@ -220,7 +224,7 @@ export default function Home() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2"><AnimatedCounter value="1M+" /></p>
+              <p className="text-5xl font-black text-white mb-2"><AnimatedCounter value="10K+" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Calls Handled</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
