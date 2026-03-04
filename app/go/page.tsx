@@ -579,8 +579,15 @@ export default function RoofingLanding() {
 
   return (
     <main className="min-h-screen bg-black text-white">
+      {/* Warning Banner */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-500 text-black text-center py-2 px-4">
+        <p className="text-sm md:text-base font-black uppercase tracking-wide">
+          WARNING: This Is ONLY For Roofers With Sub Crews That Can Handle 3 New Installs A Week.
+        </p>
+      </div>
+
       {/* Simple top bar */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-white/10">
+      <div className="fixed top-[40px] left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded-full" />
@@ -596,7 +603,7 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section — matching main page style */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-24 pb-8">
+      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-32 pb-8">
         {/* Background Video */}
         <video
           autoPlay
