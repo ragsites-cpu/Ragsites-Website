@@ -515,6 +515,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 export default function RoofingLanding() {
   const [showQuiz, setShowQuiz] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   const openQuiz = (source: string) => {
     trackEvent('cta_click', { source });
@@ -644,9 +645,9 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['/review2.jpeg', '/review3.jpeg', '/review5.jpeg', '/review6.jpeg', '/review7.jpeg', '/review8.jpeg', '/review9.jpeg', '/review10.png'].map((src) => (
-              <div key={src} className="rounded-2xl overflow-hidden border border-white/10 aspect-[4/3]">
+              <button key={src} onClick={() => setLightboxSrc(src)} className="rounded-2xl overflow-hidden border border-white/10 aspect-[4/3] cursor-pointer hover:border-white/30 hover:scale-[1.02] transition-all">
                 <Image src={src} alt="Client review" width={400} height={300} className="w-full h-full object-cover" />
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -707,6 +708,43 @@ export default function RoofingLanding() {
           </p>
         </div>
       </footer>
+
+      {/* Review Lightbox */}
+      <AnimatePresence>
+        {lightboxSrc && (
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+            onClick={() => setLightboxSrc(null)}
+          >
+            <button
+              onClick={() => setLightboxSrc(null)}
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="max-w-4xl max-h-[90vh] w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={lightboxSrc}
+                alt="Review"
+                width={1200}
+                height={900}
+                className="w-full h-auto rounded-2xl object-contain"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Questionnaire Modal */}
       <AnimatePresence>
