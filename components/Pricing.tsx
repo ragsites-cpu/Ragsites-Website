@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Phone } from 'lucide-react';
 
-type Category = 'standard' | 'premium';
+type Category = 'voice-receptionist' | 'premium';
 
-const standardPlans = [
+const voicePlans = [
   {
     name: 'Starter',
     description: 'For small businesses getting started',
@@ -65,17 +65,17 @@ const standardPlans = [
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
-  const [category, setCategory] = useState<Category>('standard');
+  const [category, setCategory] = useState<Category>('voice-receptionist');
 
   return (
     <section id="pricing-section" className="py-24 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-brand-primary">
-            Simple, Transparent <span className="text-brand-accent">Pricing</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Simple, Transparent <span className="text-gradient-skye">Pricing</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
             Choose the plan that fits your business. No hidden fees. Cancel anytime.
           </p>
         </div>
@@ -83,34 +83,34 @@ export default function Pricing() {
         {/* Category Toggle */}
         <div className="flex items-center justify-center gap-2 mb-8">
           <button
-            onClick={() => setCategory('standard')}
+            onClick={() => setCategory('voice-receptionist')}
             className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
-              category === 'standard'
-                ? 'bg-brand-accent text-white shadow-sm'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              category === 'voice-receptionist'
+                ? 'bg-gradient-skye text-white shadow-[0_0_15px_rgba(232,28,255,0.3)]'
+                : 'bg-white/10 text-slate-400 hover:bg-white/15'
             }`}
           >
-            Standard
+            Voice Receptionist
           </button>
           <button
             onClick={() => setCategory('premium')}
             className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
               category === 'premium'
-                ? 'bg-brand-accent text-white shadow-sm'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-gradient-skye text-white shadow-[0_0_15px_rgba(232,28,255,0.3)]'
+                : 'bg-white/10 text-slate-400 hover:bg-white/15'
             }`}
           >
             Premium
           </button>
         </div>
 
-        {/* Monthly/Yearly Toggle — only for standard */}
-        {category === 'standard' && (
+        {/* Monthly/Yearly Toggle — only for voice-receptionist */}
+        {category === 'voice-receptionist' && (
           <div className="flex items-center justify-center gap-4 mb-16">
-            <span className={`text-sm font-medium ${!isYearly ? 'text-brand-primary' : 'text-slate-500'}`}>Monthly</span>
+            <span className={`text-sm font-medium ${!isYearly ? 'text-white' : 'text-slate-500'}`}>Monthly</span>
             <button
               onClick={() => setIsYearly(!isYearly)}
-              className={`relative w-14 h-7 rounded-full transition-colors duration-300 ${isYearly ? 'bg-brand-accent' : 'bg-slate-300'
+              className={`relative w-14 h-7 rounded-full transition-colors duration-300 ${isYearly ? 'bg-[#40c9ff]' : 'bg-white/20'
                 }`}
             >
               <div
@@ -118,62 +118,66 @@ export default function Pricing() {
                   }`}
               />
             </button>
-            <span className={`text-sm font-medium ${isYearly ? 'text-brand-primary' : 'text-slate-500'}`}>
+            <span className={`text-sm font-medium ${isYearly ? 'text-white' : 'text-slate-500'}`}>
               Yearly
-              <span className="ml-2 text-xs text-brand-accent font-semibold bg-blue-50 px-2 py-1 rounded-full">Save 20%</span>
+              <span className="ml-2 text-xs text-[#40c9ff] font-semibold bg-[#40c9ff]/10 px-2 py-1 rounded-full">Save 20%</span>
             </span>
           </div>
         )}
 
         {/* Premium CTA */}
         {category === 'premium' && (
-          <div className="text-center glass-card p-10 rounded-2xl max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-brand-primary mb-3">Everything in Standard, plus:</h3>
+          <div className="text-center dark-glass-card p-10 rounded-2xl max-w-2xl mx-auto border border-white/10">
+            <h3 className="text-2xl font-bold text-white mb-3">Everything in Voice Receptionist, plus:</h3>
             <div className="flex flex-wrap justify-center gap-3 mb-6">
               {['CRM Integration', 'Live Dispatch', 'HIPAA Compliance', 'Custom Integrations', 'Dedicated Account Manager'].map((feature) => (
-                <span key={feature} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-sm font-medium text-brand-primary">
-                  <Check className="w-4 h-4 text-brand-accent" />
+                <span key={feature} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-sm font-medium text-white">
+                  <Check className="w-4 h-4 text-[#40c9ff]" />
                   {feature}
                 </span>
               ))}
             </div>
-            <p className="text-slate-600 mb-8">
-              Custom pricing tailored to your needs. Fill out a quick questionnaire and we&apos;ll get back to you within 24 hours.
+            <p className="text-slate-400 mb-4">
+              We build a fully custom AI solution tailored to your business needs — integrations, workflows, compliance, and more.
+            </p>
+            <p className="text-slate-300 mb-8 text-sm">
+              Book a call with our team and we&apos;ll design the perfect package for you.
             </p>
             <a
               href="/quiz?tier=premium"
-              className="inline-block px-10 py-4 rounded-xl bg-brand-accent text-white font-bold text-lg hover:bg-brand-accent-hover transition-all duration-200 hover:scale-[1.02] shadow-sm"
+              className="inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all duration-200 shadow-[0_0_20px_rgba(232,28,255,0.3)]"
             >
-              Get a Quote
+              <Phone className="w-5 h-5" />
+              Book a Call
             </a>
           </div>
         )}
 
-        {/* Standard Plans */}
-        {category === 'standard' && (
+        {/* Voice Receptionist Plans */}
+        {category === 'voice-receptionist' && (
           <div className="grid md:grid-cols-3 gap-8">
-            {standardPlans.map((plan) => (
+            {voicePlans.map((plan) => (
               <div
                 key={plan.name}
                 className={`relative rounded-2xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${plan.popular
-                    ? 'glass-card border-2 border-brand-accent shadow-xl'
-                    : 'glass-card'
+                    ? 'dark-glass-card border-2 border-[#40c9ff]/50 shadow-[0_0_30px_rgba(64,201,255,0.15)]'
+                    : 'dark-glass-card border border-white/10'
                   }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-accent text-white text-xs font-bold uppercase tracking-wider shadow-sm">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-skye text-white text-xs font-bold uppercase tracking-wider shadow-sm">
                     Most Popular
                   </div>
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-xl font-bold text-brand-primary mb-1">{plan.name}</h3>
-                  <p className="text-sm text-slate-500">{plan.description}</p>
+                  <h3 className="text-xl font-bold text-white mb-1">{plan.name}</h3>
+                  <p className="text-sm text-slate-400">{plan.description}</p>
                 </div>
 
                 <div className="mb-8">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-bold text-brand-primary">
+                    <span className="text-5xl font-bold text-white">
                       ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
                     </span>
                     <span className="text-slate-500">/mo</span>
@@ -188,15 +192,15 @@ export default function Pricing() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-brand-accent flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-slate-700">{feature}</span>
+                      <Check className="w-5 h-5 text-[#40c9ff] flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-slate-300">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 <a
                   href="/quiz"
-                  className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-brand-accent text-white hover:bg-brand-accent-hover"
+                  className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:scale-[1.02] shadow-sm text-center block bg-gradient-skye text-white hover:shadow-[0_0_20px_rgba(232,28,255,0.3)]"
                 >
                   {plan.cta}
                 </a>
@@ -205,21 +209,19 @@ export default function Pricing() {
           </div>
         )}
 
-        {/* Enterprise CTA — only for standard */}
-        {category === 'standard' && (
-          <div className="mt-12 text-center glass-card p-8 rounded-2xl bg-blue-50 border-blue-100">
-            <h3 className="text-xl font-bold text-brand-primary mb-2">Need more volume?</h3>
-            <p className="text-slate-600 mb-6">
+        {/* Enterprise CTA — only for voice-receptionist */}
+        {category === 'voice-receptionist' && (
+          <div className="mt-12 text-center dark-glass-card p-8 rounded-2xl border border-white/10">
+            <h3 className="text-xl font-bold text-white mb-2">Need more volume?</h3>
+            <p className="text-slate-400 mb-6">
               Contact us for a custom Enterprise plan with unlimited conversations and dedicated support.
             </p>
-            <button
-              onClick={() => {
-                document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="px-8 py-3 rounded-xl bg-white border border-slate-200 text-brand-primary font-semibold text-sm hover:bg-slate-50 transition-colors shadow-sm"
+            <a
+              href="/quiz?tier=premium"
+              className="px-8 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-semibold text-sm hover:bg-white/15 transition-colors"
             >
               Contact Sales
-            </button>
+            </a>
           </div>
         )}
       </div>

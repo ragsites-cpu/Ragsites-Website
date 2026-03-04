@@ -9,7 +9,7 @@ export default function PricingPage() {
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
-      <div className="pt-32 bg-slate-50 text-brand-primary">
+      <div className="pt-32">
         <Pricing />
       </div>
 
