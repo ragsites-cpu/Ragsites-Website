@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Phone,
@@ -20,7 +20,9 @@ import Image from 'next/image';
 
 const BOOKING_URL = 'https://cal.com/ragsite/30min?user=ragsite';
 
-/* ─── Analytics Helper ─── */
+/* ─── Analytics Helpers ─── */
+
+const META_PIXEL_ID = '1749584679784093';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -28,16 +30,60 @@ function trackEvent(eventName: string, params?: Record<string, string>) {
   }
 }
 
-function trackMeta(eventName: string, params?: Record<string, string | boolean>) {
+function trackMetaGo(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq('trackCustom', eventName, params);
+    window.fbq('trackSingle', META_PIXEL_ID, eventName, params);
   }
 }
 
-function trackMetaStandard(eventName: string, params?: Record<string, string>) {
-  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq('track', eventName, params);
-  }
+/**
+ * Initializes Meta Pixel for /go page:
+ * - Loads fbevents.js (if not already loaded)
+ * - Inits pixel with ID 1749584679784093
+ * - Fires PageView on mount
+ * - Fires ViewContent once user scrolls past 25% of page
+ */
+function useMetaPixel() {
+  const viewContentFired = useRef(false);
+
+  useEffect(() => {
+    // Load the SDK if not already present
+    if (typeof window.fbq === 'undefined') {
+      const n: any = (window.fbq = function (...args: unknown[]) {
+        n.callMethod ? n.callMethod(...args) : n.queue.push(args);
+      });
+      (window as any)._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = '2.0';
+      n.queue = [] as unknown[][];
+      const t = document.createElement('script');
+      t.async = true;
+      t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      const s = document.getElementsByTagName('script')[0];
+      s?.parentNode?.insertBefore(t, s);
+    }
+
+    // Init this pixel & fire PageView
+    window.fbq('init', META_PIXEL_ID);
+    window.fbq('trackSingle', META_PIXEL_ID, 'PageView');
+  }, []);
+
+  // ViewContent on scroll engagement (25% of page)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (viewContentFired.current) return;
+      const scrollPercent =
+        window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      if (scrollPercent >= 0.25) {
+        viewContentFired.current = true;
+        trackMetaGo('ViewContent', { content_name: '30 Roofs Landing' });
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 }
 
 /* ─── Questionnaire Modal ─── */
@@ -70,21 +116,18 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const handleSizeSelect = (size: string) => {
     setBusinessSize(size);
     trackEvent('quiz_step', { step: 'business_size', value: size });
-    trackMeta('QuizStep', { step: 'business_size', value: size });
     setTimeout(() => setStep('contact'), 300);
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     trackEvent('quiz_step', { step: 'contact_info' });
-    trackMeta('QuizStep', { step: 'contact_info' });
     setStep('roi');
   };
 
   const handleRoiSelect = (value: boolean) => {
     setCanInvest(value);
     trackEvent('quiz_step', { step: 'roi_question', value: value ? 'yes' : 'no' });
-    trackMeta('QuizStep', { step: 'roi_question', value: value ? 'yes' : 'no' });
     setTimeout(() => setStep('disclaimers'), 300);
   };
 
@@ -120,11 +163,11 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       });
       if (res.ok) {
         trackEvent('generate_lead', { source: 'roofing_landing', business_size: businessSize });
-        trackMetaStandard('Lead', { content_name: '30 Roofs in 30 Days', content_category: 'roofing_landing' });
+        trackMetaGo('Lead', { content_name: '30 Roofs in 30 Days', content_category: 'roofing_landing' });
         setStep('done');
         setTimeout(() => {
           trackEvent('booking_redirect', { source: 'roofing_landing' });
-          trackMetaStandard('Schedule', { content_name: 'Cal.com Booking' });
+          trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
           window.location.href = BOOKING_URL;
         }, 2000);
       } else {
@@ -430,13 +473,12 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             {(['size', 'contact', 'roi', 'disclaimers'] as const).map((s, i) => (
               <div
                 key={s}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  s === step
-                    ? 'w-8 bg-gradient-skye'
-                    : i < ['size', 'contact', 'roi', 'disclaimers'].indexOf(step)
+                className={`h-1.5 rounded-full transition-all duration-300 ${s === step
+                  ? 'w-8 bg-gradient-skye'
+                  : i < ['size', 'contact', 'roi', 'disclaimers'].indexOf(step)
                     ? 'w-2 bg-[#40c9ff]/60'
                     : 'w-2 bg-white/20'
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -517,9 +559,12 @@ export default function RoofingLanding() {
   const [showQuiz, setShowQuiz] = useState(false);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
+  // Initialize Meta Pixel for this page
+  useMetaPixel();
+
   const openQuiz = (source: string) => {
     trackEvent('cta_click', { source });
-    trackMetaStandard('ViewContent', { content_name: 'Book Call CTA', content_category: source });
+    trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source });
     setShowQuiz(true);
   };
 
