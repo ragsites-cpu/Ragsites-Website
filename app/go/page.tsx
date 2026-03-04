@@ -193,9 +193,11 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       });
       if (res.ok) {
         trackEvent('generate_lead', { source: 'roofing_landing', business_size: businessSize });
+        trackMetaGo('Lead', { content_name: 'Roofing Quiz Submit', content_category: 'roofing_landing' });
         setStep('done');
         setTimeout(() => {
           trackEvent('booking_redirect', { source: 'roofing_landing' });
+          trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
           window.location.href = BOOKING_URL;
         }, 2000);
       } else {
