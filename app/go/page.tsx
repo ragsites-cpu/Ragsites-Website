@@ -633,6 +633,25 @@ export default function RoofingLanding() {
         </div>
       </section>
 
+      {/* Reviews */}
+      <section className="py-20 px-4 bg-black">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-center text-sm font-semibold text-[#40c9ff] tracking-wide uppercase mb-2">
+            Real Results
+          </p>
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
+            What Roofing Contractors <span className="text-gradient-skye">Are Saying</span>
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {['/review2.jpeg', '/review3.jpeg', '/review5.jpeg', '/review6.jpeg', '/review7.jpeg', '/review8.jpeg', '/review9.jpeg', '/review10.jpeg'].map((src) => (
+              <div key={src} className="rounded-2xl overflow-hidden border border-white/10">
+                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="py-24 px-4 relative overflow-hidden">
         <div className="glow-orb glow-orb-purple w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
