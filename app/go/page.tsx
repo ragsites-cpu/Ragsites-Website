@@ -587,7 +587,7 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section — matching main page style */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-16 pb-8">
+      <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-16 pb-4">
         {/* Background Video */}
         <video
           autoPlay
@@ -613,7 +613,7 @@ export default function RoofingLanding() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-yellow-500 border border-yellow-400"
+            className="mb-4 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-yellow-500 border border-yellow-400"
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
@@ -621,7 +621,7 @@ export default function RoofingLanding() {
             </span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white">
+          <h1 className="text-5xl md:text-8xl font-black mb-4 leading-[1.1] tracking-tight text-white">
             {'30 Roof Replacement'.split('').map((char, i) => (
               <motion.span
                 key={`line1-${i}`}
@@ -652,7 +652,7 @@ export default function RoofingLanding() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.8 }}
-            className="text-2xl md:text-4xl font-black mb-10"
+            className="text-2xl md:text-4xl font-black mb-6"
           >
             <span className="text-gradient-skye">Or You Don&apos;t Pay.</span>
           </motion.p>
@@ -661,11 +661,11 @@ export default function RoofingLanding() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 2.2 }}
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-3"
           >
             <button
               onClick={() => openQuiz('hero')}
-              className="group relative flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
+              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
             >
               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
               <Phone className="w-8 h-8 animate-pulse" />
@@ -680,7 +680,7 @@ export default function RoofingLanding() {
       </section>
 
       {/* Reviews */}
-      <section className="pt-16 pb-2 px-4 bg-black">
+      <section className="pt-8 pb-2 px-4 bg-black">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-sm font-semibold text-[#40c9ff] tracking-wide uppercase mb-2">
             Real Results
