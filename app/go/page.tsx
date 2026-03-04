@@ -18,7 +18,7 @@ import Image from 'next/image';
 
 /* ─── Configuration ─── */
 
-const BOOKING_URL = 'https://cal.com/ragsite/30min?user=ragsite';
+const BOOKING_URL = '/go/book';
 
 /* ─── Analytics Helpers ─── */
 
@@ -163,11 +163,9 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       });
       if (res.ok) {
         trackEvent('generate_lead', { source: 'roofing_landing', business_size: businessSize });
-        trackMetaGo('Lead', { content_name: '30 Roofs in 30 Days', content_category: 'roofing_landing' });
         setStep('done');
         setTimeout(() => {
           trackEvent('booking_redirect', { source: 'roofing_landing' });
-          trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
           window.location.href = BOOKING_URL;
         }, 2000);
       } else {
@@ -688,10 +686,10 @@ export default function RoofingLanding() {
           <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
             What Roofing Contractors <span className="text-gradient-skye">Are Saying</span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {['/review2.jpeg', '/review3.jpeg', '/review5.jpeg', '/review6.jpeg', '/review7.jpeg', '/review8.jpeg', '/review9.jpeg', '/review10.png'].map((src) => (
-              <button key={src} onClick={() => setLightboxSrc(src)} className="rounded-2xl overflow-hidden border border-white/10 aspect-[4/3] cursor-pointer hover:border-white/30 hover:scale-[1.02] transition-all">
-                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-full object-cover" />
+              <button key={src} onClick={() => setLightboxSrc(src)} className="rounded-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300">
+                <Image src={src} alt="Client review" width={600} height={450} className="w-full h-auto object-contain rounded-xl" />
               </button>
             ))}
           </div>
