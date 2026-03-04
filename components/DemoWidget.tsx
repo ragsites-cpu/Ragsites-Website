@@ -149,10 +149,10 @@ export default function DemoWidget() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-brand-primary">
-            Try It With <span className="text-brand-accent">Your Business</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Try It With <span className="text-gradient-skye">Your Business</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-xl mx-auto">
+          <p className="text-xl text-slate-400 max-w-xl mx-auto">
             Drop your website URL and talk to a personalized AI receptionist in under 1 minute
           </p>
         </motion.div>
