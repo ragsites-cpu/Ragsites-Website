@@ -96,11 +96,27 @@ const BUSINESS_SIZES = [
   '$10M+ per year',
 ];
 
-type QuizStep = 'size' | 'contact' | 'roi' | 'disclaimers' | 'submitting' | 'done';
+const ROOFS_PER_MONTH = [
+  '0 - 1 roofs per month',
+  '2 - 4 roofs per month',
+  '5 - 8 roofs per month',
+  '9+ roofs per month',
+];
+
+const LICENSING_OPTIONS = [
+  "Yes we're fully licensed, bonded, & insured",
+  'We have some, but not all of these',
+  'No, we\'re working on getting these in place',
+  'No, I\'m not a roofing contractor',
+];
+
+type QuizStep = 'size' | 'roofs' | 'licensing' | 'contact' | 'roi' | 'disclaimers' | 'submitting' | 'done';
 
 function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState<QuizStep>('size');
   const [businessSize, setBusinessSize] = useState('');
+  const [roofsPerMonth, setRoofsPerMonth] = useState('');
+  const [licensingStatus, setLicensingStatus] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -108,7 +124,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
     website: '',
     city: '',
   });
-  const [canInvest, setCanInvest] = useState<boolean | null>(null);
+  const [timeline, setTimeline] = useState('');
   const [meetingCommit, setMeetingCommit] = useState(false);
   const [spamConsent, setSpamConsent] = useState(false);
   const [error, setError] = useState('');
@@ -116,19 +132,31 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const handleSizeSelect = (size: string) => {
     setBusinessSize(size);
     trackEvent('quiz_step', { step: 'business_size', value: size });
+    setTimeout(() => setStep('roofs'), 300);
+  };
+
+  const handleRoofsSelect = (value: string) => {
+    setRoofsPerMonth(value);
+    trackEvent('quiz_step', { step: 'roofs_per_month', value });
+    setTimeout(() => setStep('licensing'), 300);
+  };
+
+  const handleLicensingSelect = (value: string) => {
+    setLicensingStatus(value);
+    trackEvent('quiz_step', { step: 'licensing_status', value });
+    setTimeout(() => setStep('roi'), 300);
+  };
+
+  const handleTimelineSelect = (value: string) => {
+    setTimeline(value);
+    trackEvent('quiz_step', { step: 'timeline', value });
     setTimeout(() => setStep('contact'), 300);
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     trackEvent('quiz_step', { step: 'contact_info' });
-    setStep('roi');
-  };
-
-  const handleRoiSelect = (value: boolean) => {
-    setCanInvest(value);
-    trackEvent('quiz_step', { step: 'roi_question', value: value ? 'yes' : 'no' });
-    setTimeout(() => setStep('disclaimers'), 300);
+    setStep('disclaimers');
   };
 
   const handleFinalSubmit = async () => {
@@ -153,7 +181,9 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
     body.append('website', formData.website);
     body.append('city', formData.city);
     body.append('business_size', businessSize);
-    body.append('can_invest_1000_roi', canInvest ? 'Yes' : 'No');
+    body.append('roofs_per_month', roofsPerMonth);
+    body.append('licensing_status', licensingStatus);
+    body.append('timeline', timeline);
     body.append('campaign', '30 Roofs in 30 Days');
 
     try {
@@ -220,7 +250,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 1 of 4
+                Step 1 of 6
               </p>
               <h3 className="text-2xl font-bold text-white mb-2">
                 What&apos;s the size of your business?
@@ -241,7 +271,69 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             </motion.div>
           )}
 
-          {/* ─── Step 2: Contact Info ─── */}
+          {/* ─── Step 2: Roofs Per Month ─── */}
+          {step === 'roofs' && (
+            <motion.div
+              key="roofs"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+                Step 2 of 6
+              </p>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                Roughly how many roofs does your company typically complete in a month?
+              </h3>
+              <p className="text-slate-400 text-sm mb-8">This helps us understand your capacity</p>
+
+              <div className="space-y-3">
+                {ROOFS_PER_MONTH.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => handleRoofsSelect(option)}
+                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Step 3: Licensing Status ─── */}
+          {step === 'licensing' && (
+            <motion.div
+              key="licensing"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3 }}
+            >
+              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+                Step 3 of 6
+              </p>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                Are you licensed, bonded, &amp; insured?
+              </h3>
+              <p className="text-slate-400 text-sm mb-8">Select the option that best describes your situation</p>
+
+              <div className="space-y-3">
+                {LICENSING_OPTIONS.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => handleLicensingSelect(option)}
+                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Step 5: Contact Info ─── */}
           {step === 'contact' && (
             <motion.div
               key="contact"
@@ -251,7 +343,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 2 of 4
+                Step 5 of 6
               </p>
               <h3 className="text-2xl font-bold text-white mb-2">Your Contact Details</h3>
               <p className="text-slate-400 text-sm mb-8">
@@ -327,7 +419,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             </motion.div>
           )}
 
-          {/* ─── Step 3: ROI Question ─── */}
+          {/* ─── Step 4: Timeline ─── */}
           {step === 'roi' && (
             <motion.div
               key="roi"
@@ -337,32 +429,28 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 3 of 4
+                Step 4 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-2">One Quick Question</h3>
-              <p className="text-slate-300 text-lg mt-6 mb-8 leading-relaxed">
-                If there was a 1000% <span className="text-[#40c9ff] font-bold">GUARANTEED</span>{' '}
-                ROI &mdash; do you have the financial ability to invest?
-              </p>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                If we are a good fit, when could we get started?
+              </h3>
+              <p className="text-slate-400 text-sm mb-8">Select the best option</p>
 
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => handleRoiSelect(true)}
-                  className="px-6 py-5 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
-                >
-                  Yes
-                </button>
-                <button
-                  onClick={() => handleRoiSelect(false)}
-                  className="px-6 py-5 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg hover:bg-white/10 hover:border-white/20 transition-all duration-200 hover:scale-[1.02]"
-                >
-                  No
-                </button>
+              <div className="space-y-3">
+                {['This week', 'This month', 'Unsure'].map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => handleTimelineSelect(option)}
+                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                  >
+                    {option}
+                  </button>
+                ))}
               </div>
             </motion.div>
           )}
 
-          {/* ─── Step 4: Disclaimers ─── */}
+          {/* ─── Step 6: Disclaimers ─── */}
           {step === 'disclaimers' && (
             <motion.div
               key="disclaimers"
@@ -372,7 +460,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 4 of 4
+                Step 6 of 6
               </p>
               <h3 className="text-2xl font-bold text-white mb-6">Almost There!</h3>
 
@@ -468,12 +556,12 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         {/* Progress dots */}
         {!['submitting', 'done'].includes(step) && (
           <div className="flex justify-center gap-2 mt-8">
-            {(['size', 'contact', 'roi', 'disclaimers'] as const).map((s, i) => (
+            {(['size', 'roofs', 'licensing', 'roi', 'contact', 'disclaimers'] as const).map((s, i) => (
               <div
                 key={s}
                 className={`h-1.5 rounded-full transition-all duration-300 ${s === step
                   ? 'w-8 bg-gradient-skye'
-                  : i < ['size', 'contact', 'roi', 'disclaimers'].indexOf(step)
+                  : i < ['size', 'roofs', 'licensing', 'contact', 'roi', 'disclaimers'].indexOf(step)
                     ? 'w-2 bg-[#40c9ff]/60'
                     : 'w-2 bg-white/20'
                   }`}
