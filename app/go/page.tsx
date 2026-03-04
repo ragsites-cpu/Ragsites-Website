@@ -644,8 +644,8 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['/review2.jpeg', '/review3.jpeg', '/review5.jpeg', '/review6.jpeg', '/review7.jpeg', '/review8.jpeg', '/review9.jpeg', '/review10.png'].map((src) => (
-              <div key={src} className="rounded-2xl overflow-hidden border border-white/10">
-                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
+              <div key={src} className="rounded-2xl overflow-hidden border border-white/10 aspect-[4/3]">
+                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
