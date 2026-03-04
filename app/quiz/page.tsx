@@ -92,15 +92,14 @@ function trackMetaStandard(eventName: string, params?: Record<string, string>) {
 /* ─── Review Images ─── */
 
 const REVIEW_IMAGES = [
-  '/reveiw1.jpeg',
   '/review2.jpeg',
   '/review3.jpeg',
-  '/review4.jpeg',
   '/review5.jpeg',
   '/review6.jpeg',
   '/review7.jpeg',
   '/review8.jpeg',
   '/review9.jpeg',
+  '/review10.jpeg',
 ];
 
 const HEARTS = [

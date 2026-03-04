@@ -40,97 +40,6 @@ function trackMetaStandard(eventName: string, params?: Record<string, string>) {
   }
 }
 
-/* ─── Review Images ─── */
-
-const REVIEW_IMAGES = [
-  '/reveiw1.jpeg',
-  '/review2.jpeg',
-  '/review3.jpeg',
-  '/review4.jpeg',
-  '/review5.jpeg',
-  '/review6.jpeg',
-  '/review7.jpeg',
-  '/review8.jpeg',
-  '/review9.jpeg',
-];
-
-/* ─── Floating Hearts ─── */
-
-const HEARTS = [
-  { left: '5%', size: 18, duration: '7s', delay: '0s', color: 'text-red-400' },
-  { left: '15%', size: 14, duration: '5.5s', delay: '1.2s', color: 'text-pink-300' },
-  { left: '28%', size: 20, duration: '8s', delay: '0.5s', color: 'text-red-500' },
-  { left: '40%', size: 12, duration: '6s', delay: '2.5s', color: 'text-pink-400' },
-  { left: '52%', size: 16, duration: '7.5s', delay: '1s', color: 'text-red-300' },
-  { left: '65%', size: 22, duration: '6.5s', delay: '3s', color: 'text-pink-500' },
-  { left: '75%', size: 14, duration: '5s', delay: '0.8s', color: 'text-red-400' },
-  { left: '88%', size: 18, duration: '7s', delay: '2s', color: 'text-pink-300' },
-  { left: '95%', size: 12, duration: '6s', delay: '1.5s', color: 'text-red-300' },
-  { left: '35%', size: 10, duration: '8.5s', delay: '3.5s', color: 'text-pink-400' },
-  { left: '58%', size: 16, duration: '5.8s', delay: '0.3s', color: 'text-red-500' },
-  { left: '82%', size: 20, duration: '7.2s', delay: '2.8s', color: 'text-pink-300' },
-];
-
-function FloatingHearts() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {HEARTS.map((h, i) => (
-        <span
-          key={i}
-          className={`absolute bottom-0 animate-float-heart ${h.color}`}
-          style={{
-            left: h.left,
-            fontSize: h.size,
-            '--heart-duration': h.duration,
-            '--heart-delay': h.delay,
-          } as React.CSSProperties}
-        >
-          &#x2764;&#xFE0F;
-        </span>
-      ))}
-    </div>
-  );
-}
-
-/* ─── Reviews Carousel ─── */
-
-function ReviewsCarousel() {
-  const row1 = [...REVIEW_IMAGES, ...REVIEW_IMAGES];
-  const row2 = [...[...REVIEW_IMAGES].reverse(), ...[...REVIEW_IMAGES].reverse()];
-
-  return (
-    <section className="py-10 px-4 relative overflow-hidden">
-      <FloatingHearts />
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <p className="text-center text-sm font-semibold text-[#40c9ff] tracking-wide uppercase mb-2">
-          Real Results
-        </p>
-        <h2 className="text-3xl md:text-4xl font-black text-center mb-10">
-          What Roofing Contractors <span className="text-gradient-skye">Are Saying</span>
-        </h2>
-
-        <div className="space-y-4 overflow-hidden">
-          <div className="animate-marquee-left flex gap-4 w-max">
-            {row1.map((src, i) => (
-              <div key={`r1-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
-              </div>
-            ))}
-          </div>
-          <div className="animate-marquee-right flex gap-4 w-max">
-            {row2.map((src, i) => (
-              <div key={`r2-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─── Questionnaire Modal ─── */
 
 const BUSINESS_SIZES = [
@@ -723,9 +632,6 @@ export default function RoofingLanding() {
           </motion.div>
         </div>
       </section>
-
-      {/* Reviews Carousel */}
-      <ReviewsCarousel />
 
       {/* Final CTA */}
       <section className="py-24 px-4 relative overflow-hidden">
