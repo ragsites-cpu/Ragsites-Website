@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import {
   Phone,
   ArrowRight,
@@ -139,16 +139,6 @@ function CalInlineBooking() {
           },
         });
 
-        window.Cal('on', {
-          action: 'bookingSuccessfulV2',
-          callback: () => {
-            trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
-            setTimeout(() => {
-              window.location.href = THANK_YOU_URL;
-            }, 1500);
-          },
-        });
-
         window.Cal('ui', {
           theme: 'dark',
           styles: { branding: { brandColor: '#40c9ff' } },
@@ -160,12 +150,8 @@ function CalInlineBooking() {
   }, []);
 
   return (
-    <motion.div
+    <div
       key="booking"
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -30 }}
-      transition={{ duration: 0.3 }}
     >
       <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
         Final Step
@@ -181,11 +167,11 @@ function CalInlineBooking() {
         className="w-full min-h-[450px] rounded-xl overflow-hidden flex items-center justify-center"
       >
         <div className="text-center">
-          <Loader2 className="w-10 h-10 text-[#40c9ff] animate-spin mx-auto mb-3" />
+          <Loader2 className="w-10 h-10 text-[#40c9ff]  mx-auto mb-3" />
           <p className="text-slate-400 text-sm">Loading calendar...</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -311,21 +297,14 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.3 }}
+      <div
         className={`relative z-10 w-full dark-glass-card p-8 md:p-10 border-white/10 bg-[#0a0a0a] overflow-y-auto max-h-[90vh] ${step === 'booking' ? 'max-w-4xl' : 'max-w-lg'}`}
       >
         {/* Close button */}
@@ -336,15 +315,11 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
           <X className="w-4 h-4 text-white" />
         </button>
 
-        <AnimatePresence mode="wait">
+        <>
           {/* ─── Step 1: Business Size ─── */}
           {step === 'size' && (
-            <motion.div
+            <div
               key="size"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 1 of 6
@@ -365,17 +340,13 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                   </button>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Step 2: Roofs Per Month ─── */}
           {step === 'roofs' && (
-            <motion.div
+            <div
               key="roofs"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 2 of 6
@@ -396,17 +367,13 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                   </button>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Step 3: Licensing Status ─── */}
           {step === 'licensing' && (
-            <motion.div
+            <div
               key="licensing"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 3 of 6
@@ -427,17 +394,13 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                   </button>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Step 5: Contact Info ─── */}
           {step === 'contact' && (
-            <motion.div
+            <div
               key="contact"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 5 of 6
@@ -513,17 +476,13 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                   <ArrowRight className="w-5 h-5" />
                 </button>
               </form>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Step 4: Timeline ─── */}
           {step === 'roi' && (
-            <motion.div
+            <div
               key="roi"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 4 of 6
@@ -544,17 +503,13 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                   </button>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Step 6: Disclaimers ─── */}
           {step === 'disclaimers' && (
-            <motion.div
+            <div
               key="disclaimers"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
             >
               <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 6 of 6
@@ -613,30 +568,24 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                 Book My Call Now
                 <ArrowRight className="w-5 h-5" />
               </button>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Submitting ─── */}
           {step === 'submitting' && (
-            <motion.div
+            <div
               key="submitting"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               className="text-center py-8"
             >
-              <Loader2 className="w-12 h-12 text-[#40c9ff] animate-spin mx-auto mb-4" />
+              <Loader2 className="w-12 h-12 text-[#40c9ff]  mx-auto mb-4" />
               <p className="text-white font-bold text-lg">Reserving your spot...</p>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Done ─── */}
           {step === 'done' && (
-            <motion.div
+            <div
               key="done"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
               className="text-center py-8"
             >
               <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
@@ -646,14 +595,14 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               <p className="text-slate-400 text-sm">
                 Loading the calendar...
               </p>
-            </motion.div>
+            </div>
           )}
 
           {/* ─── Booking (Cal.com inline) ─── */}
           {step === 'booking' && (
             <CalInlineBooking />
           )}
-        </AnimatePresence>
+        </>
 
         {/* Progress dots */}
         {!['submitting', 'done', 'booking'].includes(step) && (
@@ -671,8 +620,8 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             ))}
           </div>
         )}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
@@ -722,21 +671,17 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           +
         </span>
       </button>
-      <AnimatePresence>
+      <>
         {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+          <div
             className="overflow-hidden"
           >
             <p className="pb-6 text-slate-400 leading-relaxed whitespace-pre-line">
               {answer}
             </p>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </>
     </div>
   );
 }
@@ -784,58 +729,31 @@ export default function RoofingLanding() {
 
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+          <div
             className="mb-4 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-yellow-500 border border-yellow-400"
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
-              WARNING: This Is ONLY For Roofers With Sub Crews That Can Handle 3 New Installs A Week.
+              WARNING: This Is ONLY For Roofers With Sub Crews That Can Handle New Installs Weekly.
             </span>
-          </motion.div>
-
-          <h1 className="text-5xl md:text-8xl font-black mb-4 leading-[1.1] tracking-tight text-white">
-            {'30 Roof Replacement'.split('').map((char, i) => (
-              <motion.span
-                key={`line1-${i}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.03, delay: 0.2 + i * 0.04 }}
-              >
-                {char}
-              </motion.span>
-            ))}
-            <br />
-            {'Jobs in 30 Days.'.split('').map((char, i) => (
-              <motion.span
-                key={`line2-${i}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  duration: 0.03,
-                  delay: 0.2 + 20 * 0.04 + i * 0.04,
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
+          </div>
+          <h1
+            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-12 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
+            style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
+          >
+            <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
+              <span>30 ROOF REPLACEMENT</span>
+              <span>JOBS IN 30 DAYS</span>
+              <span>OR</span>
+            </div>
+            <div className="flex flex-wrap justify-center mt-3 md:mt-5 text-center">
+              <span className="text-gradient-skye border-b-[6px] md:border-b-[8px] border-[#c026d3] pb-0 md:pb-1 leading-[0.85]">
+                YOU DON&apos;T PAY
+              </span>
+            </div>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.8 }}
-            className="text-2xl md:text-4xl font-black mb-6"
-          >
-            <span className="text-gradient-skye">Or You Don&apos;t Pay.</span>
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.2 }}
+          <div
             className="flex flex-col items-center gap-3"
           >
             <button
@@ -843,14 +761,14 @@ export default function RoofingLanding() {
               className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
             >
               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
-              <Phone className="w-8 h-8 animate-pulse" />
+              <Phone className="w-8 h-8 " />
               Book Call Now
             </button>
             <p className="text-slate-400 flex items-center gap-2 text-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-green-400 " />
               Limited spots available &mdash; only 5 new clients per month
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -861,7 +779,7 @@ export default function RoofingLanding() {
             Real Results
           </p>
           <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
-            What Roofing Contractors <span className="text-gradient-skye">Are Saying</span>
+            Our AI <span className="text-gradient-skye">Success Stories</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {['/review2.jpeg', '/review3.jpeg', '/review5.jpeg', '/review6.jpeg', '/review7.jpeg', '/review8.jpeg', '/review9.jpeg', '/review10.png'].map((src) => (
@@ -930,13 +848,10 @@ export default function RoofingLanding() {
       </footer>
 
       {/* Review Lightbox */}
-      <AnimatePresence>
+      <>
         {lightboxSrc && (
-          <motion.div
+          <div
             key="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
             onClick={() => setLightboxSrc(null)}
           >
@@ -946,11 +861,7 @@ export default function RoofingLanding() {
             >
               <X className="w-8 h-8" />
             </button>
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            <div
               className="max-w-4xl max-h-[90vh] w-full"
               onClick={(e) => e.stopPropagation()}
             >
@@ -961,15 +872,15 @@ export default function RoofingLanding() {
                 height={900}
                 className="w-full h-auto rounded-2xl object-contain"
               />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      </>
 
       {/* Questionnaire Modal */}
-      <AnimatePresence>
+      <>
         {showQuiz && <QuestionnaireModal onClose={() => setShowQuiz(false)} />}
-      </AnimatePresence>
+      </>
     </main>
   );
 }
