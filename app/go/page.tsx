@@ -811,19 +811,22 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
             {[
-              'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA',
-              'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8',
-              '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams',
-              'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E',
-            ].map((playbackId, index) => (
-              <div key={index} className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
-                <iframe
-                  src={`https://player.mux.com/${playbackId}`}
-                  style={{ width: '100%', height: '100%', border: 'none' }}
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  title={`Success Story Video ${index + 1}`}
-                />
+              { id: 'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA', quote: '"It\'s A Game Changer"' },
+              { id: 'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8', quote: '"I\'m Not on the Phone Until 9 PM Anymore"' },
+              { id: '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams', quote: '"It\'s Not Just Leads, It\'s Actual Work"' },
+              { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', quote: '"I\'m Not Chasing People Who Aren\'t Interested"' },
+            ].map((video, index) => (
+              <div key={index} className="flex flex-col">
+                <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.quote}</p>
+                <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
+                  <iframe
+                    src={`https://player.mux.com/${video.id}`}
+                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    title={`Success Story Video ${index + 1}`}
+                  />
+                </div>
               </div>
             ))}
           </div>
