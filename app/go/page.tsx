@@ -659,27 +659,27 @@ const FAQS = [
   {
     question: 'What Do You Guys Do?',
     answer:
-      'Ragsites is a leading AI-powered lead generation solution dedicated to helping roofers grow their business. We dominate both organic and paid traffic to establish you as a trusted pillar in your community, crafting compelling ads and personalized AI lead qualification systems that ensure a successful launch and rapid results. Our streamlined, automated system pre-qualifies your leads before you go out for estimates, allowing you to focus on closing deals and scaling your roofing business with confidence.',
+      'Ragsites is a leading AI-powered lead and revenue generation solution dedicated to helping roofers grow their business. We dominate both organic and paid traffic to establish you as a trusted pillar in your community, crafting compelling ads and personalized AI lead qualification systems that ensure a successful launch and rapid results. Our streamlined, automated system pre-qualifies your leads before you go out for estimates, allowing you to focus on closing deals and scaling your roofing business with confidence.',
   },
   {
     question: 'How Much Does It Cost?',
     answer:
-      "How much is it worth to you? If we added an additional $150k to your top line in the next 3 months, what would you be willing to pay?\n\nWe don't have a one-size-fits-all approach. We build a customized game plan tailored to your specific needs and will try to work within your budget if possible.\n\nIf you are a tire-kicker looking for the cheapest way to \"get more leads\" — we are not a good fit for you. If you want serious, pre-qualified exclusive booked estimates — we've got you.",
+      "Think about it this way: if we put an extra $150k on your books over the next 90 days, what would that be worth to you?\n\nThere is no cookie-cutter pricing here. Every plan we put together is built around your business, your goals, and your budget.\n\nIf you are shopping around for the cheapest lead source, we are probably not the right fit. But if you want exclusive, pre-qualified roof replacement estimates on your calendar, that is exactly what we deliver.",
   },
   {
     question: 'Do You Pre-Qualify Leads?',
     answer:
-      "Every lead we deliver is thoroughly pre-qualified through a proven system of targeted assessments and AI-powered filters that verify each prospect's intent, interest, and readiness to buy. By ensuring only serious homeowners make it through, we save your team time, increase the efficiency of your sales process, and maximize your chances of closing successful deals.",
+      "Absolutely. Before a lead ever reaches your team, it goes through our multi-step qualification process powered by AI. We verify homeowner status, project scope, damage type, and buying intent so your crew only shows up to appointments that are worth the trip. No more wasted afternoons chasing tire kickers.",
   },
   {
     question: 'Do I Own Everything?',
     answer:
-      'We believe in giving our clients complete ownership and control. Every system we build and integrate into your business is 100% yours, providing the freedom and flexibility to manage and operate it independently if you choose. Our goal is to ensure you have full command over the tools and strategies we implement, so your business can continue to grow and thrive with or without our direct involvement.',
+      'Yes, 100%. Every asset, system, and tool we create for your business belongs entirely to you. If you ever decide to part ways, you walk away with everything. We build it, hand you the keys, and you have full control to run it however you see fit.',
   },
   {
     question: 'How Do You Guarantee Results?',
     answer:
-      "Our confidence in delivering results comes from a proven track record of success. We've refined our AI-driven systems into a set of strategies that consistently produce measurable outcomes. By leveraging these tested methods, we ensure every client experiences significant improvements in both operations and sales — allowing us to confidently guarantee 30 roof replacement jobs in 30 days or you don't pay.",
+      "Simple: we have done this enough times to know what works. Our AI-powered lead systems have been battle-tested across dozens of roofing companies, and the data speaks for itself. We are so confident in the process that we guarantee 30 roof replacement jobs in 30 days, or you do not pay. No fine print, no runaround.",
   },
 ];
 
@@ -841,6 +841,23 @@ export default function RoofingLanding() {
         </div>
       </section>
 
+      {/* FAQs */}
+      <section className="py-20 px-4 bg-slate-50">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
+            Got A <span className="text-gradient-skye">Question?</span>
+          </h2>
+          <p className="text-slate-600 text-center mb-12">
+            Here are some of the most common questions we get.
+          </p>
+          <div>
+            {FAQS.map((faq) => (
+              <FaqItem key={faq.question} {...faq} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="pt-6 pb-24 px-4 relative overflow-hidden">
 
@@ -860,23 +877,6 @@ export default function RoofingLanding() {
             Book Call Now
             <ArrowRight className="w-7 h-7" />
           </button>
-        </div>
-      </section>
-
-      {/* FAQs */}
-      <section className="py-20 px-4 bg-slate-50">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
-            Got A <span className="text-gradient-skye">Question?</span>
-          </h2>
-          <p className="text-slate-600 text-center mb-12">
-            Here are some of the most common questions we get.
-          </p>
-          <div>
-            {FAQS.map((faq) => (
-              <FaqItem key={faq.question} {...faq} />
-            ))}
-          </div>
         </div>
       </section>
 
