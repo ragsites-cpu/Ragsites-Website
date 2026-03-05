@@ -781,17 +781,19 @@ export default function RoofingLanding() {
           <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
             Our <span className="text-gradient-skye">Success Stories</span>
           </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
-            {['Landing_Page_Vid_2.mp4', 'Landing_page_vid_1.mp4', 'Landing_page_vid-4.mp4', 'Landing_page_vid-3.mp4'].map((vid, index) => (
-              <div key={index} className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 flex items-center justify-center">
-                <video
-                  src={`/videos/${vid}`}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-auto max-h-[75vh] object-contain rounded-xl"
-                />
+            {['Qma4y9eXzPQ', 'Zyb9nrZR8lY', 'Lz7PRag_Jmk', 'S0HJRBK_fkU'].map((videoId, index) => (
+              <div key={index} className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
+                  title={`Success Story Video ${index + 1}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full"
+                ></iframe>
               </div>
             ))}
           </div>
