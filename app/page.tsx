@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-react';
 import Image from 'next/image';
+import Script from 'next/script';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import DemoWidget from '@/components/DemoWidget';
@@ -212,6 +213,23 @@ export default function Home() {
 
       {/* Custom Demo Widget */}
       <DemoWidget />
+
+      {/* Testimonials (Senja) */}
+      <section className="py-24 px-4 bg-black">
+        <div className="max-w-6xl mx-auto">
+          <Script
+            src="https://widget.senja.io/widget/88398c53-6761-4590-921a-a67814ac7b12/platform.js"
+            strategy="afterInteractive"
+          />
+          <div
+            className="senja-embed"
+            data-id="88398c53-6761-4590-921a-a67814ac7b12"
+            data-mode="shadow"
+            data-lazyload="false"
+            style={{ display: 'block', width: '100%' }}
+          />
+        </div>
+      </section>
 
       {/* Metrics Section */}
       <section className="py-24 px-4 bg-black border-t border-white/5">
