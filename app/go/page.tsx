@@ -811,13 +811,13 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
             {[
-              { id: 'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA', quote: '"It\'s A Game Changer"' },
-              { id: 'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8', quote: '"I\'m Not on the Phone Until 9 PM Anymore"' },
-              { id: '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams', quote: '"It\'s Not Just Leads, It\'s Actual Work"' },
-              { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', quote: '"I\'m Not Chasing People Who Aren\'t Interested"' },
+              { id: 'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
+              { id: 'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
+              { id: '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
+              { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
-                <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.quote}</p>
+                <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b]">{video.highlight}</span>{video.after}</p>
                 <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
                   <iframe
                     src={`https://player.mux.com/${video.id}`}
