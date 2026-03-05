@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Phone,
@@ -18,7 +18,8 @@ import Image from 'next/image';
 
 /* ─── Configuration ─── */
 
-const BOOKING_URL = '/go/book';
+const CAL_LINK = 'ragsite/30min';
+const THANK_YOU_URL = '/go/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
@@ -64,7 +65,8 @@ function useMetaPixel() {
       s?.parentNode?.insertBefore(t, s);
     }
 
-    // Init this pixel & fire PageView
+    // Disable auto-config so Facebook doesn't auto-track "Subscribe" or other random button click events
+    window.fbq('set', 'autoConfig', false, META_PIXEL_ID);
     window.fbq('init', META_PIXEL_ID);
     window.fbq('trackSingle', META_PIXEL_ID, 'PageView');
   }, []);
@@ -84,6 +86,107 @@ function useMetaPixel() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+}
+
+/* ─── Cal.com Inline Booking ─── */
+
+function CalInlineBooking() {
+  const calReady = useRef(false);
+
+  useEffect(() => {
+    if (calReady.current) return;
+    calReady.current = true;
+
+    // Load Cal.com embed script
+    (function (C: any, A: any, L: string) {
+      const p = function () {
+        if (!(C.Cal as any)?.loaded) {
+          (C.Cal as any) = function (...args: unknown[]) {
+            (C.Cal as any).q = (C.Cal as any).q || [];
+            (C.Cal as any).q.push(args);
+          };
+          (C.Cal as any).ns = {};
+          (C.Cal as any).loaded = true;
+          const d = A as Document;
+          const s = d.createElement(L) as HTMLScriptElement;
+          s.async = true;
+          s.src = 'https://app.cal.com/embed/embed.js';
+          d.head.appendChild(s);
+        }
+      };
+      p();
+    })(window, document, 'script');
+
+    setTimeout(() => {
+      if (typeof window.Cal === 'function') {
+        window.Cal('init', { origin: 'https://app.cal.com' });
+
+        window.Cal('inline', {
+          elementOrSelector: '#cal-embed-modal',
+          calLink: CAL_LINK,
+          layout: 'month_view',
+          config: { theme: 'dark' },
+        });
+
+        // Listen for successful booking → fire Schedule + redirect
+        window.Cal('on', {
+          action: 'bookingSuccessful',
+          callback: () => {
+            trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
+            setTimeout(() => {
+              window.location.href = THANK_YOU_URL;
+            }, 1500);
+          },
+        });
+
+        window.Cal('on', {
+          action: 'bookingSuccessfulV2',
+          callback: () => {
+            trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
+            setTimeout(() => {
+              window.location.href = THANK_YOU_URL;
+            }, 1500);
+          },
+        });
+
+        window.Cal('ui', {
+          theme: 'dark',
+          styles: { branding: { brandColor: '#40c9ff' } },
+          hideEventTypeDetails: false,
+          layout: 'month_view',
+        });
+      }
+    }, 100);
+  }, []);
+
+  return (
+    <motion.div
+      key="booking"
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.3 }}
+    >
+      <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+        Final Step
+      </p>
+      <h3 className="text-2xl font-bold text-white mb-2">
+        Pick a Time That Works For You
+      </h3>
+      <p className="text-slate-400 text-sm mb-6">
+        Select a date and time below to lock in your free strategy call.
+      </p>
+      <div
+        id="cal-embed-modal"
+        className="w-full min-h-[450px] rounded-xl overflow-hidden flex items-center justify-center"
+      >
+        <div className="text-center">
+          <Loader2 className="w-10 h-10 text-[#40c9ff] animate-spin mx-auto mb-3" />
+          <p className="text-slate-400 text-sm">Loading calendar...</p>
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 
 /* ─── Questionnaire Modal ─── */
@@ -110,7 +213,7 @@ const LICENSING_OPTIONS = [
   'No, I\'m not a roofing contractor',
 ];
 
-type QuizStep = 'size' | 'roofs' | 'licensing' | 'contact' | 'roi' | 'disclaimers' | 'submitting' | 'done';
+type QuizStep = 'size' | 'roofs' | 'licensing' | 'contact' | 'roi' | 'disclaimers' | 'submitting' | 'done' | 'booking';
 
 function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState<QuizStep>('size');
@@ -128,34 +231,30 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const [meetingCommit, setMeetingCommit] = useState(false);
   const [spamConsent, setSpamConsent] = useState(false);
   const [error, setError] = useState('');
+  const calInitialized = useRef(false);
 
   const handleSizeSelect = (size: string) => {
     setBusinessSize(size);
-    trackEvent('quiz_step', { step: 'business_size', value: size });
     setTimeout(() => setStep('roofs'), 300);
   };
 
   const handleRoofsSelect = (value: string) => {
     setRoofsPerMonth(value);
-    trackEvent('quiz_step', { step: 'roofs_per_month', value });
     setTimeout(() => setStep('licensing'), 300);
   };
 
   const handleLicensingSelect = (value: string) => {
     setLicensingStatus(value);
-    trackEvent('quiz_step', { step: 'licensing_status', value });
     setTimeout(() => setStep('roi'), 300);
   };
 
   const handleTimelineSelect = (value: string) => {
     setTimeline(value);
-    trackEvent('quiz_step', { step: 'timeline', value });
     setTimeout(() => setStep('contact'), 300);
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    trackEvent('quiz_step', { step: 'contact_info' });
     setStep('disclaimers');
   };
 
@@ -192,12 +291,9 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         body,
       });
       if (res.ok) {
-        trackEvent('generate_lead', { source: 'roofing_landing', business_size: businessSize });
         setStep('done');
         setTimeout(() => {
-          trackEvent('booking_redirect', { source: 'roofing_landing' });
-          trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
-          window.location.href = BOOKING_URL;
+          setStep('booking');
         }, 2000);
       } else {
         setError('Something went wrong. Please try again.');
@@ -230,7 +326,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3 }}
-        className="relative z-10 w-full max-w-lg dark-glass-card p-8 md:p-10 border-white/10 bg-[#0a0a0a] overflow-y-auto max-h-[90vh]"
+        className={`relative z-10 w-full dark-glass-card p-8 md:p-10 border-white/10 bg-[#0a0a0a] overflow-y-auto max-h-[90vh] ${step === 'booking' ? 'max-w-4xl' : 'max-w-lg'}`}
       >
         {/* Close button */}
         <button
@@ -548,14 +644,19 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               </div>
               <h3 className="text-xl font-bold text-white mb-2">You&apos;re In!</h3>
               <p className="text-slate-400 text-sm">
-                Redirecting you to book your call...
+                Loading the calendar...
               </p>
             </motion.div>
+          )}
+
+          {/* ─── Booking (Cal.com inline) ─── */}
+          {step === 'booking' && (
+            <CalInlineBooking />
           )}
         </AnimatePresence>
 
         {/* Progress dots */}
-        {!['submitting', 'done'].includes(step) && (
+        {!['submitting', 'done', 'booking'].includes(step) && (
           <div className="flex justify-center gap-2 mt-8">
             {(['size', 'roofs', 'licensing', 'roi', 'contact', 'disclaimers'] as const).map((s, i) => (
               <div
@@ -650,7 +751,6 @@ export default function RoofingLanding() {
   useMetaPixel();
 
   const openQuiz = (source: string) => {
-    trackEvent('cta_click', { source });
     trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source });
     setShowQuiz(true);
   };
@@ -676,24 +776,12 @@ export default function RoofingLanding() {
       {/* Hero Section — matching main page style */}
       <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-16 pb-4">
         {/* Background Video */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4"
-            type="video/mp4"
-          />
-        </video>
+
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black z-0 pointer-events-none" />
 
         {/* Glow orbs */}
-        <div className="glow-orb glow-orb-purple w-[600px] h-[600px] top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-40 z-0" />
-        <div className="glow-orb glow-orb-blue w-[500px] h-[500px] bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 opacity-30 z-0" />
+
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
           <motion.div
@@ -787,7 +875,7 @@ export default function RoofingLanding() {
 
       {/* Final CTA */}
       <section className="pt-6 pb-24 px-4 relative overflow-hidden">
-        <div className="glow-orb glow-orb-purple w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-black mb-6">
             Ready for 30 Jobs <span className="text-gradient-skye">This Month?</span>
