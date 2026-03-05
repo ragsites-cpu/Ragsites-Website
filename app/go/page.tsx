@@ -217,6 +217,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const [meetingCommit, setMeetingCommit] = useState(false);
   const [spamConsent, setSpamConsent] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ phone?: string; email?: string }>({});
   const calInitialized = useRef(false);
 
   const handleSizeSelect = (size: string) => {
@@ -241,6 +242,24 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const errors: { phone?: string; email?: string } = {};
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setFieldErrors({});
     setStep('disclaimers');
   };
 
@@ -294,6 +313,9 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     if (error) setError('');
+    if (fieldErrors[e.target.name as keyof typeof fieldErrors]) {
+      setFieldErrors((prev) => ({ ...prev, [e.target.name]: undefined }));
+    }
   };
 
   return (
@@ -422,29 +444,35 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                     className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
-                <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <input
-                    name="phone"
-                    type="tel"
-                    required
-                    placeholder="Phone number"
-                    value={formData.phone}
-                    onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
-                  />
+                <div>
+                  <div className="relative">
+                    <Phone className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${fieldErrors.phone ? 'text-red-500' : 'text-slate-500'}`} />
+                    <input
+                      name="phone"
+                      type="tel"
+                      required
+                      placeholder="Phone number"
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      className={`w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border ${fieldErrors.phone ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 text-slate-900 focus:border-[#991b1b] focus:ring-[#991b1b]'} placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-colors`}
+                    />
+                  </div>
+                  {fieldErrors.phone && <p className="text-red-500 text-sm mt-1 px-1 font-bold">{fieldErrors.phone}</p>}
                 </div>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="Email address"
-                    value={formData.email}
-                    onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
-                  />
+                <div>
+                  <div className="relative">
+                    <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${fieldErrors.email ? 'text-red-500' : 'text-slate-500'}`} />
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="Email address"
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      className={`w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border ${fieldErrors.email ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 text-slate-900 focus:border-[#991b1b] focus:ring-[#991b1b]'} placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-colors`}
+                    />
+                  </div>
+                  {fieldErrors.email && <p className="text-red-500 text-sm mt-1 px-1 font-bold">{fieldErrors.email}</p>}
                 </div>
                 <div className="relative">
                   <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
