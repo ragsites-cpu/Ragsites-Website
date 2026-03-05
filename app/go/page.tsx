@@ -810,18 +810,20 @@ export default function RoofingLanding() {
             Our <span className="text-gradient-skye">Success Stories</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
-            {['Qma4y9eXzPQ', 'Zyb9nrZR8lY', 'Lz7PRag_Jmk', 'S0HJRBK_fkU'].map((videoId, index) => (
+            {[
+              'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA',
+              'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E',
+              '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams',
+              'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8',
+            ].map((playbackId, index) => (
               <div key={index} className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
                 <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
-                  title={`Success Story Video ${index + 1}`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  src={`https://player.mux.com/${playbackId}`}
+                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
-                  className="w-full h-full"
-                ></iframe>
+                  title={`Success Story Video ${index + 1}`}
+                />
               </div>
             ))}
           </div>
