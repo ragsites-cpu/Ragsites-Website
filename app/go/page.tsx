@@ -153,13 +153,13 @@ function CalInlineBooking() {
     <div
       key="booking"
     >
-      <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+      <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
         Final Step
       </p>
-      <h3 className="text-2xl font-bold text-white mb-2">
+      <h3 className="text-2xl font-bold text-slate-900 mb-2">
         Pick a Time That Works For You
       </h3>
-      <p className="text-slate-400 text-sm mb-6">
+      <p className="text-slate-600 text-sm mb-6">
         Select a date and time below to lock in your free strategy call.
       </p>
       <div
@@ -167,8 +167,8 @@ function CalInlineBooking() {
         className="w-full min-h-[450px] rounded-xl overflow-hidden flex items-center justify-center"
       >
         <div className="text-center">
-          <Loader2 className="w-10 h-10 text-[#40c9ff]  mx-auto mb-3" />
-          <p className="text-slate-400 text-sm">Loading calendar...</p>
+          <Loader2 className="w-10 h-10 text-[#991b1b]  mx-auto mb-3" />
+          <p className="text-slate-600 text-sm">Loading calendar...</p>
         </div>
       </div>
     </div>
@@ -301,18 +301,18 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
       <div
-        className={`relative z-10 w-full dark-glass-card p-8 md:p-10 border-white/10 bg-[#0a0a0a] overflow-y-auto max-h-[90vh] ${step === 'booking' ? 'max-w-4xl' : 'max-w-lg'}`}
+        className={`relative z-10 w-full glass-card p-8 md:p-10 border-slate-200 bg-white overflow-y-auto max-h-[90vh] ${step === 'booking' ? 'max-w-4xl' : 'max-w-lg'}`}
       >
         {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
         >
-          <X className="w-4 h-4 text-white" />
+          <X className="w-4 h-4 text-slate-900" />
         </button>
 
         <>
@@ -321,20 +321,20 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             <div
               key="size"
             >
-              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 1 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">
                 What&apos;s the size of your business?
               </h3>
-              <p className="text-slate-400 text-sm mb-8">Annual revenue</p>
+              <p className="text-slate-600 text-sm mb-8">Annual revenue</p>
 
               <div className="space-y-3">
                 {BUSINESS_SIZES.map((size) => (
                   <button
                     key={size}
                     onClick={() => handleSizeSelect(size)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
                   >
                     {size}
                   </button>
@@ -348,20 +348,20 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             <div
               key="roofs"
             >
-              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 2 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">
                 Roughly how many roofs does your company typically complete in a month?
               </h3>
-              <p className="text-slate-400 text-sm mb-8">This helps us understand your capacity</p>
+              <p className="text-slate-600 text-sm mb-8">This helps us understand your capacity</p>
 
               <div className="space-y-3">
                 {ROOFS_PER_MONTH.map((option) => (
                   <button
                     key={option}
                     onClick={() => handleRoofsSelect(option)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
                   >
                     {option}
                   </button>
@@ -375,20 +375,20 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             <div
               key="licensing"
             >
-              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 3 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">
                 Are you licensed, bonded, &amp; insured?
               </h3>
-              <p className="text-slate-400 text-sm mb-8">Select the option that best describes your situation</p>
+              <p className="text-slate-600 text-sm mb-8">Select the option that best describes your situation</p>
 
               <div className="space-y-3">
                 {LICENSING_OPTIONS.map((option) => (
                   <button
                     key={option}
                     onClick={() => handleLicensingSelect(option)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
                   >
                     {option}
                   </button>
@@ -402,11 +402,11 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             <div
               key="contact"
             >
-              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 5 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-2">Your Contact Details</h3>
-              <p className="text-slate-400 text-sm mb-8">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Your Contact Details</h3>
+              <p className="text-slate-600 text-sm mb-8">
                 So we can reach out and schedule your strategy call
               </p>
 
@@ -419,7 +419,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                     placeholder="Full name"
                     value={formData.name}
                     onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
                 <div className="relative">
@@ -431,7 +431,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                     placeholder="Phone number"
                     value={formData.phone}
                     onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
                 <div className="relative">
@@ -443,7 +443,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                     placeholder="Email address"
                     value={formData.email}
                     onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
                 <div className="relative">
@@ -453,7 +453,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                     placeholder="Company website"
                     value={formData.website}
                     onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
                 <div className="relative">
@@ -464,13 +464,13 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                     placeholder="City"
                     value={formData.city}
                     onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#40c9ff] focus:ring-1 focus:ring-[#40c9ff] transition-colors"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(232,28,255,0.3)] flex items-center justify-center gap-2 mt-2"
+                  className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(153,27,27,0.3)] flex items-center justify-center gap-2 mt-2"
                 >
                   Continue
                   <ArrowRight className="w-5 h-5" />
@@ -484,20 +484,20 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             <div
               key="roi"
             >
-              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 4 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">
                 If we are a good fit, when could we get started?
               </h3>
-              <p className="text-slate-400 text-sm mb-8">Select the best option</p>
+              <p className="text-slate-600 text-sm mb-8">Select the best option</p>
 
               <div className="space-y-3">
                 {['This week', 'This month', 'Unsure'].map((option) => (
                   <button
                     key={option}
                     onClick={() => handleTimelineSelect(option)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
+                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
                   >
                     {option}
                   </button>
@@ -511,15 +511,15 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
             <div
               key="disclaimers"
             >
-              <p className="text-[#40c9ff] text-xs font-bold uppercase tracking-widest mb-3">
+              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
                 Step 6 of 6
               </p>
-              <h3 className="text-2xl font-bold text-white mb-6">Almost There!</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-6">Almost There!</h3>
 
               {/* Meeting Disclaimer */}
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5 mb-4">
-                <p className="text-slate-300 text-sm leading-relaxed mb-4">
-                  <span className="text-white font-bold">DISCLAIMER:</span> This meeting will be
+              <div className="bg-slate-100 border border-slate-200 rounded-xl p-5 mb-4">
+                <p className="text-slate-700 text-sm leading-relaxed mb-4">
+                  <span className="text-slate-900 font-bold">DISCLAIMER:</span> This meeting will be
                   hosted on Google Meet, the link will be sent in the confirmation email. We have a
                   waiting list and limit the number of clients we take on each month. If you need to
                   reschedule, you must let us know 24h prior to our call.
@@ -532,16 +532,16 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                       setMeetingCommit(e.target.checked);
                       if (error) setError('');
                     }}
-                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#40c9ff] focus:ring-[#40c9ff] bg-transparent"
+                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#991b1b] focus:ring-[#991b1b] bg-transparent"
                   />
-                  <span className="text-sm text-slate-300">
+                  <span className="text-sm text-slate-700">
                     Will you be able to commit and attend to this call at the time of this booking?
                   </span>
                 </label>
               </div>
 
               {/* Spam Disclaimer */}
-              <div className="bg-white/5 border border-white/10 rounded-xl p-5 mb-6">
+              <div className="bg-slate-100 border border-slate-200 rounded-xl p-5 mb-6">
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -550,9 +550,9 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                       setSpamConsent(e.target.checked);
                       if (error) setError('');
                     }}
-                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#40c9ff] focus:ring-[#40c9ff] bg-transparent"
+                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#991b1b] focus:ring-[#991b1b] bg-transparent"
                   />
-                  <span className="text-sm text-slate-300">
+                  <span className="text-sm text-slate-700">
                     We hate spammers and will never spam you. Do you consent to us reaching out in a
                     meaningful way regarding this offer?
                   </span>
@@ -563,7 +563,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
               <button
                 onClick={handleFinalSubmit}
-                className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(232,28,255,0.3)] flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(153,27,27,0.3)] flex items-center justify-center gap-2"
               >
                 Book My Call Now
                 <ArrowRight className="w-5 h-5" />
@@ -577,8 +577,8 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               key="submitting"
               className="text-center py-8"
             >
-              <Loader2 className="w-12 h-12 text-[#40c9ff]  mx-auto mb-4" />
-              <p className="text-white font-bold text-lg">Reserving your spot...</p>
+              <Loader2 className="w-12 h-12 text-[#991b1b]  mx-auto mb-4" />
+              <p className="text-slate-900 font-bold text-lg">Reserving your spot...</p>
             </div>
           )}
 
@@ -591,8 +591,8 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
               <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-emerald-400" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">You&apos;re In!</h3>
-              <p className="text-slate-400 text-sm">
+              <h3 className="text-xl font-bold text-slate-900 mb-2">You&apos;re In!</h3>
+              <p className="text-slate-600 text-sm">
                 Loading the calendar...
               </p>
             </div>
@@ -613,7 +613,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                 className={`h-1.5 rounded-full transition-all duration-300 ${s === step
                   ? 'w-8 bg-gradient-skye'
                   : i < ['size', 'roofs', 'licensing', 'contact', 'roi', 'disclaimers'].indexOf(step)
-                    ? 'w-2 bg-[#40c9ff]/60'
+                    ? 'w-2 bg-[#991b1b]/60'
                     : 'w-2 bg-white/20'
                   }`}
               />
@@ -659,15 +659,15 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-white/10">
+    <div className="border-b border-slate-200">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between py-6 text-left group"
       >
-        <span className="text-lg font-bold text-white group-hover:text-[#40c9ff] transition-colors pr-4">
+        <span className="text-lg font-bold text-slate-900 group-hover:text-[#991b1b] transition-colors pr-4">
           {question}
         </span>
-        <span className={`text-2xl text-slate-400 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
+        <span className={`text-2xl text-slate-600 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
           +
         </span>
       </button>
@@ -676,7 +676,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           <div
             className="overflow-hidden"
           >
-            <p className="pb-6 text-slate-400 leading-relaxed whitespace-pre-line">
+            <p className="pb-6 text-slate-600 leading-relaxed whitespace-pre-line">
               {answer}
             </p>
           </div>
@@ -701,17 +701,17 @@ export default function RoofingLanding() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-slate-50 text-slate-900">
       {/* Simple top bar */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-white/10">
+      <div className="fixed top-0 left-0 right-0 z-40 bg-slate-900/40 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded-full" />
-            <span className="text-xl font-bold text-white">RAGSITES</span>
+            <span className="text-xl font-bold text-slate-900">RAGSITES</span>
           </div>
           <button
             onClick={() => openQuiz('navbar')}
-            className="px-5 py-2 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_15px_rgba(232,28,255,0.4)] hover:scale-105 transition-all"
+            className="px-5 py-2 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_15px_rgba(153,27,27,0.4)] hover:scale-105 transition-all"
           >
             Book Call Now
           </button>
@@ -723,7 +723,7 @@ export default function RoofingLanding() {
         {/* Background Video */}
 
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/10 via-slate-50/50 to-slate-50 z-0 pointer-events-none" />
 
         {/* Glow orbs */}
 
@@ -734,11 +734,11 @@ export default function RoofingLanding() {
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
-              WARNING: This Is ONLY For Roofers With Sub Crews That Can Handle New Installs Weekly.
+              WARNING: This Is ONLY For Roofers With Crews That Can Handle New Installs Weekly.
             </span>
           </div>
           <h1
-            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-12 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
+            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-12 leading-[1.1] tracking-normal text-slate-900 uppercase font-black flex flex-col items-center"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
@@ -747,7 +747,7 @@ export default function RoofingLanding() {
               <span>OR</span>
             </div>
             <div className="flex flex-wrap justify-center mt-3 md:mt-5 text-center">
-              <span className="text-gradient-skye border-b-[6px] md:border-b-[8px] border-[#c026d3] pb-0 md:pb-1 leading-[0.85]">
+              <span className="text-gradient-skye border-b-[6px] md:border-b-[8px] border-[#991b1b] pb-0 md:pb-1 leading-[0.85]">
                 YOU DON&apos;T PAY
               </span>
             </div>
@@ -758,13 +758,13 @@ export default function RoofingLanding() {
           >
             <button
               onClick={() => openQuiz('hero')}
-              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
+              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.6)] hover:scale-105 transition-all duration-300"
             >
               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
               <Phone className="w-8 h-8 " />
               Book Call Now
             </button>
-            <p className="text-slate-400 flex items-center gap-2 text-sm">
+            <p className="text-slate-600 flex items-center gap-2 text-sm">
               <span className="w-2 h-2 rounded-full bg-green-400 " />
               Limited spots available &mdash; only 5 new clients per month
             </p>
@@ -773,14 +773,29 @@ export default function RoofingLanding() {
       </section>
 
       {/* Reviews */}
-      <section className="pt-8 pb-2 px-4 bg-black">
+      <section className="pt-8 pb-2 px-4 bg-slate-50">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-sm font-semibold text-[#40c9ff] tracking-wide uppercase mb-2">
+          <p className="text-center text-sm font-semibold text-[#991b1b] tracking-wide uppercase mb-2">
             Real Results
           </p>
           <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
-            Our AI <span className="text-gradient-skye">Success Stories</span>
+            Our <span className="text-gradient-skye">Success Stories</span>
           </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
+            {['Landing_Page_Vid_2.mp4', 'Landing_page_vid_1.mp4', 'Landing_page_vid-4.mp4', 'Landing_page_vid-3.mp4'].map((vid, index) => (
+              <div key={index} className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 flex items-center justify-center">
+                <video
+                  src={`/videos/${vid}`}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-auto max-h-[75vh] object-contain rounded-xl"
+                />
+              </div>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {['/review2.jpeg', '/review3.jpeg', '/review5.jpeg', '/review6.jpeg', '/review7.jpeg', '/review8.jpeg', '/review9.jpeg', '/review10.png'].map((src) => (
               <button key={src} onClick={() => setLightboxSrc(src)} className="rounded-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300">
@@ -798,13 +813,13 @@ export default function RoofingLanding() {
           <h2 className="text-4xl md:text-6xl font-black mb-6">
             Ready for 30 Jobs <span className="text-gradient-skye">This Month?</span>
           </h2>
-          <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto">
+          <p className="text-xl text-slate-700 mb-10 max-w-xl mx-auto">
             Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
             guaranteed.
           </p>
           <button
             onClick={() => openQuiz('bottom_cta')}
-            className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(232,28,255,0.4)] hover:shadow-[0_0_60px_rgba(64,201,255,0.6)] hover:scale-105 transition-all duration-300"
+            className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.6)] hover:scale-105 transition-all duration-300"
           >
             <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
             Book Call Now
@@ -814,12 +829,12 @@ export default function RoofingLanding() {
       </section>
 
       {/* FAQs */}
-      <section className="py-20 px-4 bg-black">
+      <section className="py-20 px-4 bg-slate-50">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
             Got A <span className="text-gradient-skye">Question?</span>
           </h2>
-          <p className="text-slate-400 text-center mb-12">
+          <p className="text-slate-600 text-center mb-12">
             Here are some of the most common questions we get.
           </p>
           <div>
@@ -831,15 +846,15 @@ export default function RoofingLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 px-4 border-t border-white/10 bg-black">
+      <footer className="py-10 px-4 border-t border-slate-200 bg-slate-50">
         <div className="max-w-4xl mx-auto text-center space-y-4">
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-600">
             Ragsites &copy; 2025 - All Rights Reserved
           </p>
           <div className="flex items-center justify-center gap-4 text-sm">
-            <a href="#" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors">Privacy Policy</a>
             <span className="text-slate-600">|</span>
-            <a href="#" className="text-slate-400 hover:text-white transition-colors">Terms</a>
+            <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors">Terms</a>
           </div>
           <p className="text-xs text-slate-600 max-w-2xl mx-auto leading-relaxed mt-4">
             This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
@@ -852,12 +867,12 @@ export default function RoofingLanding() {
         {lightboxSrc && (
           <div
             key="lightbox"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-50/90 backdrop-blur-sm p-4"
             onClick={() => setLightboxSrc(null)}
           >
             <button
               onClick={() => setLightboxSrc(null)}
-              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+              className="absolute top-6 right-6 text-slate-900/70 hover:text-slate-900 transition-colors"
             >
               <X className="w-8 h-8" />
             </button>

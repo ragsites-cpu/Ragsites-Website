@@ -1,5 +1,3 @@
-@import url('https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,9 +5,7 @@
 @layer base {
   body {
     @apply bg-brand-secondary text-brand-primary antialiased;
-    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: Impact, "Arial Black", sans-serif !important;
   }
 
   html {
@@ -79,14 +75,14 @@
   }
 
   .text-gradient-skye {
-    background: linear-gradient(to right, #e81cff 0%, #40c9ff 100%);
+    background: linear-gradient(to right, #7f1d1d 0%, #dc2626 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .bg-gradient-skye {
-    background: linear-gradient(to right, #e81cff 0%, #40c9ff 100%);
+    background: linear-gradient(to right, #7f1d1d 0%, #dc2626 100%);
   }
 
   .glow-orb {

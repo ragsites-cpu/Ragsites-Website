@@ -14,6 +14,9 @@ const config: Config = {
         'brand-accent': '#2563eb',     // blue-600 for primary CTA buttons
         'brand-accent-hover': '#1d4ed8', // blue-700 for hover state
       },
+      fontFamily: {
+        sans: ['Impact', '"Arial Black"', 'sans-serif'],
+      },
       backgroundImage: {
         'subtle-gradient': 'linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)',
       },
