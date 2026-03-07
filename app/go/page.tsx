@@ -809,12 +809,13 @@ export default function RoofingLanding() {
           <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
             Our <span className="text-gradient-skye">Success Stories</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
+          <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
             {[
               { id: 'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
               { id: 'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
               { id: '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
               { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
+              { id: 'IkwDjx017iKjeK7ay5SUETg0102Nt1dTnqc5dPkGQcsaBU', before: '"', highlight: 'I Got My Life Back', after: '"' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
