@@ -218,12 +218,12 @@ export default function Home() {
       <section className="py-24 px-4 bg-black">
         <div className="max-w-6xl mx-auto">
           <Script
-            src="https://widget.senja.io/widget/88398c53-6761-4590-921a-a67814ac7b12/platform.js"
+            src="https://widget.senja.io/widget/630388b8-5925-43a5-8d32-217aee54ab75/platform.js"
             strategy="afterInteractive"
           />
           <div
             className="senja-embed"
-            data-id="88398c53-6761-4590-921a-a67814ac7b12"
+            data-id="630388b8-5925-43a5-8d32-217aee54ab75"
             data-mode="shadow"
             data-lazyload="false"
             style={{ display: 'block', width: '100%' }}
