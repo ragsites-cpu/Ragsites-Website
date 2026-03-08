@@ -91,6 +91,27 @@ export default function ThankYouPage() {
                             Need to reschedule? Let us know 24h before your call.
                         </p>
                     </motion.div>
+
+                    {/* Video */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                        className="mt-12"
+                    >
+                        <h2 className="text-2xl md:text-3xl font-black mb-4">
+                            Watch This <span className="text-gradient-skye">Before Your Call</span>
+                        </h2>
+                        <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200" style={{ aspectRatio: '302/135' }}>
+                            <iframe
+                                src="https://player.mux.com/8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM?autoplay=any"
+                                style={{ width: '100%', height: '100%', border: 'none' }}
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                allowFullScreen
+                                title="Watch before your call"
+                            />
+                        </div>
+                    </motion.div>
                 </motion.div>
             </div>
 
