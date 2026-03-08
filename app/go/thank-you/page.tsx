@@ -101,9 +101,18 @@ export default function ThankYouPage() {
                 <div className="max-w-3xl mx-auto space-y-6">
                     <div className="border-2 border-black rounded-xl p-6">
                         <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Check Your Email</h3>
-                        <p className="text-slate-700">
+                        <p className="text-slate-700 mb-4">
                             You&apos;ll receive a confirmation email with your Google Meet link. Add it to your calendar so you don&apos;t miss it.
                         </p>
+                        <div className="rounded-lg overflow-hidden border border-slate-200">
+                            <Image
+                                src="/email_guide.jpg"
+                                alt="Email confirmation guide"
+                                width={800}
+                                height={400}
+                                className="w-full h-auto object-cover"
+                            />
+                        </div>
                     </div>
                     <div className="border-2 border-black rounded-xl p-6">
                         <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Show Up on Time</h3>
