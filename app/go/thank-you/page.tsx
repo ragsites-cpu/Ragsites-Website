@@ -106,7 +106,7 @@ export default function ThankYouPage() {
                         </p>
                         <div className="rounded-lg overflow-hidden border border-slate-200">
                             <img
-                                src="/email_guide.jpb"
+                                src="/email_guide.jpg"
                                 alt="Email confirmation guide"
                                 className="w-full h-auto object-cover"
                             />
