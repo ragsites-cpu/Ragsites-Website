@@ -90,7 +90,7 @@ function useMetaPixel() {
 
 /* ─── Cal.com Inline Booking ─── */
 
-function CalInlineBooking() {
+function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
   const calReady = useRef(false);
 
   useEffect(() => {
@@ -125,7 +125,11 @@ function CalInlineBooking() {
           elementOrSelector: '#cal-embed-modal',
           calLink: CAL_LINK,
           layout: 'month_view',
-          config: { theme: 'dark' },
+          config: {
+            theme: 'dark',
+            name: name || undefined,
+            email: email || undefined,
+          },
         });
 
         // Listen for successful booking → fire Schedule + redirect
@@ -628,7 +632,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
           {/* ─── Booking (Cal.com inline) ─── */}
           {step === 'booking' && (
-            <CalInlineBooking />
+            <CalInlineBooking name={formData.name} email={formData.email} />
           )}
         </>
 
