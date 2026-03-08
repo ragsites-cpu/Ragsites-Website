@@ -1,15 +1,26 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { CheckCircle, Phone } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Volume2 } from 'lucide-react';
 import Image from 'next/image';
 import MuxPlayer from '@mux/mux-player-react';
+import type MuxPlayerElement from '@mux/mux-player';
 
 export default function ThankYouPage() {
+    const playerRef = useRef<MuxPlayerElement>(null);
+    const [showUnmute, setShowUnmute] = useState(true);
+
+    const handleUnmute = () => {
+        if (playerRef.current) {
+            playerRef.current.muted = false;
+            playerRef.current.volume = 1;
+            setShowUnmute(false);
+        }
+    };
 
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
-            {/* Top bar — matches /go landing page */}
+        <main className="min-h-screen bg-white text-slate-900 flex flex-col">
+            {/* Top bar */}
             <div className="fixed top-0 left-0 right-0 z-40 bg-slate-900/40 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -19,126 +30,105 @@ export default function ThankYouPage() {
                 </div>
             </div>
 
-            {/* Video — very top */}
-            <section className="relative pt-24 pb-12 px-4 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-50/10 via-slate-50/50 to-slate-50 z-0 pointer-events-none" />
-
-                <div className="relative z-10 max-w-3xl mx-auto text-center">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-3xl md:text-4xl font-black mb-6 text-[#991b1b]"
-                    >
-                        Watch This Before Your Call
-                    </motion.h1>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200">
-                            <MuxPlayer
-                                playbackId="8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM"
-                                autoPlay="any"
-                                muted={false}
-                                accentColor="#991b1b"
-                                style={{ width: '100%', aspectRatio: '302/135' }}
-                            />
-                        </div>
-                    </motion.div>
+            {/* Hero headline */}
+            <div className="pt-24 pb-6 px-4 text-center bg-white">
+                <div className="max-w-4xl mx-auto">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight">
+                        Your Strategy Meeting to Scale Your Roofing Business with{' '}
+                        <span className="text-[#991b1b]">Ragsites</span>{' '}
+                        Is Reserved!
+                    </h1>
                 </div>
-            </section>
+            </div>
 
-            {/* Confirmation content */}
-            <section className="py-12 px-4 bg-slate-50">
-                <div className="max-w-lg mx-auto text-center">
-                    {/* Success badge */}
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: 'spring', damping: 15, stiffness: 200, delay: 0.4 }}
-                        className="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-6"
-                    >
-                        <CheckCircle className="w-10 h-10 text-emerald-500" />
-                    </motion.div>
+            {/* Step 1 Banner */}
+            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
+                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
+                    Step #1: Watch This Video Before Your Call
+                </p>
+            </div>
 
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="text-3xl md:text-4xl font-black mb-3"
-                    >
-                        You&apos;re <span className="text-gradient-skye">All Set!</span>
-                    </motion.h2>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.55 }}
-                        className="text-lg text-slate-600 mb-6 leading-relaxed max-w-xl mx-auto"
-                    >
-                        Your strategy call has been booked. Check your email for the confirmation and Google Meet link.
-                    </motion.p>
-
-                    {/* Confirmation text notice */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6 }}
-                        className="bg-yellow-50 border border-yellow-300 rounded-xl px-5 py-4 mb-10 max-w-xl mx-auto"
-                    >
-                        <p className="text-sm text-slate-800 font-bold">
-                            Within the next 5 minutes, you&apos;ll receive a confirmation text. Please reply <span className="text-[#991b1b]">CONFIRM</span> to let us know you&apos;ll be joining the meeting.
-                        </p>
-                    </motion.div>
-
-                    {/* What Happens Next */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.65 }}
-                        className="space-y-4"
-                    >
-                        <div className="bg-white border border-slate-200 rounded-2xl p-6 text-left shadow-sm">
-                            <h3 className="text-lg font-bold text-slate-900 mb-4">What Happens Next:</h3>
-                            <ul className="space-y-3">
-                                <li className="flex items-start gap-3">
-                                    <span className="w-6 h-6 rounded-full bg-[#991b1b]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <span className="text-[#991b1b] text-xs font-bold">1</span>
-                                    </span>
-                                    <span className="text-slate-700 text-sm">Check your inbox for the confirmation email with a Google Meet link</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="w-6 h-6 rounded-full bg-[#991b1b]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <span className="text-[#991b1b] text-xs font-bold">2</span>
-                                    </span>
-                                    <span className="text-slate-700 text-sm">Show up on time &mdash; we have limited spots and a waitlist</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="w-6 h-6 rounded-full bg-[#991b1b]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <span className="text-[#991b1b] text-xs font-bold">3</span>
-                                    </span>
-                                    <span className="text-slate-700 text-sm">We&apos;ll build your custom growth plan live on the call</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <p className="text-sm text-slate-500 flex items-center justify-center gap-2">
-                            <Phone className="w-4 h-4" />
-                            Need to reschedule? Let us know 24h before your call.
-                        </p>
-                    </motion.div>
+            {/* Video */}
+            <div className="py-8 px-4 bg-white">
+                <div className="max-w-4xl mx-auto">
+                    <div className="relative rounded-xl overflow-hidden border-2 border-black shadow-2xl">
+                        <MuxPlayer
+                            ref={playerRef}
+                            playbackId="8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM"
+                            autoPlay
+                            muted
+                            accentColor="#991b1b"
+                            style={{ width: '100%', aspectRatio: '16/9' }}
+                        />
+                        {showUnmute && (
+                            <button
+                                onClick={handleUnmute}
+                                className="absolute top-4 right-4 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-[#991b1b] text-white font-bold text-sm shadow-lg hover:scale-105 transition-all animate-pulse"
+                            >
+                                <Volume2 className="w-5 h-5" />
+                                Tap to Unmute
+                            </button>
+                        )}
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            {/* Footer — matches /go landing page */}
-            <footer className="py-10 px-4 border-t border-slate-200 bg-slate-50">
+            {/* Step 2 Banner */}
+            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
+                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
+                    Step #2: Respond &quot;CONFIRM&quot; to Our Text to Confirm Your Call
+                </p>
+            </div>
+
+            {/* Step 2 Content */}
+            <div className="py-8 px-4 bg-white">
+                <div className="max-w-3xl mx-auto text-center">
+                    <p className="text-lg text-slate-700 leading-relaxed">
+                        Within the next 5 minutes, you&apos;ll receive a confirmation text from our team.
+                        Please reply <span className="font-black text-[#991b1b]">CONFIRM</span> to let us know you&apos;ll be joining the meeting.
+                        This helps us prepare your custom growth plan ahead of time.
+                    </p>
+                </div>
+            </div>
+
+            {/* Step 3 Banner */}
+            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
+                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
+                    Step #3: Be Ready for Your Call
+                </p>
+            </div>
+
+            {/* Step 3 Content */}
+            <div className="py-8 px-4 bg-white">
+                <div className="max-w-3xl mx-auto space-y-6">
+                    <div className="border-2 border-black rounded-xl p-6">
+                        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Check Your Email</h3>
+                        <p className="text-slate-700">
+                            You&apos;ll receive a confirmation email with your Google Meet link. Add it to your calendar so you don&apos;t miss it.
+                        </p>
+                    </div>
+                    <div className="border-2 border-black rounded-xl p-6">
+                        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Show Up on Time</h3>
+                        <p className="text-slate-700">
+                            We have limited spots and a waitlist. If you need to reschedule, let us know at least 24 hours before your call.
+                        </p>
+                    </div>
+                    <div className="border-2 border-black rounded-xl p-6">
+                        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Come Prepared</h3>
+                        <p className="text-slate-700">
+                            Know your current monthly revenue, how many roofs you&apos;re closing, and your growth goals. We&apos;ll build your custom plan live on the call.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Footer */}
+            <footer className="py-10 px-4 border-t-2 border-black bg-white">
                 <div className="max-w-4xl mx-auto text-center space-y-4">
                     <p className="text-sm text-slate-600">
                         Ragsites &copy; 2026 - All Rights Reserved
                     </p>
-                    <p className="text-xs text-slate-600 max-w-2xl mx-auto leading-relaxed mt-4">
+                    <p className="text-xs text-slate-500 max-w-2xl mx-auto leading-relaxed">
                         This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
                     </p>
                 </div>
