@@ -34,7 +34,7 @@ export default function ThankYouPage() {
             <div className="pt-24 pb-6 px-4 text-center bg-white">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight">
-                        Urgent, Your Scale Session Registration Is Not Yet Complete, You Must Watch This Video In Full Prior To The Meeting
+                        <span className="text-[#991b1b]">Urgent</span>, Your Scale Session Registration Is Not Yet Complete, You <span className="text-[#991b1b]">Must Watch</span> This Video In Full Prior To The Meeting
                     </h1>
                 </div>
             </div>
