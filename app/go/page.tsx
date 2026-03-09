@@ -820,7 +820,7 @@ export default function RoofingLanding() {
               { id: '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
               { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
               { id: 'IkwDjx017iKjeK7ay5SUETg0102Nt1dTnqc5dPkGQcsaBU', before: '"', highlight: 'I Got My Life Back', after: '"' },
-              { id: 'UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg', before: '"', highlight: 'The Full Breakdown', after: '"' },
+              { id: 'UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg', before: 'From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
