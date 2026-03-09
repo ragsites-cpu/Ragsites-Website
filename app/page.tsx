@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-react';
 import Image from 'next/image';
 import Script from 'next/script';
-import MuxPlayer from '@mux/mux-player-react';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import DemoWidget from '@/components/DemoWidget';
@@ -275,32 +274,6 @@ export default function Home() {
             <a href="/workflows" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
               See Workflows <ArrowRight className="w-5 h-5" />
             </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Video 6 */}
-      <section className="py-16 px-4 bg-black">
-        <div className="max-w-md mx-auto">
-          <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-            <MuxPlayer
-              playbackId="oo007FO78wUHW3AsaKqbDITUt01loY8pYDae5P01wYO17o"
-              accentColor="#e81cff"
-              style={{ width: '100%', aspectRatio: '9/16' }}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Video 7 */}
-      <section className="py-16 px-4 bg-black">
-        <div className="max-w-4xl mx-auto">
-          <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-            <MuxPlayer
-              playbackId="UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg"
-              accentColor="#e81cff"
-              style={{ width: '100%', aspectRatio: '16/9' }}
-            />
           </div>
         </div>
       </section>
