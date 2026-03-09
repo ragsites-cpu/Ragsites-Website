@@ -812,12 +812,12 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
             {[
-              { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
+              { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
               { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
               { id: 'cc02iEl00DqKNsS8RgywwL90202rxFwQwC01vqUmKF01AQsJk', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
               { id: 'wEYR00xmhOjwjL3XLztNIBShHzPuDkewDvs9WosXYOYM', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
               { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
-              { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+              { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
               { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
