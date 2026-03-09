@@ -683,16 +683,6 @@ const FAQS = [
     answer:
       "Absolutely. Before a lead ever reaches your team, it goes through our multi-step qualification process powered by AI. We verify homeowner status, project scope, damage type, and buying intent so your crew only shows up to appointments that are worth the trip. No more wasted afternoons chasing tire kickers.",
   },
-  {
-    question: 'Do I Own Everything?',
-    answer:
-      'Yes, 100%. Every asset, system, and tool we create for your business belongs entirely to you. If you ever decide to part ways, you walk away with everything. We build it, hand you the keys, and you have full control to run it however you see fit.',
-  },
-  {
-    question: 'How Do You Guarantee Results?',
-    answer:
-      "Simple: we have done this enough times to know what works. Our AI-powered lead systems have been battle-tested across dozens of roofing companies, and the data speaks for itself. We are so confident in the process that we guarantee 30 roof replacement jobs in 30 days, or you do not pay. No fine print, no runaround.",
-  },
 ];
 
 function FaqItem({ question, answer }: { question: string; answer: string }) {
