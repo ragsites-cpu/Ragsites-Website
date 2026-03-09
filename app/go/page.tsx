@@ -815,25 +815,24 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
             {[
-              { src: '/testimonial-1.mp4', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
-              { src: '/testimonial-2.mp4', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
-              { src: '/testimonial-3.mp4', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
-              { src: '/testimonial-4.mp4', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
-              { src: '/testimonial-5.mp4', before: '"', highlight: 'I Got My Life Back', after: '"' },
-              { src: '/testimonial-6.mp4', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
-              { src: '/testimonial-7.mp4', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
+              { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
+              { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
+              { id: 'cc02iEl00DqKNsS8RgywwL90202rxFwQwC01vqUmKF01AQsJk', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
+              { id: 'wEYR00xmhOjwjL3XLztNIBShHzPuDkewDvs9WosXYOYM', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
+              { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
+              { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+              { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
                 <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
-                  <video
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-contain"
-                  >
-                    <source src={video.src} type="video/mp4" />
-                  </video>
+                  <iframe
+                    src={`https://player.mux.com/${video.id}`}
+                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    title={`Success Story Video ${index + 1}`}
+                  />
                 </div>
               </div>
             ))}
