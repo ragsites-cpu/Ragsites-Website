@@ -825,12 +825,12 @@ export default function RoofingLanding() {
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
-                <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
+                <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
                   <video
                     controls
                     playsInline
                     preload="metadata"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   >
                     <source src={video.src} type="video/mp4" />
                   </video>
