@@ -89,89 +89,6 @@ function trackMetaStandard(eventName: string, params?: Record<string, string>) {
   }
 }
 
-/* ─── Review Images ─── */
-
-const REVIEW_IMAGES = [
-  '/review2.jpeg',
-  '/review3.jpeg',
-  '/review5.jpeg',
-  '/review6.jpeg',
-  '/review7.jpeg',
-  '/review8.jpeg',
-  '/review9.jpeg',
-  '/review10.png',
-];
-
-const HEARTS = [
-  { left: '5%', size: 18, duration: '7s', delay: '0s', color: 'text-red-400' },
-  { left: '15%', size: 14, duration: '5.5s', delay: '1.2s', color: 'text-pink-300' },
-  { left: '28%', size: 20, duration: '8s', delay: '0.5s', color: 'text-red-500' },
-  { left: '40%', size: 12, duration: '6s', delay: '2.5s', color: 'text-pink-400' },
-  { left: '52%', size: 16, duration: '7.5s', delay: '1s', color: 'text-red-300' },
-  { left: '65%', size: 22, duration: '6.5s', delay: '3s', color: 'text-pink-500' },
-  { left: '75%', size: 14, duration: '5s', delay: '0.8s', color: 'text-red-400' },
-  { left: '88%', size: 18, duration: '7s', delay: '2s', color: 'text-pink-300' },
-  { left: '95%', size: 12, duration: '6s', delay: '1.5s', color: 'text-red-300' },
-  { left: '35%', size: 10, duration: '8.5s', delay: '3.5s', color: 'text-pink-400' },
-  { left: '58%', size: 16, duration: '5.8s', delay: '0.3s', color: 'text-red-500' },
-  { left: '82%', size: 20, duration: '7.2s', delay: '2.8s', color: 'text-pink-300' },
-];
-
-function FloatingHearts() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {HEARTS.map((h, i) => (
-        <span
-          key={i}
-          className={`absolute bottom-0 animate-float-heart ${h.color}`}
-          style={{
-            left: h.left,
-            fontSize: h.size,
-            '--heart-duration': h.duration,
-            '--heart-delay': h.delay,
-          } as React.CSSProperties}
-        >
-          &#x2764;&#xFE0F;
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function ReviewsMarquee() {
-  const row1 = [...REVIEW_IMAGES, ...REVIEW_IMAGES];
-  const row2 = [...[...REVIEW_IMAGES].reverse(), ...[...REVIEW_IMAGES].reverse()];
-
-  return (
-    <div className="mt-12 space-y-4 relative">
-      <FloatingHearts />
-
-      <p className="text-center text-sm font-semibold text-emerald-600 tracking-wide">Real Results</p>
-      <h3 className="text-2xl md:text-3xl font-extrabold text-brand-primary text-center">
-        See Why Business Owners Love Us
-      </h3>
-
-      <div className="mt-8 space-y-4 overflow-hidden">
-        {/* Row 1 — scrolls left */}
-        <div className="animate-marquee-left flex gap-4 w-max">
-          {row1.map((src, i) => (
-            <div key={`r1-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-              <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
-            </div>
-          ))}
-        </div>
-        {/* Row 2 — scrolls right */}
-        <div className="animate-marquee-right flex gap-4 w-max">
-          {row2.map((src, i) => (
-            <div key={`r2-${i}`} className="flex-shrink-0 w-[400px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-              <Image src={src} alt="Client review" width={400} height={300} className="w-full h-auto object-cover" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ─── Types ─── */
 
@@ -515,7 +432,6 @@ function QuizContent() {
                 </form>
               </div>
 
-              <ReviewsMarquee />
             </motion.div>
           )}
 

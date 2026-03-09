@@ -730,7 +730,6 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 export default function RoofingLanding() {
   const [showQuiz, setShowQuiz] = useState(false);
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   // Initialize Meta Pixel for this page
   useMetaPixel();
@@ -846,13 +845,6 @@ export default function RoofingLanding() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {['/Slack_1.png', '/Discord_1.png', '/Discord_2.png', '/Text_1.png', '/dm_1.png', '/review10.png'].map((src) => (
-              <button key={src} onClick={() => setLightboxSrc(src)} className="rounded-xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300">
-                <Image src={src} alt="Client review" width={600} height={450} className="w-full h-auto object-contain rounded-xl" />
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -912,35 +904,6 @@ export default function RoofingLanding() {
         </div>
       </footer>
 
-      {/* Review Lightbox */}
-      <>
-        {lightboxSrc && (
-          <div
-            key="lightbox"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-50/90 backdrop-blur-sm p-4"
-            onClick={() => setLightboxSrc(null)}
-          >
-            <button
-              onClick={() => setLightboxSrc(null)}
-              className="absolute top-6 right-6 text-slate-900/70 hover:text-slate-900 transition-colors"
-            >
-              <X className="w-8 h-8" />
-            </button>
-            <div
-              className="max-w-4xl max-h-[90vh] w-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={lightboxSrc}
-                alt="Review"
-                width={1200}
-                height={900}
-                className="w-full h-auto rounded-2xl object-contain"
-              />
-            </div>
-          </div>
-        )}
-      </>
 
       {/* Questionnaire Modal */}
       <>
