@@ -43,7 +43,6 @@ export async function sendMetaCAPIEvent(
                     custom_data: customData,
                 },
             ],
-            test_event_code: TEST_EVENT_CODE,
         };
 
         const url = `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`;
