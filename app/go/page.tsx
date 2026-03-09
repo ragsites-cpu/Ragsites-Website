@@ -832,7 +832,7 @@ export default function RoofingLanding() {
                       width: '100%',
                       height: '100%',
                       border: 'none',
-                      ...('crop' in video && video.crop ? { transform: 'scale(1.20)', transformOrigin: 'center 45%' } : {}),
+                      ...('crop' in video && video.crop ? { transform: 'scale(1.10)', transformOrigin: 'center 88%' } : {}),
                     }}
                     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
                     allowFullScreen
