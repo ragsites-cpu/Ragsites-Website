@@ -20,7 +20,7 @@ interface QuizQuestion {
   key: string;
 }
 
-const BOOKING_URL = 'https://cal.com/ragsite/30min?user=ragsite';
+const BOOKING_URL = 'https://cal.com/ragsites/30min?user=ragsites';
 
 const QUESTIONS: QuizQuestion[] = [
   {

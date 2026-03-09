@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
 
 const META_PIXEL_ID = '1749584679784093';
-const CAL_LINK = 'ragsite/30min';
+const CAL_LINK = 'ragsites/30min';
 
 export default function BookingPage() {
     const router = useRouter();

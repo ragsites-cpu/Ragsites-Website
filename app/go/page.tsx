@@ -18,7 +18,7 @@ import Image from 'next/image';
 
 /* ─── Configuration ─── */
 
-const CAL_LINK = 'ragsite/30min';
+const CAL_LINK = 'ragsites/30min';
 const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
