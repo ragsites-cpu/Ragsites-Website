@@ -15,6 +15,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import Image from 'next/image';
+import { sendMetaCAPIEvent } from '@/app/actions/capi';
 
 /* ─── Configuration ─── */
 
@@ -726,6 +727,8 @@ export default function RoofingLanding() {
 
   const openQuiz = (source: string) => {
     trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source });
+    // Send CAPI Lead event concurrently
+    sendMetaCAPIEvent('Lead', {}, { content_name: 'Book Call CTA', content_category: source }).catch(console.error);
     setShowQuiz(true);
   };
 

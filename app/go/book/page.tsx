@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
+import { sendMetaCAPIEvent } from '@/app/actions/capi';
 
 const META_PIXEL_ID = '1379048093907312';
 const CAL_LINK = 'ragsites/30min';
@@ -60,10 +61,18 @@ export default function BookingPage() {
                         // Fire Meta Pixel Schedule event
                         if (typeof window.fbq === 'function') {
                             window.fbq('trackSingle', META_PIXEL_ID, 'Schedule', {
-                                content_name: 'Cal.com Booking',
+                                content_name: 'Consultation Booked',
+                                content_category: 'Go Funnel',
+                                booking_status: 'confirmed'
                             });
                         }
-                        // Fire GA event
+
+                        // Send CAPI Schedule event concurrently
+                        sendMetaCAPIEvent('Schedule', {}, {
+                            content_name: 'Consultation Booked',
+                            content_category: 'Go Funnel',
+                            booking_status: 'confirmed'
+                        }).catch(console.error);
                         if (typeof window.gtag === 'function') {
                             window.gtag('event', 'booking_confirmed', {
                                 source: 'roofing_landing',
