@@ -821,14 +821,19 @@ export default function RoofingLanding() {
               { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
               { id: 'IkwDjx017iKjeK7ay5SUETg0102Nt1dTnqc5dPkGQcsaBU', before: '"', highlight: 'I Got My Life Back', after: '"' },
               { id: 'UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg', before: 'From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '' },
-              { id: 'Lj8PKuabhuVUCFIKgcEzTH3RGTEIg01gL4e101X9D72500', before: 'Ragsites Doubles Booking Rate to ', highlight: '44% in Just One Month', after: '' },
+              { id: 'Lj8PKuabhuVUCFIKgcEzTH3RGTEIg01gL4e101X9D72500', before: 'Ragsites Doubles Booking Rate to ', highlight: '44% in Just One Month', after: '', crop: true },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
                 <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 aspect-video">
                   <iframe
                     src={`https://player.mux.com/${video.id}`}
-                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      border: 'none',
+                      ...('crop' in video && video.crop ? { transform: 'scale(1.25)', transformOrigin: 'center center' } : {}),
+                    }}
                     allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
                     allowFullScreen
                     title={`Success Story Video ${index + 1}`}
