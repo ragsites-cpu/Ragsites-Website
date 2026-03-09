@@ -821,6 +821,7 @@ export default function RoofingLanding() {
               { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
               { id: 'IkwDjx017iKjeK7ay5SUETg0102Nt1dTnqc5dPkGQcsaBU', before: '"', highlight: 'I Got My Life Back', after: '"' },
               { id: 'UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg', before: 'From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '' },
+              { id: 'Lj8PKuabhuVUCFIKgcEzTH3RGTEIg01gL4e101X9D72500', before: 'RagSites Doubles Booking Rate to ', highlight: '44% in Just One Month', after: '.' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
