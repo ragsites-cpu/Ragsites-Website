@@ -815,15 +815,15 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
             {[
-              { src: '/testimonial-1.mp4', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
-              { src: '/testimonial-2.mp4', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
-              { src: '/testimonial-3.mp4', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
-              { src: '/testimonial-4.mp4', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
-              { src: '/testimonial-5.mp4', before: '"', highlight: 'I Got My Life Back', after: '"' },
+              { src: '/testimonial-1.mp4', before: '"It\'s A ', highlight: 'Game Changer', after: '"', portrait: true },
+              { src: '/testimonial-2.mp4', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"', portrait: true },
+              { src: '/testimonial-3.mp4', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"', portrait: true },
+              { src: '/testimonial-4.mp4', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"', portrait: true },
+              { src: '/testimonial-5.mp4', before: '"', highlight: 'I Got My Life Back', after: '"', portrait: true },
               { src: '/testimonial-6.mp4', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
               { src: '/testimonial-7.mp4', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
             ].map((video, index) => (
-              <div key={index} className="flex flex-col">
+              <div key={index} className={`flex flex-col ${'portrait' in video && video.portrait ? 'max-w-sm mx-auto' : ''}`}>
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
                 <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200">
                   <video
