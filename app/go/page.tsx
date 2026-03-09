@@ -92,6 +92,7 @@ function useMetaPixel() {
 
 function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
   const calReady = useRef(false);
+  const [calLoaded, setCalLoaded] = useState(false);
 
   useEffect(() => {
     if (calReady.current) return;
@@ -143,6 +144,11 @@ function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
           },
         });
 
+        window.Cal('on', {
+          action: '__iframeReady',
+          callback: () => setCalLoaded(true),
+        });
+
         window.Cal('ui', {
           theme: 'dark',
           styles: { branding: { brandColor: '#40c9ff' } },
@@ -170,10 +176,12 @@ function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
         id="cal-embed-modal"
         className="w-full min-h-[450px] rounded-xl overflow-hidden flex items-center justify-center"
       >
-        <div className="text-center">
-          <Loader2 className="w-10 h-10 text-[#991b1b]  mx-auto mb-3" />
-          <p className="text-slate-600 text-sm">Loading calendar...</p>
-        </div>
+        {!calLoaded && (
+          <div className="text-center">
+            <Loader2 className="w-10 h-10 text-[#991b1b]  mx-auto mb-3" />
+            <p className="text-slate-600 text-sm">Loading calendar...</p>
+          </div>
+        )}
       </div>
     </div>
   );
