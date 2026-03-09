@@ -129,6 +129,32 @@ export default function ThankYouPage() {
                 </div>
             </div>
 
+            {/* Video 6 */}
+            <div className="py-8 px-4 bg-white">
+                <div className="max-w-md mx-auto">
+                    <div className="rounded-xl overflow-hidden border-2 border-black shadow-2xl">
+                        <MuxPlayer
+                            playbackId="oo007FO78wUHW3AsaKqbDITUt01loY8pYDae5P01wYO17o"
+                            accentColor="#991b1b"
+                            style={{ width: '100%', aspectRatio: '9/16' }}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Video 7 */}
+            <div className="py-8 px-4 bg-white">
+                <div className="max-w-4xl mx-auto">
+                    <div className="rounded-xl overflow-hidden border-2 border-black shadow-2xl">
+                        <MuxPlayer
+                            playbackId="UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg"
+                            accentColor="#991b1b"
+                            style={{ width: '100%', aspectRatio: '16/9' }}
+                        />
+                    </div>
+                </div>
+            </div>
+
             {/* Footer */}
             <footer className="py-10 px-4 border-t-2 border-black bg-white">
                 <div className="max-w-4xl mx-auto text-center space-y-4">
