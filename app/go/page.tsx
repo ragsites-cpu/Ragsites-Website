@@ -815,40 +815,28 @@ export default function RoofingLanding() {
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
             {[
-              { id: 'eA00KzAJgZPsNRJXoFrWpEV7uiuO3nA300DipYsWWmpYA', before: '"It\'s A ', highlight: 'Game Changer', after: '"', portrait: true },
-              { id: 'Hlxmfr2D4X008zdi3LTX8FkSt6chCN01DoIZotSOYvWX8', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"', portrait: true },
-              { id: '00j1xVFM9Wo01fjSa77z4oZHmC01HK01l00Fiqd55blqAams', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"', portrait: true },
-              { id: 'aoF3Hupcq9JQQ58f02JLwNJJ2nFjkyc02QymEkhCUfc1E', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"', portrait: true },
-              { id: 'IkwDjx017iKjeK7ay5SUETg0102Nt1dTnqc5dPkGQcsaBU', before: '"', highlight: 'I Got My Life Back', after: '"' },
-              { id: 'UDm01V2nlrvWTxj8aQjNROJX2yXgjFn2h6RvGtfThZSg', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+              { src: '/testimonial-1.mp4', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
+              { src: '/testimonial-2.mp4', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
+              { src: '/testimonial-3.mp4', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
+              { src: '/testimonial-4.mp4', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
+              { src: '/testimonial-5.mp4', before: '"', highlight: 'I Got My Life Back', after: '"' },
+              { src: '/testimonial-6.mp4', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+              { src: '/testimonial-7.mp4', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
             ].map((video, index) => (
-              <div key={index} className={`flex flex-col ${'portrait' in video && video.portrait ? 'max-w-sm mx-auto' : ''}`}>
+              <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
-                <div className={`rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200 ${'portrait' in video && video.portrait ? 'aspect-[9/16]' : 'aspect-video'}`}>
-                  <iframe
-                    src={`https://player.mux.com/${video.id}`}
-                    style={{ width: '100%', height: '100%', border: 'none' }}
-                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                    title={`Success Story Video ${index + 1}`}
-                  />
+                <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200">
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-auto"
+                  >
+                    <source src={video.src} type="video/mp4" />
+                  </video>
                 </div>
               </div>
             ))}
-            {/* Cropped testimonial video */}
-            <div className="flex flex-col">
-              <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">&quot;Doubled Booking Rate to <span className="text-[#991b1b] underline">44% in Just One Month</span>&quot;</p>
-              <div className="rounded-xl overflow-hidden shadow-2xl bg-white border border-slate-200">
-                <video
-                  controls
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-auto"
-                >
-                  <source src="/testimonial-7.mp4" type="video/mp4" />
-                </video>
-              </div>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
