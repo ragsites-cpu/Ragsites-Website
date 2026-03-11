@@ -766,7 +766,7 @@ export default function RoofingLanding() {
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
-              WARNING: This is only for roofers that have an annual revenue of more than 300k
+              WARNING: This Is ONLY For Roofers With Crews That Can Handle New Installs Weekly.
             </span>
           </div>
           <h1
