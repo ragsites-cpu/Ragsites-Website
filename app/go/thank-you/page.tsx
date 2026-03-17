@@ -9,6 +9,18 @@ import type MuxPlayerElement from '@mux/mux-player';
 export default function ThankYouPage() {
     const playerRef = useRef<MuxPlayerElement>(null);
     const [showUnmute, setShowUnmute] = useState(true);
+    const [dailyAdSpend, setDailyAdSpend] = useState(30);
+    const [avgJobValue, setAvgJobValue] = useState(8000);
+
+    const spend = dailyAdSpend;
+    const job = avgJobValue;
+    const monthlyAdSpend = spend * 30;
+    const monthlyLeads = monthlyAdSpend / 27;
+    const monthlyJobs = Math.floor(monthlyLeads * 0.6);
+    const monthlyRevenue = monthlyJobs * job;
+    const monthlyProfit = monthlyRevenue - monthlyAdSpend;
+    const roiPercent = monthlyAdSpend > 0 ? Math.round((monthlyProfit / monthlyAdSpend) * 100) : 0;
+    const showResults = true;
 
     const handleUnmute = () => {
         if (playerRef.current) {
@@ -71,6 +83,95 @@ export default function ThankYouPage() {
                 </div>
             </div>
 
+            {/* ROI Calculator */}
+            <div className="py-12 px-4 bg-slate-900">
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-2">
+                        Monthly <span className="text-[#991b1b]">ROI</span> Calculator
+                    </h2>
+                    <p className="text-slate-400 text-center mb-8">
+                        See how much profit you&apos;ll generate with our system.
+                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Inputs */}
+                        <div className="space-y-8">
+                            <div>
+                                <div className="flex justify-between items-center mb-3">
+                                    <label className="text-sm font-bold text-slate-300 uppercase tracking-wide">
+                                        Daily Ad Spend
+                                    </label>
+                                    <span className="text-lg font-black text-white bg-slate-800 border border-slate-600 rounded-lg px-4 py-1">
+                                        ${dailyAdSpend}
+                                    </span>
+                                </div>
+                                <input
+                                    type="range"
+                                    min={10}
+                                    max={200}
+                                    step={5}
+                                    value={dailyAdSpend}
+                                    onChange={(e) => setDailyAdSpend(Number(e.target.value))}
+                                    className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-700 accent-[#991b1b]"
+                                />
+                            </div>
+                            <div>
+                                <div className="flex justify-between items-center mb-3">
+                                    <label className="text-sm font-bold text-slate-300 uppercase tracking-wide">
+                                        Average Roofing Job Value
+                                    </label>
+                                    <span className="text-lg font-black text-white bg-slate-800 border border-slate-600 rounded-lg px-4 py-1">
+                                        ${avgJobValue.toLocaleString()}
+                                    </span>
+                                </div>
+                                <input
+                                    type="range"
+                                    min={1000}
+                                    max={50000}
+                                    step={500}
+                                    value={avgJobValue}
+                                    onChange={(e) => setAvgJobValue(Number(e.target.value))}
+                                    className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-700 accent-[#991b1b]"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Results */}
+                        <div className="bg-white rounded-2xl p-6 md:p-8 border-2 border-slate-200">
+                            <p className="text-xs font-bold uppercase tracking-widest text-[#991b1b] mb-4">
+                                Your Estimated Monthly Returns
+                            </p>
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
+                                    <span className="text-slate-600 text-sm">Monthly ad spend</span>
+                                    <span className="font-bold text-slate-900">${monthlyAdSpend.toLocaleString()}</span>
+                                </div>
+                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
+                                    <span className="text-slate-600 text-sm">Leads generated</span>
+                                    <span className="font-bold text-slate-900">{Math.floor(monthlyLeads)}</span>
+                                </div>
+                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
+                                    <span className="text-slate-600 text-sm">Jobs closed</span>
+                                    <span className="font-bold text-slate-900">{monthlyJobs}</span>
+                                </div>
+                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
+                                    <span className="text-slate-600 text-sm">Monthly revenue</span>
+                                    <span className="font-bold text-slate-900">${monthlyRevenue.toLocaleString()}</span>
+                                </div>
+                                <div className="flex justify-between items-center pt-4">
+                                    <span className="text-slate-900 font-black text-lg">Profit</span>
+                                    <span className="font-black text-2xl text-emerald-600">${monthlyProfit.toLocaleString()}</span>
+                                </div>
+                                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+                                    <p className="text-sm text-emerald-700 font-medium">Return on Ad Spend</p>
+                                    <p className="text-4xl font-black text-emerald-600">{roiPercent.toLocaleString()}%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {/* Step 2 Banner */}
             <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
                 <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
@@ -82,7 +183,7 @@ export default function ThankYouPage() {
             <div className="py-8 px-4 bg-white">
                 <div className="max-w-3xl mx-auto text-center">
                     <p className="text-lg text-slate-700 leading-relaxed">
-                        Within the next 5 minutes, you&apos;ll receive a confirmation text from our team.
+                        Before 24 hours of the call, you&apos;ll receive a confirmation text from our team.
                         Please reply <span className="font-black text-[#991b1b]">CONFIRM</span> to let us know you&apos;ll be joining the meeting.
                         This helps us prepare your custom growth plan ahead of time.
                     </p>
@@ -92,40 +193,33 @@ export default function ThankYouPage() {
             {/* Step 3 Banner */}
             <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
                 <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #3: Be Ready for Your Call
+                    Step #3: See What Our Clients Have to Say
                 </p>
             </div>
 
-            {/* Step 3 Content */}
+            {/* Step 3 Content — Testimonial Videos */}
             <div className="py-8 px-4 bg-white">
-                <div className="max-w-3xl mx-auto space-y-6">
-                    <div className="border-2 border-black rounded-xl p-6">
-                        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Check Your Email</h3>
-                        <p className="text-slate-700 mb-4">
-                            You&apos;ll receive a confirmation email with your Google Meet link. Add it to your calendar so you don&apos;t miss it.
-                        </p>
-                        <div className="rounded-lg overflow-hidden border border-slate-200">
-                            <Image
-                                src="/Email-confirmation.jpeg"
-                                alt="Email confirmation example"
-                                width={800}
-                                height={600}
-                                className="w-full h-auto object-cover"
-                            />
+                <div className="max-w-3xl mx-auto grid grid-cols-1 gap-8">
+                    {[
+                        { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+                        { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
+                        { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
+                        { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
+                        { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
+                    ].map((video, index) => (
+                        <div key={index} className="flex flex-col">
+                            <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
+                            <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
+                                <iframe
+                                    src={`https://player.mux.com/${video.id}`}
+                                    style={{ width: '100%', height: '100%', border: 'none' }}
+                                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                    allowFullScreen
+                                    title={`Testimonial Video ${index + 1}`}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="border-2 border-black rounded-xl p-6">
-                        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Show Up on Time</h3>
-                        <p className="text-slate-700">
-                            We have limited spots and a waitlist. If you need to reschedule, let us know at least 24 hours before your call.
-                        </p>
-                    </div>
-                    <div className="border-2 border-black rounded-xl p-6">
-                        <h3 className="text-lg font-black text-slate-900 mb-2 uppercase">Come Prepared</h3>
-                        <p className="text-slate-700">
-                            Know your current monthly revenue, how many roofs you&apos;re closing, and your growth goals. We&apos;ll build your custom plan live on the call.
-                        </p>
-                    </div>
+                    ))}
                 </div>
             </div>
 
