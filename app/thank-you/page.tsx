@@ -15,8 +15,8 @@ export default function ThankYouPage() {
     const spend = dailyAdSpend;
     const job = avgJobValue;
     const monthlyAdSpend = spend * 30;
-    const monthlyLeads = monthlyAdSpend / 27;
-    const monthlyJobs = Math.floor(monthlyLeads * 0.6);
+    const monthlyLeads = monthlyAdSpend / 40;
+    const monthlyJobs = Math.floor(monthlyLeads * 0.5);
     const monthlyRevenue = monthlyJobs * job;
     const monthlyProfit = monthlyRevenue - monthlyAdSpend;
     const roiPercent = monthlyAdSpend > 0 ? Math.round((monthlyProfit / monthlyAdSpend) * 100) : 0;
