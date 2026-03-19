@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   title: "Ragsites - AI Automation for Local Businesses",
   description: "From AI Receptionists that never sleep to 5-Star Review Systems. We build the tech that scales local businesses.",
   icons: {
-    icon: "/new-logo.png",
-    apple: "/new-logo.png",
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
   other: {
     "trustpilot-one-time-domain-verification-id": "a3c41fb2-a225-48c4-a6ac-1e2d903acc81",

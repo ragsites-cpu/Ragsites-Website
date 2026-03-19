@@ -208,7 +208,7 @@ export default function BrochurePage() {
             <nav className="bg-[#0c1929] sticky top-0 z-50 border-b border-white/5">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
+                        <Image src="/logo.png" alt="Ragsites" width={32} height={32} />
                         <span className="text-xl font-bold text-white tracking-tight">RAGSITES</span>
                     </div>
                     <a
@@ -619,7 +619,7 @@ export default function BrochurePage() {
             <footer className="py-10 px-4 bg-[#0c1929] text-center">
                 <div className="max-w-4xl mx-auto space-y-4">
                     <div className="flex items-center justify-center gap-2 mb-4">
-                        <Image src="/new-logo.png" alt="Ragsites" width={28} height={28} />
+                        <Image src="/logo.png" alt="Ragsites" width={28} height={28} />
                         <span className="text-lg font-bold text-white tracking-tight">RAGSITES</span>
                     </div>
                     <p className="text-sm text-slate-500">

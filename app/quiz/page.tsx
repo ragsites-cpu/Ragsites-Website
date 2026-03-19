@@ -214,7 +214,7 @@ function QuizContent() {
       {/* Logo */}
       <div className="flex justify-center pt-6 pb-2">
         <button onClick={() => (window.location.href = '/')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <Image src="/new-logo.png" alt="Ragsites" width={36} height={36} />
+          <Image src="/logo.png" alt="Ragsites" width={36} height={36} />
           <span className="text-2xl font-bold text-brand-primary">RAGSITES</span>
         </button>
       </div>
