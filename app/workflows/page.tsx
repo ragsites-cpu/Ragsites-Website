@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { Network, ArrowRight, ArrowDownRight, UserX, UserCheck, CalendarX, Zap, CheckCircle2 } from 'lucide-react';
-import Navbar from '@/components/Navbar';
 import Image from 'next/image';
+import Navbar from '@/components/Navbar';
 
 const workflows = [
     {
@@ -188,7 +188,7 @@ export default function WorkflowsPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-2">
-                            <Image src="/logo.png" alt="Ragsites" width={24} height={24} className="rounded-full" />
+                            <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
                             <span className="font-bold text-white">RAGSITES</span>
                         </div>
                         <p className="text-sm text-slate-500">

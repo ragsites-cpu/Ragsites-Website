@@ -3,8 +3,8 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 /* ─── Quiz Data ─── */
 
@@ -214,7 +214,7 @@ function QuizContent() {
       {/* Logo */}
       <div className="flex justify-center pt-6 pb-2">
         <button onClick={() => (window.location.href = '/')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <Image src="/logo.png" alt="Ragsites" width={36} height={36} className="rounded-full" />
+          <Image src="/new-logo.png" alt="Ragsites" width={36} height={36} />
           <span className="text-2xl font-bold text-brand-primary">RAGSITES</span>
         </button>
       </div>

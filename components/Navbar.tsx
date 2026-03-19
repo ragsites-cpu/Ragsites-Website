@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,7 +40,7 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <Image src="/logo.png" alt="Ragsites" width={36} height={36} className="rounded-full" />
+            <Image src="/new-logo.png" alt="Ragsites" width={36} height={36} />
             <span className="text-2xl font-bold text-white">RAGSITES</span>
           </Link>
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { ArrowLeft, Phone } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import AudioCard from '@/components/AudioCard';
 
 export default function ServicesPage() {
@@ -13,7 +13,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded-full" />
+              <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
               <span className="text-xl font-bold gradient-text">RAGSITES</span>
             </Link>
 
@@ -99,7 +99,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <Image src="/logo.png" alt="Ragsites" width={24} height={24} className="rounded-full" />
+              <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
               <span className="font-bold gradient-text">RAGSITES</span>
             </div>
             <p className="text-sm text-gray-500">

@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 import { sendMetaCAPIEvent } from '@/app/actions/capi';
 
 const META_PIXEL_ID = '1379048093907312';
@@ -122,7 +122,7 @@ export default function BookingPage() {
             <div className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-white/10">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Image src="/logo.png" alt="Ragsites" width={32} height={32} className="rounded-full" />
+                        <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
                         <span className="text-xl font-bold text-white">RAGSITES</span>
                     </div>
                 </div>

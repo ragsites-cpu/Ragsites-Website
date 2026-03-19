@@ -2,12 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-react';
-import Image from 'next/image';
 import Script from 'next/script';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import DemoWidget from '@/components/DemoWidget';
 import AnimatedCounter from '@/components/AnimatedCounter';
+import Image from 'next/image';
 
 // Reusable animation variants
 const fadeUp = {
@@ -283,7 +283,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <Image src="/logo.png" alt="Ragsites" width={24} height={24} className="rounded-full" />
+              <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
               <span className="font-bold text-white">RAGSITES</span>
             </div>
             <p className="text-sm text-slate-500">
