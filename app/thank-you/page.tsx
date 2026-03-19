@@ -39,7 +39,7 @@ export default function ThankYouPage() {
             <div className="fixed top-0 left-0 right-0 z-40 bg-slate-900/40 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Image src="/logo.png" alt="Ragsites" width={32} height={32} />
+                        <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
                         <span className="text-xl font-bold text-slate-900">RAGSITES</span>
                     </div>
                 </div>
@@ -60,11 +60,43 @@ export default function ThankYouPage() {
             {/* ─── STEP 1 BANNER ─── */}
             <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
                 <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #1: Confirm Your Spot
+                    Step #1: Watch This Video Before Your Call
                 </p>
             </div>
 
-            {/* Step 1 Content */}
+            {/* Step 1 — VSL Video */}
+            <div className="py-8 px-4 bg-white">
+                <div className="max-w-4xl mx-auto">
+                    <div className="relative rounded-xl overflow-hidden border-2 border-black shadow-2xl">
+                        <MuxPlayer
+                            ref={playerRef}
+                            playbackId="8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM"
+                            autoPlay
+                            muted
+                            accentColor="#991b1b"
+                            style={{ width: '100%', aspectRatio: '16/9' }}
+                        />
+                        {showUnmute && (
+                            <button
+                                onClick={handleUnmute}
+                                className="absolute top-4 right-4 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-[#991b1b] text-white font-bold text-sm shadow-lg hover:scale-105 transition-all animate-pulse"
+                            >
+                                <Volume2 className="w-5 h-5" />
+                                Tap to Unmute
+                            </button>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* ─── STEP 2 BANNER ─── */}
+            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
+                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
+                    Step #2: Confirm Your Spot
+                </p>
+            </div>
+
+            {/* Step 2 Content */}
             <div className="py-10 px-4 bg-white">
                 <div className="max-w-3xl mx-auto">
                     <p className="text-center text-slate-600 text-lg mb-8 leading-relaxed">
@@ -102,41 +134,6 @@ export default function ThankYouPage() {
                                 Star the email &amp; add to calendar
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* ─── STEP 2 BANNER ─── */}
-            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
-                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #2: Watch This Video Before Your Call
-                </p>
-            </div>
-
-            {/* Step 2 — VSL Video */}
-            <div className="py-8 px-4 bg-white">
-                <div className="max-w-4xl mx-auto">
-                    <p className="text-center text-slate-600 mb-6 text-lg leading-relaxed">
-                        This video is <span className="font-black text-slate-900">optional</span> for viewing before your session.
-                    </p>
-                    <div className="relative rounded-xl overflow-hidden border-2 border-black shadow-2xl">
-                        <MuxPlayer
-                            ref={playerRef}
-                            playbackId="8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM"
-                            autoPlay
-                            muted
-                            accentColor="#991b1b"
-                            style={{ width: '100%', aspectRatio: '16/9' }}
-                        />
-                        {showUnmute && (
-                            <button
-                                onClick={handleUnmute}
-                                className="absolute top-4 right-4 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-[#991b1b] text-white font-bold text-sm shadow-lg hover:scale-105 transition-all animate-pulse"
-                            >
-                                <Volume2 className="w-5 h-5" />
-                                Tap to Unmute
-                            </button>
-                        )}
                     </div>
                 </div>
             </div>
