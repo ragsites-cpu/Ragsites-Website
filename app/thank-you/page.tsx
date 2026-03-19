@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Volume2 } from 'lucide-react';
+import { Volume2, CheckCircle2, Mail, MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
 import MuxPlayer from '@mux/mux-player-react';
 import type MuxPlayerElement from '@mux/mux-player';
@@ -9,18 +9,6 @@ import type MuxPlayerElement from '@mux/mux-player';
 export default function ThankYouPage() {
     const playerRef = useRef<MuxPlayerElement>(null);
     const [showUnmute, setShowUnmute] = useState(true);
-    const [dailyAdSpend, setDailyAdSpend] = useState(30);
-    const [avgJobValue, setAvgJobValue] = useState(8000);
-
-    const spend = dailyAdSpend;
-    const job = avgJobValue;
-    const monthlyAdSpend = spend * 30;
-    const monthlyLeads = monthlyAdSpend / 40;
-    const monthlyJobs = Math.floor(monthlyLeads * 0.5);
-    const monthlyRevenue = monthlyJobs * job;
-    const monthlyProfit = monthlyRevenue - monthlyAdSpend;
-    const roiPercent = monthlyAdSpend > 0 ? Math.round((monthlyProfit / monthlyAdSpend) * 100) : 0;
-    const showResults = true;
 
     const handleUnmute = () => {
         if (playerRef.current) {
@@ -30,13 +18,28 @@ export default function ThankYouPage() {
         }
     };
 
+    const campaignImages = [
+        { src: '/meta-campaigns/campaign-2.png', alt: 'Meta Ad Campaign Results – Client 1' },
+        { src: '/meta-campaigns/campaign-3.png', alt: 'Meta Ad Campaign Results – Client 2' },
+        { src: '/meta-campaigns/campaign-4.png', alt: 'Meta Ad Campaign Results – Client 3' },
+        { src: '/meta-campaigns/campaign-5.png', alt: 'Meta Ad Campaign Results – Client 4' },
+    ];
+
+    const testimonialVideos = [
+        { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+        { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
+        { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
+        { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
+        { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
+    ];
+
     return (
         <main className="min-h-screen bg-white text-slate-900 flex flex-col">
             {/* Top bar */}
             <div className="fixed top-0 left-0 right-0 z-40 bg-slate-900/40 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
+                        <Image src="/logo.png" alt="Ragsites" width={32} height={32} />
                         <span className="text-xl font-bold text-slate-900">RAGSITES</span>
                     </div>
                 </div>
@@ -46,21 +49,76 @@ export default function ThankYouPage() {
             <div className="pt-24 pb-6 px-4 text-center bg-white">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight">
-                        <span className="text-[#991b1b]">Urgent</span>, Your Scale Session Registration Is Not Yet Complete, You <span className="text-[#991b1b]">Must Watch</span> This Video In Full Prior To The Meeting
+                        <span className="text-[#991b1b]">You&apos;re Almost Booked.</span> Complete These 3 Steps Before Your Call
                     </h1>
+                    <p className="mt-4 text-lg text-slate-600 font-medium">
+                        Follow each step below so we can hit the ground running on your call.
+                    </p>
                 </div>
             </div>
 
-            {/* Step 1 Banner */}
+            {/* ─── STEP 1 BANNER ─── */}
             <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
                 <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #1: Watch This Video Before Your Call
+                    Step #1: Confirm Your Spot
                 </p>
             </div>
 
-            {/* Video */}
+            {/* Step 1 Content */}
+            <div className="py-10 px-4 bg-white">
+                <div className="max-w-3xl mx-auto">
+                    <p className="text-center text-slate-600 text-lg mb-8 leading-relaxed">
+                        Do these two things right now so your call is locked in and you don&apos;t miss it.
+                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Text confirmation card */}
+                        <div className="flex flex-col items-center text-center bg-slate-50 border-2 border-slate-200 rounded-2xl p-8 gap-4 shadow-sm">
+                            <div className="w-16 h-16 rounded-full bg-[#991b1b]/10 flex items-center justify-center">
+                                <MessageSquare className="w-8 h-8 text-[#991b1b]" />
+                            </div>
+                            <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Reply &quot;CONFIRM&quot;</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                You&apos;ll receive a text from our team before your call.
+                                Reply <span className="font-black text-[#991b1b]">CONFIRM</span> so we know you&apos;ll be there and can prepare your custom growth plan.
+                            </p>
+                            <div className="flex items-center gap-2 bg-[#991b1b]/10 text-[#991b1b] font-bold rounded-full px-4 py-2 text-sm">
+                                <CheckCircle2 className="w-4 h-4" />
+                                Reply CONFIRM to our text
+                            </div>
+                        </div>
+
+                        {/* Email / calendar card */}
+                        <div className="flex flex-col items-center text-center bg-slate-50 border-2 border-slate-200 rounded-2xl p-8 gap-4 shadow-sm">
+                            <div className="w-16 h-16 rounded-full bg-[#991b1b]/10 flex items-center justify-center">
+                                <Mail className="w-8 h-8 text-[#991b1b]" />
+                            </div>
+                            <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Star Your Calendar Invite</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                Check your inbox for a calendar invite from Ragsites. Star it or mark it as important so it doesn&apos;t get buried — then add it to your calendar.
+                            </p>
+                            <div className="flex items-center gap-2 bg-[#991b1b]/10 text-[#991b1b] font-bold rounded-full px-4 py-2 text-sm">
+                                <Star className="w-4 h-4" />
+                                Star the email &amp; add to calendar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* ─── STEP 2 BANNER ─── */}
+            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
+                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
+                    Step #2: Watch This Video Before Your Call
+                </p>
+            </div>
+
+            {/* Step 2 — VSL Video */}
             <div className="py-8 px-4 bg-white">
                 <div className="max-w-4xl mx-auto">
+                    <p className="text-center text-slate-600 mb-6 text-lg leading-relaxed">
+                        This video is <span className="font-black text-slate-900">optional</span> for viewing before your session.
+                    </p>
                     <div className="relative rounded-xl overflow-hidden border-2 border-black shadow-2xl">
                         <MuxPlayer
                             ref={playerRef}
@@ -83,143 +141,65 @@ export default function ThankYouPage() {
                 </div>
             </div>
 
-            {/* ROI Calculator */}
+            {/* ─── STEP 3 BANNER ─── */}
+            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
+                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
+                    Step #3: See What We&apos;ve Done for Other Clients
+                </p>
+            </div>
+
+            {/* Step 3 — Meta Campaign Proof */}
             <div className="py-12 px-4 bg-slate-900">
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-5xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-2">
-                        Monthly <span className="text-[#991b1b]">ROI</span> Calculator
+                        Real Ad Campaigns. <span className="text-[#991b1b]">Real Results.</span>
                     </h2>
-                    <p className="text-slate-400 text-center mb-8">
-                        See how much profit you&apos;ll generate with our system.
+                    <p className="text-slate-400 text-center mb-10 text-lg">
+                        Here&apos;s actual proof from campaigns we&apos;ve run for roofing clients just like you.
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Inputs */}
-                        <div className="space-y-8">
-                            <div>
-                                <div className="flex justify-between items-center mb-3">
-                                    <label className="text-sm font-bold text-slate-300 uppercase tracking-wide">
-                                        Daily Ad Spend
-                                    </label>
-                                    <span className="text-lg font-black text-white bg-slate-800 border border-slate-600 rounded-lg px-4 py-1">
-                                        ${dailyAdSpend}
-                                    </span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    step={5}
-                                    value={dailyAdSpend}
-                                    onChange={(e) => setDailyAdSpend(Number(e.target.value))}
-                                    className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-700 accent-[#991b1b]"
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {campaignImages.map((img, i) => (
+                            <div key={i} className="rounded-2xl overflow-hidden border-2 border-slate-700 shadow-2xl bg-slate-800">
+                                <Image
+                                    src={img.src}
+                                    alt={img.alt}
+                                    width={800}
+                                    height={500}
+                                    className="w-full h-auto object-cover"
                                 />
                             </div>
-                            <div>
-                                <div className="flex justify-between items-center mb-3">
-                                    <label className="text-sm font-bold text-slate-300 uppercase tracking-wide">
-                                        Average Roofing Job Value
-                                    </label>
-                                    <span className="text-lg font-black text-white bg-slate-800 border border-slate-600 rounded-lg px-4 py-1">
-                                        ${avgJobValue.toLocaleString()}
-                                    </span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min={1000}
-                                    max={50000}
-                                    step={500}
-                                    value={avgJobValue}
-                                    onChange={(e) => setAvgJobValue(Number(e.target.value))}
-                                    className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-700 accent-[#991b1b]"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Results */}
-                        <div className="bg-white rounded-2xl p-6 md:p-8 border-2 border-slate-200">
-                            <p className="text-xs font-bold uppercase tracking-widest text-[#991b1b] mb-4">
-                                Your Estimated Monthly Returns
-                            </p>
-                            <div className="space-y-4">
-                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
-                                    <span className="text-slate-600 text-sm">Monthly ad spend</span>
-                                    <span className="font-bold text-slate-900">${monthlyAdSpend.toLocaleString()}</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
-                                    <span className="text-slate-600 text-sm">Leads generated</span>
-                                    <span className="font-bold text-slate-900">{Math.floor(monthlyLeads)}</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
-                                    <span className="text-slate-600 text-sm">Jobs closed</span>
-                                    <span className="font-bold text-slate-900">{monthlyJobs}</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 border-b border-slate-100">
-                                    <span className="text-slate-600 text-sm">Monthly revenue</span>
-                                    <span className="font-bold text-slate-900">${monthlyRevenue.toLocaleString()}</span>
-                                </div>
-                                <div className="flex justify-between items-center pt-4">
-                                    <span className="text-slate-900 font-black text-lg">Profit</span>
-                                    <span className="font-black text-2xl text-emerald-600">${monthlyProfit.toLocaleString()}</span>
-                                </div>
-                                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
-                                    <p className="text-sm text-emerald-700 font-medium">Return on Ad Spend</p>
-                                    <p className="text-4xl font-black text-emerald-600">{roiPercent.toLocaleString()}%</p>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
 
-            {/* Step 2 Banner */}
-            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
-                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #2: Respond &quot;CONFIRM&quot; to Our Text to Confirm Your Call
-                </p>
-            </div>
-
-            {/* Step 2 Content */}
-            <div className="py-8 px-4 bg-white">
-                <div className="max-w-3xl mx-auto text-center">
-                    <p className="text-lg text-slate-700 leading-relaxed">
-                        Before 24 hours of the call, you&apos;ll receive a confirmation text from our team.
-                        Please reply <span className="font-black text-[#991b1b]">CONFIRM</span> to let us know you&apos;ll be joining the meeting.
-                        This helps us prepare your custom growth plan ahead of time.
-                    </p>
-                </div>
-            </div>
-
-            {/* Step 3 Banner */}
-            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
-                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #3: See What Our Clients Have to Say
-                </p>
-            </div>
-
-            {/* Step 3 Content — Testimonial Videos */}
-            <div className="py-8 px-4 bg-white">
-                <div className="max-w-3xl mx-auto grid grid-cols-1 gap-8">
-                    {[
-                        { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
-                        { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
-                        { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
-                        { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
-                        { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
-                    ].map((video, index) => (
-                        <div key={index} className="flex flex-col">
-                            <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
-                            <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
-                                <iframe
-                                    src={`https://player.mux.com/${video.id}`}
-                                    style={{ width: '100%', height: '100%', border: 'none' }}
-                                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                                    allowFullScreen
-                                    title={`Testimonial Video ${index + 1}`}
-                                />
+            {/* Step 3 — Testimonial Videos */}
+            <div className="py-10 px-4 bg-white">
+                <div className="max-w-3xl mx-auto">
+                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 text-center mb-8">
+                        Hear It From Our <span className="text-[#991b1b]">Clients</span>
+                    </h3>
+                    <div className="grid grid-cols-1 gap-8">
+                        {testimonialVideos.map((video, index) => (
+                            <div key={index} className="flex flex-col">
+                                <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">
+                                    {video.before}
+                                    <span className="text-[#991b1b] underline">{video.highlight}</span>
+                                    {video.after}
+                                </p>
+                                <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
+                                    <iframe
+                                        src={`https://player.mux.com/${video.id}`}
+                                        style={{ width: '100%', height: '100%', border: 'none' }}
+                                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                        allowFullScreen
+                                        title={`Testimonial Video ${index + 1}`}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
 
