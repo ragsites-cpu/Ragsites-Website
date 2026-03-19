@@ -312,7 +312,7 @@ export default function BrochurePage() {
                     <p className="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-10">
                         Works With Your Favorite Tools
                     </p>
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                         {INTEGRATIONS.map((item) => (
                             <div key={item.name} className="flex flex-col items-center gap-2 group" title={item.name}>
                                 <Image
