@@ -5,7 +5,6 @@ import { headers } from 'next/headers';
 
 const META_PIXEL_ID = '913942544750622';
 const META_ACCESS_TOKEN = 'EAAP4qriDd3EBQZCFBymvNkkTcXC2w1H0kjgvL8D4S1XNLJZByeSwLSK5eIJdbNnxRZB40O4CDBM647e0REhw1ivj3fOHUY75KAZBg76Lxa6zYE3R4jC9wJj2xZCyyiHolKRq0ZACFqE69ow4efnyYMzyDPI4r2sIX0NphUSeEJdMiExLu8o2Q0zut530VBJAZDZD';
-const TEST_EVENT_CODE = 'TEST22248';
 
 function hashData(data: string | undefined): string | undefined {
     if (!data) return undefined;
