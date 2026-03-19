@@ -766,7 +766,7 @@ export default function RoofingLanding() {
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
-              WARNING: This Is ONLY For Roofers With Crews That Can Handle New Installs Weekly.
+              WARNING: This Is ONLY For Roofers Wanting Consistent Jobs.
             </span>
           </div>
           <h1
