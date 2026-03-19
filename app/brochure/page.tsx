@@ -159,6 +159,33 @@ const FAQ = [
     },
 ];
 
+const INTEGRATIONS = [
+    { name: 'Google Calendar', logo: '/integrations/googlecalendar.svg' },
+    { name: 'HubSpot', logo: '/integrations/hubspot.svg' },
+    { name: 'Salesforce', logo: '/integrations/salesforce.svg' },
+    { name: 'Google Maps', logo: '/integrations/googlemaps.svg' },
+    { name: 'Zapier', logo: '/integrations/zapier.svg' },
+    { name: 'Calendly', logo: '/integrations/calendly.svg' },
+    { name: 'Stripe', logo: '/integrations/stripe.svg' },
+    { name: 'Square', logo: '/integrations/square.svg' },
+    { name: 'Twilio', logo: '/integrations/twilio.svg' },
+    { name: 'Slack', logo: '/integrations/slack.svg' },
+    { name: 'WhatsApp', logo: '/integrations/whatsapp.svg' },
+    { name: 'QuickBooks', logo: '/integrations/quickbooks.svg' },
+];
+
+/* Inline SVG noise filter — applied as overlay on dark sections */
+function NoiseOverlay() {
+    return (
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-[1]" style={{ opacity: 0.045 }}>
+            <filter id="noiseFilter">
+                <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+        </svg>
+    );
+}
+
 export default function BrochurePage() {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
     const [callVolume, setCallVolume] = useState(1200);
@@ -194,12 +221,34 @@ export default function BrochurePage() {
             </nav>
 
             {/* Hero */}
-            <section className="bg-gradient-to-br from-[#0c1929] via-[#162544] to-[#0c1929] py-24 px-4 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(59,130,246,0.15),transparent_50%)]" />
+            <section className="py-24 px-4 relative overflow-hidden" style={{ background: '#060d18' }}>
+                <NoiseOverlay />
+                {/* Animated mesh gradient — Retell AI style */}
+                <style>{`
+                    @keyframes meshBlob1 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(200px,-100px) scale(1.3)} 50%{transform:translate(-100px,120px) scale(0.8)} 75%{transform:translate(150px,80px) scale(1.15)} 100%{transform:translate(0,0) scale(1)} }
+                    @keyframes meshBlob2 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(-250px,80px) scale(1.25)} 50%{transform:translate(150px,-150px) scale(0.85)} 75%{transform:translate(-120px,-100px) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
+                    @keyframes meshBlob3 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(120px,180px) scale(0.8)} 50%{transform:translate(-200px,-80px) scale(1.3)} 75%{transform:translate(80px,-150px) scale(1.1)} 100%{transform:translate(0,0) scale(1)} }
+                    @keyframes meshBlob4 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(-180px,-120px) scale(1.2)} 50%{transform:translate(220px,60px) scale(0.85)} 75%{transform:translate(-80px,160px) scale(1.25)} 100%{transform:translate(0,0) scale(1)} }
+                    @keyframes meshBlob5 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(100px,-200px) scale(1.15)} 50%{transform:translate(-150px,100px) scale(0.9)} 75%{transform:translate(180px,50px) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
+                `}</style>
+                <div className="absolute inset-0 overflow-hidden">
+                    {/* Large deep blue — dominant center glow */}
+                    <div className="absolute rounded-full" style={{ width: '900px', height: '700px', background: 'radial-gradient(circle, #1d4ed8 0%, #1e3a8a 40%, transparent 70%)', top: '-15%', left: '15%', opacity: 0.9, filter: 'blur(80px)', animation: 'meshBlob1 10s ease-in-out infinite' }} />
+                    {/* Bright blue — right side */}
+                    <div className="absolute rounded-full" style={{ width: '700px', height: '600px', background: 'radial-gradient(circle, #2563eb 0%, #1d4ed8 35%, transparent 70%)', top: '10%', right: '-10%', opacity: 0.8, filter: 'blur(70px)', animation: 'meshBlob2 12s ease-in-out infinite' }} />
+                    {/* Teal accent — bottom-left */}
+                    <div className="absolute rounded-full" style={{ width: '600px', height: '500px', background: 'radial-gradient(circle, #0d9488 0%, #0f766e 30%, transparent 70%)', bottom: '-20%', left: '-10%', opacity: 0.6, filter: 'blur(90px)', animation: 'meshBlob3 14s ease-in-out infinite' }} />
+                    {/* Indigo — top-right */}
+                    <div className="absolute rounded-full" style={{ width: '550px', height: '550px', background: 'radial-gradient(circle, #4f46e5 0%, #3730a3 35%, transparent 70%)', top: '-15%', right: '10%', opacity: 0.5, filter: 'blur(75px)', animation: 'meshBlob4 8s ease-in-out infinite' }} />
+                    {/* Mid blue — center fill */}
+                    <div className="absolute rounded-full" style={{ width: '800px', height: '600px', background: 'radial-gradient(circle, #3b82f6 0%, #2563eb 30%, transparent 65%)', top: '0%', left: '30%', opacity: 0.6, filter: 'blur(85px)', animation: 'meshBlob5 11s ease-in-out infinite' }} />
+                    {/* Edge vignette — softer so blobs show through */}
+                    <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 40%, transparent 35%, #060d18 85%)' }} />
+                </div>
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
                     <div>
                         <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] mb-8 tracking-tight">
-                            Never Miss Another Client. Get Started with Your AI Receptionist for $99.
+                            Never Miss Another Client. Get Started with Your AI Call Center for $99.
                         </h1>
                         <ul className="space-y-4 text-lg text-slate-300">
                             <li className="flex items-start gap-3">
@@ -257,8 +306,34 @@ export default function BrochurePage() {
                 </div>
             </section>
 
+            {/* Integrations Strip */}
+            <section className="py-14 px-4 bg-slate-50 border-y border-slate-100">
+                <div className="max-w-7xl mx-auto">
+                    <p className="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-10">
+                        Works With Your Favorite Tools
+                    </p>
+                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                        {INTEGRATIONS.map((item) => (
+                            <div key={item.name} className="flex flex-col items-center gap-2 group" title={item.name}>
+                                <Image
+                                    src={item.logo}
+                                    alt={item.name}
+                                    width={36}
+                                    height={36}
+                                    className="w-9 h-9 object-contain"
+                                />
+                                <span className="text-[11px] font-medium text-slate-400 group-hover:text-slate-600 transition-colors">
+                                    {item.name}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Professional Setup */}
             <section className="py-20 px-4 bg-gradient-to-br from-[#0c1929] via-[#162544] to-[#0c1929] relative overflow-hidden">
+                <NoiseOverlay />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(99,102,241,0.1),transparent_50%)]" />
                 <div className="max-w-2xl mx-auto text-center relative z-10">
                     <div className="flex justify-center gap-1 mb-4">
@@ -295,6 +370,7 @@ export default function BrochurePage() {
 
             {/* Pricing */}
             <section id="pricing" className="py-20 px-4 bg-gradient-to-b from-[#0c1929] to-[#162544] relative overflow-hidden">
+                <NoiseOverlay />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(59,130,246,0.08),transparent_50%)]" />
                 <div className="max-w-7xl mx-auto relative z-10">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center mb-3 tracking-tight">
@@ -387,6 +463,7 @@ export default function BrochurePage() {
 
             {/* Annual Gains Calculator */}
             <section className="py-20 px-4 bg-gradient-to-br from-[#0c1929] via-[#162544] to-[#0c1929] relative overflow-hidden">
+                <NoiseOverlay />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.06),transparent_60%)]" />
                 <div className="max-w-5xl mx-auto relative z-10">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center mb-12 tracking-tight">
