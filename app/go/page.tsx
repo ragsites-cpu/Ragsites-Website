@@ -24,7 +24,7 @@ const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
-const META_PIXEL_ID = '913942544750622';
+const META_PIXEL_ID = '1379048093907312';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -309,13 +309,6 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         body,
       });
       if (res.ok) {
-        // Fire Lead event after successful qualification form submit
-        trackMetaGo('Lead', { content_name: 'Qualification Form Submitted' });
-        sendMetaCAPIEvent('Lead', {
-          email: formData.email,
-          phone: formData.phone
-        }, { content_name: 'Qualification Form Submitted' }).catch(console.error);
-
         setStep('done');
         setTimeout(() => {
           setStep('booking');
@@ -733,6 +726,9 @@ export default function RoofingLanding() {
   useMetaPixel();
 
   const openQuiz = (source: string) => {
+    trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source });
+    // Send CAPI Lead event concurrently
+    sendMetaCAPIEvent('Lead', {}, { content_name: 'Book Call CTA', content_category: source }).catch(console.error);
     setShowQuiz(true);
   };
 
