@@ -3,26 +3,6 @@
 import { headers } from 'next/headers';
 import { Redis } from '@upstash/redis';
 
-interface VisitData {
-  ip: string;
-  timestamp: string;
-  page: string;
-  location: {
-    city: string;
-    country: string;
-    region: string;
-    latitude: string;
-    longitude: string;
-    timezone: string;
-  };
-  device: {
-    browser: string;
-    os: string;
-    type: string;
-  };
-  userAgent: string;
-}
-
 function getRedis(): Redis {
   return new Redis({
     url: 'https://intimate-seasnail-78625.upstash.io',
@@ -53,13 +33,15 @@ function parseUserAgent(ua: string) {
   return { browser, os, type };
 }
 
-export async function trackPageVisit(page: string) {
+export async function trackPageVisit(page: string): Promise<string> {
   try {
     const headersList = await headers();
     const ip = headersList.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
     const userAgent = headersList.get('user-agent') || 'unknown';
 
-    const visit: VisitData = {
+    const visitId = `${ip}_${Date.now()}`;
+
+    const visit = {
       ip,
       timestamp: new Date().toISOString(),
       page,
@@ -73,14 +55,17 @@ export async function trackPageVisit(page: string) {
       },
       device: parseUserAgent(userAgent),
       userAgent,
+      timeOnPageSeconds: 0,
+      maxScrollPercent: 0,
     };
 
     const redis = getRedis();
-    await redis.lpush('page_visits', JSON.stringify(visit));
+    await redis.set(`visit:${visitId}`, JSON.stringify(visit));
+    await redis.lpush('visit_ids', visitId);
 
-    return { success: true };
+    return visitId;
   } catch (error) {
     console.error('[Visit Tracker] Error:', error);
-    return { success: false };
+    return '';
   }
 }

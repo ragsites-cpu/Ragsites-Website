@@ -726,9 +726,42 @@ export default function RoofingLanding() {
   // Initialize Meta Pixel for this page
   useMetaPixel();
 
-  // Track page visit (IP, location, device)
+  // Track visit (IP, location, device) + scroll depth & time on page
+  const visitIdRef = useRef('');
+
   useEffect(() => {
-    trackPageVisit('/go');
+    trackPageVisit('/go').then((id) => { visitIdRef.current = id; });
+
+    const startTime = Date.now();
+    let maxScroll = 0;
+    let sent = false;
+
+    const updateScroll = () => {
+      const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      if (pct > maxScroll) maxScroll = pct;
+    };
+
+    const sendEngagement = () => {
+      if (sent || !visitIdRef.current) return;
+      sent = true;
+      const blob = new Blob([JSON.stringify({
+        visitId: visitIdRef.current,
+        timeOnPageSeconds: Math.round((Date.now() - startTime) / 1000),
+        maxScrollPercent: Math.round(maxScroll),
+      })], { type: 'application/json' });
+      navigator.sendBeacon('/api/track', blob);
+    };
+
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendEngagement();
+    });
+    window.addEventListener('pagehide', sendEngagement);
+
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+      window.removeEventListener('pagehide', sendEngagement);
+    };
   }, []);
 
   const openQuiz = (source: string) => {

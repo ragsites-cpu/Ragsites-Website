@@ -16,18 +16,22 @@ export async function GET(request: NextRequest) {
   }
 
   const redis = getRedis();
-
   const limit = parseInt(request.nextUrl.searchParams.get('limit') || '100');
   const offset = parseInt(request.nextUrl.searchParams.get('offset') || '0');
 
   try {
-    const [visits, total] = await Promise.all([
-      redis.lrange('page_visits', offset, offset + limit - 1),
-      redis.llen('page_visits'),
-    ]);
+    const ids = await redis.lrange('visit_ids', offset, offset + limit - 1);
+    const total = await redis.llen('visit_ids');
+
+    const visits = await Promise.all(
+      ids.map(async (id) => {
+        const data = await redis.get(`visit:${id}`);
+        return typeof data === 'string' ? JSON.parse(data) : data;
+      })
+    );
 
     return NextResponse.json({
-      visits: visits.map((v) => (typeof v === 'string' ? JSON.parse(v) : v)),
+      visits: visits.filter(Boolean),
       total,
       limit,
       offset,
