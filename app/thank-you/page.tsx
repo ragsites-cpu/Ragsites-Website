@@ -1,14 +1,51 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Volume2, CheckCircle2, Mail, MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
 import MuxPlayer from '@mux/mux-player-react';
 import type MuxPlayerElement from '@mux/mux-player';
+import { trackPageVisit } from '@/app/actions/track';
 
 export default function ThankYouPage() {
     const playerRef = useRef<MuxPlayerElement>(null);
     const [showUnmute, setShowUnmute] = useState(true);
+    const visitIdRef = useRef('');
+
+    useEffect(() => {
+        trackPageVisit('/thank-you').then((id) => { visitIdRef.current = id; });
+
+        const startTime = Date.now();
+        let maxScroll = 0;
+        let sent = false;
+
+        const updateScroll = () => {
+            const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            if (pct > maxScroll) maxScroll = pct;
+        };
+
+        const sendEngagement = () => {
+            if (sent || !visitIdRef.current) return;
+            sent = true;
+            const blob = new Blob([JSON.stringify({
+                visitId: visitIdRef.current,
+                timeOnPageSeconds: Math.round((Date.now() - startTime) / 1000),
+                maxScrollPercent: Math.round(maxScroll),
+            })], { type: 'application/json' });
+            navigator.sendBeacon('/api/track', blob);
+        };
+
+        window.addEventListener('scroll', updateScroll, { passive: true });
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') sendEngagement();
+        });
+        window.addEventListener('pagehide', sendEngagement);
+
+        return () => {
+            window.removeEventListener('scroll', updateScroll);
+            window.removeEventListener('pagehide', sendEngagement);
+        };
+    }, []);
 
     const handleUnmute = () => {
         if (playerRef.current) {

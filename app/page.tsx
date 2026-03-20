@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-react';
 import Script from 'next/script';
+import { trackPageVisit } from '@/app/actions/track';
 import Navbar from '@/components/Navbar';
 import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import DemoWidget from '@/components/DemoWidget';
@@ -25,6 +27,43 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  const visitIdRef = useRef('');
+
+  useEffect(() => {
+    trackPageVisit('/').then((id) => { visitIdRef.current = id; });
+
+    const startTime = Date.now();
+    let maxScroll = 0;
+    let sent = false;
+
+    const updateScroll = () => {
+      const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      if (pct > maxScroll) maxScroll = pct;
+    };
+
+    const sendEngagement = () => {
+      if (sent || !visitIdRef.current) return;
+      sent = true;
+      const blob = new Blob([JSON.stringify({
+        visitId: visitIdRef.current,
+        timeOnPageSeconds: Math.round((Date.now() - startTime) / 1000),
+        maxScrollPercent: Math.round(maxScroll),
+      })], { type: 'application/json' });
+      navigator.sendBeacon('/api/track', blob);
+    };
+
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendEngagement();
+    });
+    window.addEventListener('pagehide', sendEngagement);
+
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+      window.removeEventListener('pagehide', sendEngagement);
+    };
+  }, []);
+
   const scrollToDemo = () => {
     document.getElementById('live-demo-section')?.scrollIntoView({ behavior: 'smooth' });
   };
