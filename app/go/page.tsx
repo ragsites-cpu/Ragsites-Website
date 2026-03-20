@@ -92,7 +92,7 @@ function useMetaPixel() {
 
 /* ─── Cal.com Inline Booking ─── */
 
-function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
+function CalInlineBooking({ name, email, phone }: { name?: string; email?: string; phone?: string }) {
   const calReady = useRef(false);
   const [calLoaded, setCalLoaded] = useState(false);
 
@@ -132,6 +132,7 @@ function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
             theme: 'dark',
             name: name || undefined,
             email: email || undefined,
+            phone: phone || undefined,
           },
         });
 
@@ -642,7 +643,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
           {/* ─── Booking (Cal.com inline) ─── */}
           {step === 'booking' && (
-            <CalInlineBooking name={formData.name} email={formData.email} />
+            <CalInlineBooking name={formData.name} email={formData.email} phone={formData.phone} />
           )}
         </>
 
