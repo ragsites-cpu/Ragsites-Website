@@ -1,7 +1,11 @@
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
 
-const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbw-3vJKwiuYaOXon6Brs0vzmlXY7oH3iFkFituZCCiQYBj17AzYsKjZPzGkoxAAwlH_Kg/exec';
+const SHEETS_WEBHOOKS: Record<string, string> = {
+  '/': 'https://script.google.com/macros/s/AKfycbxZN7eCv3Ln851lfcBI5nT-KVcAGlPavH3Lp70viqHUZ1gzF4maVOjC_FeN9luUsIrf/exec',
+  '/go': 'https://script.google.com/macros/s/AKfycbw-3vJKwiuYaOXon6Brs0vzmlXY7oH3iFkFituZCCiQYBj17AzYsKjZPzGkoxAAwlH_Kg/exec',
+  '/thank-you': 'https://script.google.com/macros/s/AKfycbzBK8fADs5cSBXngq9bXEUabWVLvBvN-BzNHpWrM92NX0zCZ0DZKkuN2RhB3RVztQMZ_w/exec',
+};
 
 function getRedis(): Redis {
   return new Redis({
@@ -29,7 +33,10 @@ export async function POST(request: NextRequest) {
 
       // Push complete row to Google Sheets
       // Apps Script returns 302 which changes POST→GET, so follow redirect manually
-      const sheetsRes = await fetch(SHEETS_WEBHOOK, {
+      const webhook = SHEETS_WEBHOOKS[visit.page];
+      if (!webhook) return NextResponse.json({ success: true });
+
+      const sheetsRes = await fetch(webhook, {
         method: 'POST',
         body: JSON.stringify(visit),
         redirect: 'manual',
