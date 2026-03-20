@@ -1,7 +1,7 @@
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
 
-const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzPJcZXv5G3zrB4kUrrygrrOg5PZNfJdJ8yuzcc9l_UodDrRKRSAdg_eXWsZpEHR1nIrg/exec';
+const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbw-3vJKwiuYaOXon6Brs0vzmlXY7oH3iFkFituZCCiQYBj17AzYsKjZPzGkoxAAwlH_Kg/exec';
 
 function getRedis(): Redis {
   return new Redis({
