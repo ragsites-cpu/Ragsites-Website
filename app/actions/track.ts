@@ -43,7 +43,7 @@ export async function trackPageVisit(page: string): Promise<string> {
 
     const visit = {
       ip,
-      timestamp: new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai', dateStyle: 'short', timeStyle: 'medium' }),
+      timestamp: new Date().toISOString(),
       page,
       location: {
         city: decodeURIComponent(headersList.get('x-vercel-ip-city') || 'unknown'),
