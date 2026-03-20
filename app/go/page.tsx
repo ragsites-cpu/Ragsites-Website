@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { sendMetaCAPIEvent } from '@/app/actions/capi';
+import { trackPageVisit } from '@/app/actions/track';
 
 /* ─── Configuration ─── */
 
@@ -724,6 +725,11 @@ export default function RoofingLanding() {
 
   // Initialize Meta Pixel for this page
   useMetaPixel();
+
+  // Track page visit (IP, location, device)
+  useEffect(() => {
+    trackPageVisit('/go');
+  }, []);
 
   const openQuiz = (source: string) => {
     trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source });
