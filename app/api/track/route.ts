@@ -28,11 +28,18 @@ export async function POST(request: NextRequest) {
       await redis.set(`visit:${visitId}`, JSON.stringify(visit));
 
       // Push complete row to Google Sheets
-      fetch(SHEETS_WEBHOOK, {
+      // Apps Script returns 302 which changes POST→GET, so follow redirect manually
+      const sheetsRes = await fetch(SHEETS_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(visit),
-      }).catch(() => {});
+        redirect: 'manual',
+      });
+      if (sheetsRes.status >= 300 && sheetsRes.status < 400) {
+        const location = sheetsRes.headers.get('location');
+        if (location) {
+          await fetch(location, { method: 'POST', body: JSON.stringify(visit) });
+        }
+      }
     }
 
     return NextResponse.json({ success: true });
