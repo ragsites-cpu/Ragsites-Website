@@ -132,7 +132,7 @@ function CalInlineBooking({ name, email, phone }: { name?: string; email?: strin
             theme: 'dark',
             name: name || undefined,
             email: email || undefined,
-            phone: phone || undefined,
+            attendeePhoneNumber: phone || undefined,
           },
         });
 
