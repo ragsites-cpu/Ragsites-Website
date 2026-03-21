@@ -2,7 +2,7 @@ import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
 
 const SHEETS_WEBHOOKS: Record<string, string> = {
-  '/': 'https://script.google.com/macros/s/AKfycbxdjhVL9WxlgUq0LHl1hAx3FmKgwRIS2a6ZIR1Q2EFD4V_zw9HrjFRX18CRgQcKYNqx4A/exec',
+  '/': 'https://script.google.com/macros/s/AKfycbxv6nk0kbmX0ti43Y-NPRmw93Yw7fYA2g2W0tm86cW4zBOND0EqIzzV7DQ6qEZmIJ7x/exec',
   '/go': 'https://script.google.com/macros/s/AKfycbw-3vJKwiuYaOXon6Brs0vzmlXY7oH3iFkFituZCCiQYBj17AzYsKjZPzGkoxAAwlH_Kg/exec',
   '/thank-you': 'https://script.google.com/macros/s/AKfycbzBK8fADs5cSBXngq9bXEUabWVLvBvN-BzNHpWrM92NX0zCZ0DZKkuN2RhB3RVztQMZ_w/exec',
 };
