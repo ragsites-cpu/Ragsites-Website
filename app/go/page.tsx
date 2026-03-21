@@ -814,8 +814,8 @@ export default function RoofingLanding() {
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
-              <span>30 ROOF REPLACEMENT</span>
-              <span>JOBS IN 30 DAYS</span>
+              <span>40 BOOKED JOBS</span>
+              <span>IN 90 DAYS</span>
               <span>OR</span>
             </div>
             <div className="flex flex-wrap justify-center mt-3 md:mt-5 text-center">
@@ -939,9 +939,9 @@ export default function RoofingLanding() {
               <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
                 <BadgeCheck className="w-7 h-7 text-[#991b1b]" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">30-Day Guarantee</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">90-Day Guarantee</h3>
               <p className="text-slate-600 text-sm leading-relaxed">
-                Get 30 roof replacement jobs in 30 days or you don&apos;t pay. We put our money where our mouth is.
+                Get 40 booked jobs in 90 days or you don&apos;t pay. We put our money where our mouth is.
               </p>
             </div>
           </div>
@@ -970,7 +970,7 @@ export default function RoofingLanding() {
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            Ready for 30 Jobs <span className="text-gradient-skye">This Month?</span>
+            Ready for 40 Booked Jobs <span className="text-gradient-skye">in 90 Days?</span>
           </h2>
           <p className="text-xl text-slate-700 mb-10 max-w-xl mx-auto">
             Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
