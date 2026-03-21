@@ -80,10 +80,6 @@ export default function ThankYouPage() {
                         <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
                         <span className="text-xl font-bold text-slate-900">RAGSITES</span>
                     </div>
-                    <Link href="/" className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to Home
-                    </Link>
                 </div>
             </div>
 
