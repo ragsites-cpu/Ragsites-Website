@@ -850,9 +850,9 @@ export default function RoofingLanding() {
           <div className="flex items-center -space-x-3 mb-4">
             {[
               'https://randomuser.me/api/portraits/men/32.jpg',
-              'https://randomuser.me/api/portraits/women/44.jpg',
+              'https://randomuser.me/api/portraits/men/52.jpg',
               'https://randomuser.me/api/portraits/men/46.jpg',
-              'https://randomuser.me/api/portraits/women/65.jpg',
+              'https://randomuser.me/api/portraits/men/67.jpg',
               'https://randomuser.me/api/portraits/men/22.jpg',
             ].map((src, i) => (
               <div key={i} className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] overflow-hidden">
@@ -860,7 +860,7 @@ export default function RoofingLanding() {
               </div>
             ))}
             <div className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] bg-slate-900 flex items-center justify-center">
-              <span className="text-xs font-bold text-white">+200</span>
+              <span className="text-xs font-bold text-white">+100</span>
             </div>
           </div>
           <div className="flex items-center justify-center gap-1 mb-1">
@@ -869,7 +869,7 @@ export default function RoofingLanding() {
             ))}
           </div>
           <p className="text-lg font-bold text-slate-800">
-            Trusted by 200+ Roofing Contractors
+            Trusted by 100+ Roofing Contractors
           </p>
         </div>
       </section>
