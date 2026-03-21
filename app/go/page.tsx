@@ -844,11 +844,28 @@ export default function RoofingLanding() {
       </section>
 
       {/* Social Proof Strip */}
-      <section className="py-8 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-1 mb-2">
+      <section className="py-10 px-4">
+        <div className="max-w-3xl mx-auto flex flex-col items-center">
+          {/* Overlapping avatar stack */}
+          <div className="flex items-center -space-x-3 mb-4">
+            {[
+              'https://randomuser.me/api/portraits/men/32.jpg',
+              'https://randomuser.me/api/portraits/women/44.jpg',
+              'https://randomuser.me/api/portraits/men/46.jpg',
+              'https://randomuser.me/api/portraits/women/65.jpg',
+              'https://randomuser.me/api/portraits/men/22.jpg',
+            ].map((src, i) => (
+              <div key={i} className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] overflow-hidden">
+                <Image src={src} alt="" width={44} height={44} className="w-full h-full object-cover" />
+              </div>
+            ))}
+            <div className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] bg-slate-900 flex items-center justify-center">
+              <span className="text-xs font-bold text-white">+200</span>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-1 mb-1">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+              <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
             ))}
           </div>
           <p className="text-lg font-bold text-slate-800">
