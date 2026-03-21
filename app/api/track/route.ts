@@ -36,15 +36,21 @@ export async function POST(request: NextRequest) {
       const webhook = SHEETS_WEBHOOKS[visit.page];
       if (!webhook) return NextResponse.json({ success: true });
 
+      const body = JSON.stringify(visit);
       const sheetsRes = await fetch(webhook, {
         method: 'POST',
-        body: JSON.stringify(visit),
+        headers: { 'Content-Type': 'text/plain' },
+        body,
         redirect: 'manual',
       });
       if (sheetsRes.status >= 300 && sheetsRes.status < 400) {
         const location = sheetsRes.headers.get('location');
         if (location) {
-          await fetch(location, { method: 'POST', body: JSON.stringify(visit) });
+          await fetch(location, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body,
+          });
         }
       }
     }
