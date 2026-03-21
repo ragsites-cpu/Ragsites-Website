@@ -13,6 +13,10 @@ import {
   MapPin,
   Zap,
   CheckCircle,
+  Shield,
+  Bot,
+  BadgeCheck,
+  Star,
 } from 'lucide-react';
 import Image from 'next/image';
 import { sendMetaCAPIEvent } from '@/app/actions/capi';
@@ -692,15 +696,15 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-slate-200">
+    <div className="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-6 text-left group"
+        className="w-full flex items-center justify-between px-6 py-5 text-left group"
       >
         <span className="text-lg font-bold text-slate-900 group-hover:text-[#991b1b] transition-colors pr-4">
           {question}
         </span>
-        <span className={`text-2xl text-slate-600 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
+        <span className={`text-2xl text-slate-500 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
           +
         </span>
       </button>
@@ -709,7 +713,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           <div
             className="overflow-hidden"
           >
-            <p className="pb-6 text-slate-600 leading-relaxed whitespace-pre-line">
+            <p className="px-6 pb-5 text-slate-600 leading-relaxed whitespace-pre-line">
               {answer}
             </p>
           </div>
@@ -773,9 +777,9 @@ export default function RoofingLanding() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
+    <main className="min-h-screen bg-[#F0F7FF] text-slate-900">
       {/* Simple top bar */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-slate-900/40 backdrop-blur-md border-b border-slate-200">
+      <div className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Ragsites" width={32} height={32} />
@@ -783,26 +787,18 @@ export default function RoofingLanding() {
           </div>
           <button
             onClick={() => openQuiz('navbar')}
-            className="px-5 py-2 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_15px_rgba(153,27,27,0.4)] hover:scale-105 transition-all"
+            className="px-5 py-2 rounded-full bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 hover:scale-105 transition-all"
           >
             Book Call Now
           </button>
         </div>
       </div>
 
-      {/* Hero Section — matching main page style */}
-      <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-16 pb-4">
-        {/* Background Video */}
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/10 via-slate-50/50 to-slate-50 z-0 pointer-events-none" />
-
-        {/* Glow orbs */}
-
-
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-24 pb-12">
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
           <div
-            className="mb-4 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-yellow-500 border border-yellow-400"
+            className="mb-6 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-yellow-500 border border-yellow-400"
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
@@ -810,7 +806,7 @@ export default function RoofingLanding() {
             </span>
           </div>
           <h1
-            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-12 leading-[1.1] tracking-normal text-slate-900 uppercase font-black flex flex-col items-center"
+            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-14 leading-[1.1] tracking-normal text-slate-900 uppercase font-black flex flex-col items-center"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
@@ -826,26 +822,39 @@ export default function RoofingLanding() {
           </h1>
 
           <div
-            className="flex flex-col items-center gap-3"
+            className="flex flex-col items-center gap-4"
           >
             <button
               onClick={() => openQuiz('hero')}
-              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.6)] hover:scale-105 transition-all duration-300"
+              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-slate-900 text-2xl font-bold text-white hover:bg-slate-800 hover:scale-105 transition-all duration-300 shadow-lg"
             >
-              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
-              <Phone className="w-8 h-8 " />
+              <Phone className="w-8 h-8" />
               Book Call Now
             </button>
             <p className="text-slate-600 flex items-center gap-2 text-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 " />
+              <span className="w-2 h-2 rounded-full bg-green-400" />
               Limited spots available &mdash; only 5 new clients per month
             </p>
           </div>
         </div>
       </section>
 
+      {/* Social Proof Strip */}
+      <section className="py-8 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-1 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />
+            ))}
+          </div>
+          <p className="text-lg font-bold text-slate-800">
+            Trusted by 200+ Roofing Contractors
+          </p>
+        </div>
+      </section>
+
       {/* Reviews */}
-      <section className="pt-8 pb-2 px-4 bg-slate-50">
+      <section className="pt-8 pb-2 px-4">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-sm font-semibold text-[#991b1b] tracking-wide uppercase mb-2">
             Real Results
@@ -857,22 +866,20 @@ export default function RoofingLanding() {
             {[
               { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
               { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
-              { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
               { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
-              { id: 'cc02iEl00DqKNsS8RgywwL90202rxFwQwC01vqUmKF01AQsJk', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
-              { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
-              { id: 'wEYR00xmhOjwjL3XLztNIBShHzPuDkewDvs9WosXYOYM', before: '"', highlight: 'I\'m Not Chasing People', after: ' Who Aren\'t Interested"' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
                 <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">{video.before}<span className="text-[#991b1b] underline">{video.highlight}</span>{video.after}</p>
-                <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
-                  <iframe
-                    src={`https://player.mux.com/${video.id}`}
-                    style={{ width: '100%', height: '100%', border: 'none' }}
-                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                    title={`Success Story Video ${index + 1}`}
-                  />
+                <div className="bg-white rounded-2xl shadow-md p-3">
+                  <div className="rounded-xl overflow-hidden bg-black aspect-video">
+                    <iframe
+                      src={`https://player.mux.com/${video.id}`}
+                      style={{ width: '100%', height: '100%', border: 'none' }}
+                      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
+                      title={`Success Story Video ${index + 1}`}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
@@ -881,8 +888,43 @@ export default function RoofingLanding() {
         </div>
       </section>
 
+      {/* Value Props */}
+      <section className="py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
+              <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
+                <Shield className="w-7 h-7 text-[#991b1b]" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Exclusive Leads</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Every lead is yours alone. No shared leads, no bidding wars — just homeowners ready for a new roof sent directly to you.
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
+              <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
+                <Bot className="w-7 h-7 text-[#991b1b]" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">AI Pre-Qualification</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Our AI vets every lead before it hits your calendar. Homeowner status, project scope, and intent are verified automatically.
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
+              <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
+                <BadgeCheck className="w-7 h-7 text-[#991b1b]" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">30-Day Guarantee</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Get 30 roof replacement jobs in 30 days or you don&apos;t pay. We put our money where our mouth is.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQs */}
-      <section className="py-20 px-4 bg-slate-50">
+      <section className="py-20 px-4">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
             Got A <span className="text-gradient-skye">Question?</span>
@@ -911,9 +953,8 @@ export default function RoofingLanding() {
           </p>
           <button
             onClick={() => openQuiz('bottom_cta')}
-            className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-gradient-skye text-2xl font-bold text-white shadow-[0_0_40px_rgba(153,27,27,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.6)] hover:scale-105 transition-all duration-300"
+            className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-slate-900 text-2xl font-bold text-white hover:bg-slate-800 hover:scale-105 transition-all duration-300 shadow-lg"
           >
-            <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
             Book Call Now
             <ArrowRight className="w-7 h-7" />
           </button>
@@ -921,7 +962,7 @@ export default function RoofingLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 px-4 border-t border-slate-200 bg-slate-50">
+      <footer className="py-10 px-4 border-t border-blue-100 bg-[#F0F7FF]">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <p className="text-sm text-slate-600">
             Ragsites &copy; 2025 - All Rights Reserved

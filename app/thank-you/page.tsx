@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { Volume2, CheckCircle2, Mail, MessageSquare, Star } from 'lucide-react';
+import { Volume2, CheckCircle2, Mail, MessageSquare, Star, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import MuxPlayer from '@mux/mux-player-react';
 import type MuxPlayerElement from '@mux/mux-player';
 import { trackPageVisit } from '@/app/actions/track';
@@ -71,70 +72,86 @@ export default function ThankYouPage() {
     ];
 
     return (
-        <main className="min-h-screen bg-white text-slate-900 flex flex-col">
+        <main className="min-h-screen bg-[#F0F7FF] text-slate-900 flex flex-col">
             {/* Top bar */}
-            <div className="fixed top-0 left-0 right-0 z-40 bg-slate-900/40 backdrop-blur-md border-b border-slate-200">
+            <div className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b border-slate-100">
                 <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
                         <span className="text-xl font-bold text-slate-900">RAGSITES</span>
                     </div>
+                    <Link href="/" className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                        <ArrowLeft className="w-4 h-4" />
+                        Back to Home
+                    </Link>
                 </div>
             </div>
 
             {/* Hero headline */}
-            <div className="pt-24 pb-6 px-4 text-center bg-white">
+            <div className="pt-28 pb-10 px-4 text-center bg-[#F0F7FF]">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight">
                         <span className="text-[#991b1b]">You&apos;re Almost Booked.</span> Complete These 3 Steps Before Your Call
                     </h1>
-                    <p className="mt-4 text-lg text-slate-600 font-medium">
+                    <p className="mt-5 text-lg text-slate-600 font-medium">
                         Follow each step below so we can hit the ground running on your call.
                     </p>
                 </div>
             </div>
 
             {/* ─── STEP 1 BANNER ─── */}
-            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
-                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #1: Watch This Video Before Your Call
-                </p>
+            <div className="px-4 py-2 bg-[#F0F7FF]">
+                <div className="max-w-4xl mx-auto">
+                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
+                        <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">1</span>
+                        <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
+                            Watch This Video Before Your Call
+                        </p>
+                    </div>
+                </div>
             </div>
 
             {/* Step 1 — VSL Video */}
-            <div className="py-8 px-4 bg-white">
+            <div className="py-8 px-4 bg-[#F0F7FF]">
                 <div className="max-w-4xl mx-auto">
-                    <div className="relative rounded-xl overflow-hidden border-2 border-black shadow-2xl">
-                        <MuxPlayer
-                            ref={playerRef}
-                            playbackId="8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM"
-                            autoPlay
-                            muted
-                            accentColor="#991b1b"
-                            style={{ width: '100%', aspectRatio: '16/9' }}
-                        />
-                        {showUnmute && (
-                            <button
-                                onClick={handleUnmute}
-                                className="absolute top-4 right-4 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-[#991b1b] text-white font-bold text-sm shadow-lg hover:scale-105 transition-all animate-pulse"
-                            >
-                                <Volume2 className="w-5 h-5" />
-                                Tap to Unmute
-                            </button>
-                        )}
+                    <div className="bg-white rounded-2xl shadow-md p-3 md:p-4">
+                        <div className="relative rounded-xl overflow-hidden">
+                            <MuxPlayer
+                                ref={playerRef}
+                                playbackId="8fgpDLmVvg3c13alcYgFAEM02Opsc5A1Qxm5GvsFpptM"
+                                autoPlay
+                                muted
+                                accentColor="#991b1b"
+                                style={{ width: '100%', aspectRatio: '16/9' }}
+                            />
+                            {showUnmute && (
+                                <button
+                                    onClick={handleUnmute}
+                                    className="absolute top-4 right-4 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-[#991b1b] text-white font-bold text-sm shadow-lg hover:scale-105 transition-all animate-pulse"
+                                >
+                                    <Volume2 className="w-5 h-5" />
+                                    Tap to Unmute
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* ─── STEP 2 BANNER ─── */}
-            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
-                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #2: Confirm Your Spot
-                </p>
+            <div className="px-4 py-2 bg-[#F0F7FF]">
+                <div className="max-w-3xl mx-auto">
+                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
+                        <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">2</span>
+                        <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
+                            Confirm Your Spot
+                        </p>
+                    </div>
+                </div>
             </div>
 
             {/* Step 2 Content */}
-            <div className="py-10 px-4 bg-white">
+            <div className="py-8 px-4 bg-[#F0F7FF]">
                 <div className="max-w-3xl mx-auto">
                     <p className="text-center text-slate-600 text-lg mb-8 leading-relaxed">
                         Do these two things right now so your call is locked in and you don&apos;t miss it.
@@ -142,7 +159,7 @@ export default function ThankYouPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Text confirmation card */}
-                        <div className="flex flex-col items-center text-center bg-slate-50 border-2 border-slate-200 rounded-2xl p-8 gap-4 shadow-sm">
+                        <div className="flex flex-col items-center text-center bg-white border border-slate-200 rounded-2xl p-8 gap-4 shadow-md">
                             <div className="w-16 h-16 rounded-full bg-[#991b1b]/10 flex items-center justify-center">
                                 <MessageSquare className="w-8 h-8 text-[#991b1b]" />
                             </div>
@@ -158,7 +175,7 @@ export default function ThankYouPage() {
                         </div>
 
                         {/* Email / calendar card */}
-                        <div className="flex flex-col items-center text-center bg-slate-50 border-2 border-slate-200 rounded-2xl p-8 gap-4 shadow-sm">
+                        <div className="flex flex-col items-center text-center bg-white border border-slate-200 rounded-2xl p-8 gap-4 shadow-md">
                             <div className="w-16 h-16 rounded-full bg-[#991b1b]/10 flex items-center justify-center">
                                 <Mail className="w-8 h-8 text-[#991b1b]" />
                             </div>
@@ -176,25 +193,30 @@ export default function ThankYouPage() {
             </div>
 
             {/* ─── STEP 3 BANNER ─── */}
-            <div className="bg-[#991b1b] border-y-2 border-black py-4 px-4">
-                <p className="text-center text-white font-black text-xl md:text-2xl uppercase tracking-wide">
-                    Step #3: See What We&apos;ve Done for Other Clients
-                </p>
+            <div className="px-4 py-2 bg-[#F0F7FF]">
+                <div className="max-w-5xl mx-auto">
+                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
+                        <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">3</span>
+                        <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
+                            See What We&apos;ve Done for Other Clients
+                        </p>
+                    </div>
+                </div>
             </div>
 
             {/* Step 3 — Meta Campaign Proof */}
-            <div className="py-12 px-4 bg-slate-900">
+            <div className="py-10 px-4 bg-[#F0F7FF]">
                 <div className="max-w-5xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-2">
+                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 text-center mb-2">
                         Real Ad Campaigns. <span className="text-[#991b1b]">Real Results.</span>
                     </h2>
-                    <p className="text-slate-400 text-center mb-10 text-lg">
+                    <p className="text-slate-500 text-center mb-10 text-lg">
                         Here&apos;s actual proof from campaigns we&apos;ve run for roofing clients just like you.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {campaignImages.map((img, i) => (
-                            <div key={i} className="rounded-2xl overflow-hidden border-2 border-slate-700 shadow-2xl bg-slate-800">
+                            <div key={i} className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white">
                                 <Image
                                     src={img.src}
                                     alt={img.alt}
@@ -209,20 +231,20 @@ export default function ThankYouPage() {
             </div>
 
             {/* Step 3 — Testimonial Videos */}
-            <div className="py-10 px-4 bg-white">
+            <div className="py-10 px-4 bg-[#F0F7FF]">
                 <div className="max-w-3xl mx-auto">
                     <h3 className="text-2xl md:text-3xl font-black text-slate-900 text-center mb-8">
                         Hear It From Our <span className="text-[#991b1b]">Clients</span>
                     </h3>
                     <div className="grid grid-cols-1 gap-8">
-                        {testimonialVideos.map((video, index) => (
-                            <div key={index} className="flex flex-col">
-                                <p className="text-lg md:text-xl font-black text-slate-900 mb-3 text-center">
+                        {testimonialVideos.slice(0, 3).map((video, index) => (
+                            <div key={index} className="bg-white rounded-2xl shadow-md border border-slate-200 p-5">
+                                <p className="text-lg md:text-xl font-black text-slate-900 mb-4 text-center">
                                     {video.before}
                                     <span className="text-[#991b1b] underline">{video.highlight}</span>
                                     {video.after}
                                 </p>
-                                <div className="rounded-xl overflow-hidden shadow-2xl bg-black border border-slate-200 aspect-video">
+                                <div className="rounded-xl overflow-hidden bg-black aspect-video">
                                     <iframe
                                         src={`https://player.mux.com/${video.id}`}
                                         style={{ width: '100%', height: '100%', border: 'none' }}
@@ -238,7 +260,7 @@ export default function ThankYouPage() {
             </div>
 
             {/* Footer */}
-            <footer className="py-10 px-4 border-t-2 border-black bg-white">
+            <footer className="py-10 px-4 border-t border-slate-200 bg-[#F0F7FF]">
                 <div className="max-w-4xl mx-auto text-center space-y-4">
                     <p className="text-sm text-slate-600">
                         Ragsites &copy; 2026 - All Rights Reserved
