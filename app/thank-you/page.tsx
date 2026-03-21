@@ -1,9 +1,8 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { Volume2, CheckCircle2, Mail, MessageSquare, Star, ArrowLeft } from 'lucide-react';
+import { Volume2, CheckCircle2, Mail, MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import MuxPlayer from '@mux/mux-player-react';
 import type MuxPlayerElement from '@mux/mux-player';
 import { trackPageVisit } from '@/app/actions/track';
@@ -103,7 +102,7 @@ export default function ThankYouPage() {
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
                         <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">1</span>
                         <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
-                            Watch This Video Before Your Call
+                            Watch This 90 Second Video Before Your Call
                         </p>
                     </div>
                 </div>
