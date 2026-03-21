@@ -388,8 +388,8 @@ export default function Home() {
                 &copy; {new Date().getFullYear()} Ragsites. All rights reserved.
               </p>
               <div className="flex items-center gap-6">
-                <a href="#" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</a>
-                <a href="#" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Terms of Service</a>
+                <a href="/privacy" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Privacy Policy</a>
+                <a href="/terms" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Terms of Service</a>
               </div>
             </div>
           </div>
