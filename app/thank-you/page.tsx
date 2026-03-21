@@ -88,12 +88,14 @@ export default function ThankYouPage() {
             </div>
 
             {/* Hero headline */}
-            <div className="pt-28 pb-10 px-4 text-center bg-[#F0F7FF]">
-                <div className="max-w-4xl mx-auto">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight">
+            <div className="relative pt-28 pb-14 px-4 text-center bg-slate-900">
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F0F7FF] to-transparent pointer-events-none" />
+                <div className="max-w-4xl mx-auto relative z-10">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight text-white">
                         <span className="text-[#991b1b]">You&apos;re Almost Booked.</span> Complete These 3 Steps Before Your Call
                     </h1>
-                    <p className="mt-5 text-lg text-slate-600 font-medium">
+                    <p className="mt-5 text-lg text-slate-400 font-medium">
                         Follow each step below so we can hit the ground running on your call.
                     </p>
                 </div>

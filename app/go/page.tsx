@@ -795,7 +795,11 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-24 pb-12">
+      <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-24 pb-16 bg-slate-900">
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F0F7FF] to-transparent pointer-events-none z-10" />
+
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
           <div
             className="mb-6 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-yellow-500 border border-yellow-400"
@@ -806,7 +810,7 @@ export default function RoofingLanding() {
             </span>
           </div>
           <h1
-            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-14 leading-[1.1] tracking-normal text-slate-900 uppercase font-black flex flex-col items-center"
+            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-14 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
@@ -815,7 +819,7 @@ export default function RoofingLanding() {
               <span>OR</span>
             </div>
             <div className="flex flex-wrap justify-center mt-3 md:mt-5 text-center">
-              <span className="text-gradient-skye border-b-[6px] md:border-b-[8px] border-[#991b1b] pb-0 md:pb-1 leading-[0.85]">
+              <span className="text-[#991b1b] border-b-[6px] md:border-b-[8px] border-[#991b1b] pb-0 md:pb-1 leading-[0.85]">
                 YOU DON&apos;T PAY
               </span>
             </div>
@@ -826,13 +830,13 @@ export default function RoofingLanding() {
           >
             <button
               onClick={() => openQuiz('hero')}
-              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-slate-900 text-2xl font-bold text-white hover:bg-slate-800 hover:scale-105 transition-all duration-300 shadow-lg"
+              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-[#991b1b] text-2xl font-bold text-white hover:bg-[#7f1d1d] hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(153,27,27,0.5)]"
             >
               <Phone className="w-8 h-8" />
               Book Call Now
             </button>
-            <p className="text-slate-600 flex items-center gap-2 text-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400" />
+            <p className="text-slate-400 flex items-center gap-2 text-sm">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               Limited spots available &mdash; only 5 new clients per month
             </p>
           </div>
