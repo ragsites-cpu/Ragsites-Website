@@ -237,7 +237,7 @@ export default function ThankYouPage() {
                         Hear It From Our <span className="text-[#991b1b]">Clients</span>
                     </h3>
                     <div className="grid grid-cols-1 gap-8">
-                        {testimonialVideos.slice(0, 3).map((video, index) => (
+                        {testimonialVideos.map((video, index) => (
                             <div key={index} className="bg-white rounded-2xl shadow-md border border-slate-200 p-5">
                                 <p className="text-lg md:text-xl font-black text-slate-900 mb-4 text-center">
                                     {video.before}
