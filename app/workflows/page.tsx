@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Network, ArrowRight, ArrowDownRight, UserX, UserCheck, CalendarX, Zap, CheckCircle2 } from 'lucide-react';
+import { Network, ArrowRight, ArrowDownRight, UserX, UserCheck, CalendarX, Zap, CheckCircle2, Bell, BrainCircuit, MessageSquareText, Star } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 
@@ -49,6 +49,81 @@ const workflows = [
             'Presents new offer or checks in on their previous interest',
             'If engaged, qualifies their current situation',
             'Live-transfers hot leads directly to your closers'
+        ]
+    },
+    {
+        icon: Zap,
+        title: 'Outbound Lead Qualification',
+        status: 'Speed to Lead',
+        color: 'text-[#40c9ff]',
+        bg: 'bg-[#40c9ff]/10',
+        description: 'When a new lead comes in from your Meta ads, the AI calls and texts them within minutes to verify they\'re a real homeowner with a real project — before they ever hit your calendar.',
+        steps: [
+            'New lead captured from Meta ad campaign',
+            'AI calls the lead within 2 minutes',
+            'Verifies homeowner status and property address',
+            'Confirms project scope (full replacement, repair, storm damage)',
+            'Pre-qualified lead booked directly to your calendar'
+        ]
+    },
+    {
+        icon: Bell,
+        title: 'Appointment Reminder Sequence',
+        status: 'No-Show Killer',
+        color: 'text-[#e81cff]',
+        bg: 'bg-[#e81cff]/10',
+        description: 'Automated daily reminders via call and text leading up to every booked appointment. Dramatically reduces no-shows so your crew never wastes a trip.',
+        steps: [
+            'Appointment booked on your calendar',
+            'AI sends confirmation text immediately',
+            'Daily reminder texts leading up to the meeting',
+            'Morning-of reminder call with meeting details',
+            'If no response, AI calls to confirm or reschedule'
+        ]
+    },
+    {
+        icon: BrainCircuit,
+        title: 'Sales Call Analysis & Coaching',
+        status: 'Close Rate Booster',
+        color: 'text-[#FF8E53]',
+        bg: 'bg-[#FF8E53]/10',
+        description: 'Every sales call is automatically recorded and transcribed. Our AI analyzes the conversation, pinpoints where deals are lost, and gives you actionable coaching to improve your close rate.',
+        steps: [
+            'Sales call is automatically recorded and transcribed',
+            'AI analyzes tone, objections, and talk-to-listen ratio',
+            'Identifies the exact moment the deal was won or lost',
+            'Generates a scorecard with specific improvement areas',
+            'Delivers coaching summary with recommended rebuttals'
+        ]
+    },
+    {
+        icon: MessageSquareText,
+        title: 'Post-Estimate Follow-Up',
+        status: 'Deal Closer',
+        color: 'text-[#40c9ff]',
+        bg: 'bg-[#40c9ff]/10',
+        description: 'After you give an estimate, the AI follows up with the homeowner automatically. No more deals falling through the cracks because you forgot to call back.',
+        steps: [
+            'Estimate marked as sent in CRM',
+            'AI sends a thank-you text within the hour',
+            'Follow-up call 24 hours later to answer questions',
+            'If undecided, sends a value-add message (financing options, warranty info)',
+            'Hot leads flagged for your personal follow-up'
+        ]
+    },
+    {
+        icon: Star,
+        title: '5-Star Review Request',
+        status: 'Reputation Builder',
+        color: 'text-[#e81cff]',
+        bg: 'bg-[#e81cff]/10',
+        description: 'After a job is completed, the AI calls the homeowner to check satisfaction and guides happy customers to leave a 5-star Google review — growing your reputation on autopilot.',
+        steps: [
+            'Job marked as completed in your system',
+            'AI calls homeowner 24 hours after completion',
+            'Checks satisfaction and handles any concerns',
+            'Happy customers get a direct link to leave a Google review',
+            'Unhappy customers flagged for your personal attention before they post publicly'
         ]
     }
 ];
