@@ -3,12 +3,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { Volume2, CheckCircle2, Mail, MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
-import MuxPlayer from '@mux/mux-player-react';
-import type MuxPlayerElement from '@mux/mux-player';
 import { trackPageVisit } from '@/app/actions/track';
 
 export default function ThankYouPage() {
-    const playerRef = useRef<MuxPlayerElement>(null);
     const [showUnmute, setShowUnmute] = useState(true);
     const visitIdRef = useRef('');
 
@@ -48,11 +45,7 @@ export default function ThankYouPage() {
     }, []);
 
     const handleUnmute = () => {
-        if (playerRef.current) {
-            playerRef.current.muted = false;
-            playerRef.current.volume = 1;
-            setShowUnmute(false);
-        }
+        setShowUnmute(false);
     };
 
     const campaignImages = [
@@ -112,14 +105,23 @@ export default function ThankYouPage() {
             <div className="py-8 px-4 bg-[#F0F7FF]">
                 <div className="max-w-4xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-md p-3 md:p-4">
-                        <div className="rounded-xl overflow-hidden">
+                        <div className="relative rounded-xl overflow-hidden">
                             <iframe
-                                src="https://player.mux.com/VXnLhhpmuPCmzGP4sJNM300z6ZGPoGSn4mv6fv300H3h8"
+                                src="https://player.mux.com/VXnLhhpmuPCmzGP4sJNM300z6ZGPoGSn4mv6fv300H3h8?autoplay=1&muted=1"
                                 style={{ width: '100%', border: 'none', aspectRatio: '16/9' }}
                                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
                                 allowFullScreen
                                 title="Strategy Call Video"
                             />
+                            {showUnmute && (
+                                <button
+                                    onClick={handleUnmute}
+                                    className="absolute top-4 right-4 z-20 flex items-center gap-2 px-5 py-3 rounded-full bg-[#991b1b] text-white font-bold text-sm shadow-lg hover:scale-105 transition-all animate-pulse"
+                                >
+                                    <Volume2 className="w-5 h-5" />
+                                    Tap to Unmute
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
