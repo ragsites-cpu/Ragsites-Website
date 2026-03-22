@@ -103,27 +103,27 @@ export default function Home() {
             className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
           >
             <Zap className="w-5 h-5 text-[#40c9ff]" />
-            <span className="text-sm font-bold tracking-widest text-[#40c9ff] uppercase">The Voice AI Revenue Engine</span>
+            <span className="text-sm font-bold tracking-widest text-[#40c9ff] uppercase">AI-Powered Growth For Roofing Contractors</span>
           </motion.div>
 
           <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
-            {'The Voice AI'.split('').map((char, i) => (
+            {'Book More Roofs.'.split('').map((char, i) => (
               <motion.span
                 key={`line1-${i}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.03, delay: 0.2 + i * 0.05 }}
               >
-                {char}
+                {char === ' ' ? '\u00A0' : char}
               </motion.span>
             ))}
             <br />
-            {'Revenue Engine.'.split('').map((char, i) => (
+            {'Close More Deals.'.split('').map((char, i) => (
               <motion.span
                 key={`line2-${i}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.03, delay: 0.2 + 12 * 0.05 + i * 0.05 }}
+                transition={{ duration: 0.03, delay: 0.2 + 16 * 0.05 + i * 0.05 }}
                 className="text-gradient-skye inline-block"
               >
                 {char === ' ' ? '\u00A0' : char}
@@ -137,7 +137,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto font-light"
           >
-            Click below and experience the AI Revenue Engine firsthand. Ask questions, hear how it handles objections, and see why our clients love it.
+            We generate exclusive roofing leads, pre-qualify them with AI, keep your calendar full with automated reminders, and analyze every sales call so your close rate climbs month over month.
           </motion.p>
 
           <motion.div
@@ -155,12 +155,12 @@ export default function Home() {
               <Phone className="w-8 h-8 animate-pulse" />
               Call Our Voice AI
             </button>
-            <p className="text-slate-400 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div> 127 demos run today</p>
+            <p className="text-slate-400 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Trusted by 100+ roofing contractors</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Done-For-You Value Prop */}
+      {/* Your Complete Roofing Growth System */}
       <section className="py-24 px-4 relative z-10 bg-black">
         <div className="max-w-6xl mx-auto border-t border-white/10 pt-24">
           <motion.div
@@ -172,16 +172,59 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
-              Not another tool you have to figure out.
+              Your Complete Roofing Growth System
             </h2>
-            <p className="text-2xl text-slate-400 max-w-4xl mx-auto font-light">
-              We provide a <span className="text-white font-semibold">Done-For-You</span> service. Our dedicated team builds, launches, and optimizes your Voice AI Revenue Engine so you go from Zero to Automated in 14 days.
+            <p className="text-xl text-slate-400 max-w-3xl mx-auto font-light">
+              We don&apos;t just hand you leads and disappear. We built a full-stack AI system that fills your pipeline, qualifies your leads, protects your calendar, and coaches your sales team.
             </p>
           </motion.div>
 
-          <div className="flex justify-center gap-4">
-            <a href="/how-it-works" className="px-8 py-4 rounded-xl border border-white/20 hover:bg-white/10 transition-colors text-lg font-medium flex items-center gap-2">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+          >
+            <motion.div variants={fadeUp} className="dark-glass-card p-8 border-white/10">
+              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-5">
+                <Zap className="w-6 h-6 text-[#40c9ff]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Exclusive Roofing Leads</h3>
+              <p className="text-slate-400 leading-relaxed">We run high-converting Meta ad campaigns that target homeowners actively looking for roof replacements in your area. Every lead is exclusively yours — no shared leads, no bidding wars.</p>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="dark-glass-card p-8 border-white/10">
+              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-5">
+                <Phone className="w-6 h-6 text-[#e81cff]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>AI Lead Qualification Agent</h3>
+              <p className="text-slate-400 leading-relaxed">Our AI agent calls and texts every lead within minutes to verify homeowner status, project scope, and buying intent. Only pre-qualified prospects make it to your calendar.</p>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="dark-glass-card p-8 border-white/10">
+              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-5">
+                <Clock className="w-6 h-6 text-[#40c9ff]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Daily Meeting Reminders</h3>
+              <p className="text-slate-400 leading-relaxed">Automated daily reminders via call and text before every meeting drastically reduce no-shows, so your crew never wastes a trip on a lead who forgot.</p>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="dark-glass-card p-8 border-white/10">
+              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-5">
+                <MessageSquare className="w-6 h-6 text-[#e81cff]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Sales Call Intelligence</h3>
+              <p className="text-slate-400 leading-relaxed">Our proprietary transcription software records and analyzes every sales call, pinpoints exactly what went wrong, and gives you actionable coaching to improve your close rate.</p>
+            </motion.div>
+          </motion.div>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/how-it-works" className="px-8 py-4 rounded-xl border border-white/20 hover:bg-white/10 transition-colors text-lg font-medium flex items-center justify-center gap-2">
               See How It Works <ArrowRight className="w-5 h-5" />
+            </a>
+            <a href="/go" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all text-lg">
+              Book a Strategy Call <ArrowRight className="w-5 h-5" />
             </a>
           </div>
         </div>
@@ -286,19 +329,19 @@ export default function Home() {
           >
             <motion.div variants={fadeUp} className="text-center">
               <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="10K+" /></p>
-              <p className="text-sm text-slate-400 uppercase tracking-wider">Calls Handled</p>
+              <p className="text-sm text-slate-400 uppercase tracking-wider">Leads Generated</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="99%" /></p>
-              <p className="text-sm text-slate-400 uppercase tracking-wider">Satisfaction Rate</p>
+              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="40%+" /></p>
+              <p className="text-sm text-slate-400 uppercase tracking-wider">Avg. Close Rate Lift</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="24/7" /></p>
-              <p className="text-sm text-slate-400 uppercase tracking-wider">Availability</p>
+              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="90%" /></p>
+              <p className="text-sm text-slate-400 uppercase tracking-wider">Show-Up Rate</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;<AnimatedCounter value="1s" /></p>
-              <p className="text-sm text-slate-400 uppercase tracking-wider">Response Time</p>
+              <p className="text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;<AnimatedCounter value="5min" /></p>
+              <p className="text-sm text-slate-400 uppercase tracking-wider">Lead Response Time</p>
             </motion.div>
           </motion.div>
         </div>
@@ -308,14 +351,14 @@ export default function Home() {
       <section className="py-32 px-4 relative overflow-hidden">
         <div className="glow-orb glow-orb-pink w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-black mb-8" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Ready to Build Your Engine?</h2>
-          <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">See our features or discover exactly how our workflows turn every missed call into closed revenue.</p>
+          <h2 className="text-5xl md:text-7xl font-black mb-8" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Ready to Fill Your Roofing Calendar?</h2>
+          <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">Stop chasing leads that ghost you. Let our AI system generate, qualify, remind, and coach — so you just show up and close.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/features" className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold flex items-center justify-center gap-2 transition-all">
-              View Features
-            </a>
-            <a href="/workflows" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
+            <a href="/workflows" className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold flex items-center justify-center gap-2 transition-all">
               See Workflows <ArrowRight className="w-5 h-5" />
+            </a>
+            <a href="/go" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
+              Book a Strategy Call <ArrowRight className="w-5 h-5" />
             </a>
           </div>
         </div>
@@ -333,7 +376,7 @@ export default function Home() {
                 <span className="text-xl font-bold text-white">RAGSITES</span>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-xs">
-                AI-powered automation for local businesses. From Voice AI receptionists to lead generation systems that never sleep.
+                AI-powered lead generation and sales automation for roofing contractors. From exclusive leads to pre-qualified appointments that actually show up.
               </p>
               {/* Social links */}
               <div className="flex items-center gap-4">
@@ -371,15 +414,15 @@ export default function Home() {
 
             {/* CTA column */}
             <div className="lg:col-span-4">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Ready to Automate?</h4>
+              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Ready to Grow Your Roofing Business?</h4>
               <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-                See how our Voice AI can handle calls, book appointments, and close deals — 24/7.
+                See how we generate exclusive leads, qualify them with AI, and put pre-qualified appointments on your calendar.
               </p>
               <a
-                href="/features"
+                href="/go"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all"
               >
-                Get Started <ArrowRight className="w-4 h-4" />
+                Book a Strategy Call <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </div>
