@@ -223,7 +223,7 @@ export default function Home() {
             <a href="/how-it-works" className="px-8 py-4 rounded-xl border border-white/20 hover:bg-white/10 transition-colors text-lg font-medium flex items-center justify-center gap-2">
               See How It Works <ArrowRight className="w-5 h-5" />
             </a>
-            <a href="/go" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all text-lg">
+            <a href="/quiz" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all text-lg">
               Book a Strategy Call <ArrowRight className="w-5 h-5" />
             </a>
           </div>
@@ -357,7 +357,7 @@ export default function Home() {
             <a href="/workflows" className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold flex items-center justify-center gap-2 transition-all">
               See Workflows <ArrowRight className="w-5 h-5" />
             </a>
-            <a href="/go" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
+            <a href="/quiz" className="px-8 py-4 rounded-xl bg-gradient-skye text-white font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
               Book a Strategy Call <ArrowRight className="w-5 h-5" />
             </a>
           </div>
@@ -419,7 +419,7 @@ export default function Home() {
                 See how we generate exclusive leads, qualify them with AI, and put pre-qualified appointments on your calendar.
               </p>
               <a
-                href="/go"
+                href="/quiz"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-skye text-white font-semibold text-sm shadow-[0_0_20px_rgba(232,28,255,0.3)] hover:scale-105 transition-all"
               >
                 Book a Strategy Call <ArrowRight className="w-4 h-4" />
