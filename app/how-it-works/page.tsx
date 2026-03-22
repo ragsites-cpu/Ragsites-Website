@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Settings, Wrench, Rocket, TrendingUp, Cpu } from 'lucide-react';
+import { Settings, Wrench, Rocket, TrendingUp, Cpu, BrainCircuit } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 
@@ -10,14 +10,14 @@ const timelineSteps = [
         day: 'Days 1-3',
         icon: Settings,
         title: 'Strategy & Knowledge Transfer',
-        description: 'We meet with you to absorb everything about your business. We map out your exact workflows, pricing, FAQs, and common objections.',
+        description: 'We meet with you to understand your roofing business inside out. We map your service areas, pricing structure, ideal customer profile, and common homeowner objections.',
         team: 'Growth Analyst & Success Manager'
     },
     {
         day: 'Days 4-10',
         icon: Wrench,
-        title: 'Build & Voice Tuning',
-        description: 'Our engineers construct the prompt architecture and integrate with your CRM (HubSpot, GoHighLevel, etc.). We tune the Voice AI to sound perfectly on-brand.',
+        title: 'Build, Integrate & Ad Setup',
+        description: 'Our engineers build your AI qualification agent, integrate with your CRM, and set up your Meta ad campaigns targeting homeowners in your service areas looking for roof replacements.',
         team: 'AI Engineer'
     },
     {
@@ -30,16 +30,30 @@ const timelineSteps = [
     {
         day: 'Day 14',
         icon: Rocket,
-        title: 'Launch & Go-Live',
-        description: 'We flip the switch. Your new Voice AI Revenue Engine is live, answering calls instantly and booking appointments straight to your calendar.',
+        title: 'Launch & Ads Go Live',
+        description: 'We flip the switch. Your Meta ad campaigns go live, your AI qualification agent starts calling leads within minutes of form submission, and appointment reminders are automated.',
         team: 'Full Team'
     },
     {
         day: 'Day 15+',
         icon: TrendingUp,
-        title: 'Continuous Optimization',
-        description: 'We listen to call recordings, analyze transcripts, and consistently tweak the prompts to improve conversion rates and objection handling over time.',
+        title: 'Optimization & Sales Coaching',
+        description: 'We monitor your ad performance, listen to AI qualification calls, and analyze your sales call transcripts. We continuously optimize your campaigns, AI scripts, and deliver coaching insights to improve your close rate week over week.',
         team: 'Growth Analyst'
+    },
+    {
+        day: 'Week 3+',
+        icon: BrainCircuit,
+        title: 'Sales Call Intelligence Activated',
+        description: 'Our proprietary transcription software begins analyzing your sales calls. You get scorecards showing exactly what went right, what went wrong, and specific rebuttals to use on your next estimate.',
+        team: 'AI Coach'
+    },
+    {
+        day: 'Month 2+',
+        icon: TrendingUp,
+        title: 'Scale & Expand',
+        description: 'With data flowing in, we scale your ad budget into winning campaigns, expand into new zip codes, and fine-tune your AI agent based on real qualification call data. Your pipeline grows every month.',
+        team: 'Growth Team'
     }
 ];
 
@@ -71,7 +85,7 @@ export default function HowItWorksPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light"
                     >
-                        Forget DIY software. We assign a dedicated 5-person team to build, launch, and manage your Voice AI Revenue Engine for you.
+                        Forget DIY software. We assign a dedicated team to build your entire roofing growth system — from Meta ad campaigns to AI lead qualification to sales call coaching.
                     </motion.p>
                 </div>
             </section>
@@ -130,12 +144,12 @@ export default function HowItWorksPage() {
             {/* Audit Form Section (Lead Gen) */}
             <section className="py-24 px-4 bg-white/5 border-t border-white/10">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl font-bold mb-6">Let&apos;s Audit Your Call Volume</h2>
+                    <h2 className="text-4xl font-bold mb-6">See What 40 Booked Jobs Looks Like</h2>
                     <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
-                        Find out exactly how much revenue you are losing to missed calls, and how fast our Voice AI can recover it.
+                        Book a strategy call and we&apos;ll show you exactly how we&apos;d fill your roofing calendar in the first 90 days.
                     </p>
-                    <a href="/quiz" className="inline-block px-10 py-5 rounded-full bg-gradient-skye text-white font-bold text-xl shadow-[0_0_30px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
-                        Start Free Audit
+                    <a href="/go" className="inline-block px-10 py-5 rounded-full bg-gradient-skye text-white font-bold text-xl shadow-[0_0_30px_rgba(232,28,255,0.3)] hover:scale-105 transition-all">
+                        Book a Strategy Call
                     </a>
                 </div>
             </section>
@@ -144,7 +158,7 @@ export default function HowItWorksPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-2">
-                            <Image src="/logo.png" alt="Ragsites" width={24} height={24} />
+                            <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
                             <span className="font-bold text-white">RAGSITES</span>
                         </div>
                         <p className="text-sm text-slate-500">

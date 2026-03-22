@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, Calendar, MessageSquare, BarChart3, Globe, ShieldCheck, Truck, CreditCard, Zap, Server, Users, AudioLines, PhoneOutgoing, Brain } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, BarChart3, Globe, Zap, Server, Users, AudioLines, PhoneOutgoing, Brain, Bell, BrainCircuit, MessageSquareText } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 
@@ -27,21 +27,6 @@ const features = [
         description: 'Speaks practically every major language natively without translation lag, expanding your serviceable market instantly.',
     },
     {
-        icon: Truck,
-        title: 'Dynamic Smart Dispatch',
-        description: 'Checks CRM for available workers, finds the best match by location/skill, and dispatches them—all during the active call.',
-    },
-    {
-        icon: CreditCard,
-        title: 'Mid-Call Payment Collection',
-        description: 'Collects deposits, processes payments via PCI-compliant paths, and confirms transactions while the customer is on the line.',
-    },
-    {
-        icon: ShieldCheck,
-        title: 'Enterprise-Grade HIPAA',
-        description: 'Built for compliance. Safe for healthcare providers, dental offices, legal firms, and any business handling sensitive data.',
-    },
-    {
         icon: BarChart3,
         title: 'Deep Analytics & Insights',
         description: 'Transcripts, sentiment analysis, call summaries, and actionable performance metrics synced back to your CRM automatically.',
@@ -65,6 +50,26 @@ const features = [
         icon: Brain,
         title: 'Self-Learning AI Memory',
         description: 'Remembers returning callers, past conversations, and preferences. Gets smarter with every interaction to deliver increasingly personalized service.',
+    },
+    {
+        icon: Zap,
+        title: 'Cost-Effective Meta Ad Leads',
+        description: 'We run high-converting Meta ad campaigns targeting homeowners actively looking for roof replacements. Every lead is exclusive to you — no shared leads, no bidding wars.',
+    },
+    {
+        icon: Bell,
+        title: 'Daily Appointment Reminders',
+        description: 'Automated daily reminders via call and text before every booked meeting. Drastically reduces no-shows so your crew never wastes a trip on a lead who forgot.',
+    },
+    {
+        icon: BrainCircuit,
+        title: 'Sales Call Transcription & Coaching',
+        description: 'Every sales call is automatically recorded and transcribed. Our AI analyzes the conversation, pinpoints where deals are lost, and delivers actionable coaching to boost your close rate.',
+    },
+    {
+        icon: MessageSquareText,
+        title: 'Post-Estimate Follow-Up',
+        description: 'After you give an estimate, our AI follows up automatically with the homeowner via call and text. No more deals falling through because you forgot to call back.',
     },
 ];
 
@@ -97,7 +102,7 @@ export default function FeaturesPage() {
                         className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full dark-glass-card border border-white/20"
                     >
                         <Server className="w-5 h-5 text-[#e81cff]" />
-                        <span className="text-sm font-bold tracking-widest text-[#e81cff] uppercase">Platform Capabilities</span>
+                        <span className="text-sm font-bold tracking-widest text-[#e81cff] uppercase">Built For Roofing Contractors</span>
                     </motion.div>
 
                     <motion.h1
@@ -115,7 +120,7 @@ export default function FeaturesPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light"
                     >
-                        We don&apos;t just provide standard SaaS features. We deploy a fully capable Voice AI agent that outperforms human receptionists across every metric.
+                        We don&apos;t just provide standard SaaS features. We deploy a fully capable AI system purpose-built for roofing contractors — from lead generation to sales coaching.
                     </motion.p>
                 </div>
             </section>
@@ -166,7 +171,7 @@ export default function FeaturesPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-2">
-                            <Image src="/logo.png" alt="Ragsites" width={24} height={24} />
+                            <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
                             <span className="font-bold text-white">RAGSITES</span>
                         </div>
                         <p className="text-sm text-slate-500">
