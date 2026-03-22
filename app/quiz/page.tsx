@@ -139,20 +139,20 @@ function QuizContent() {
     } else {
       trackEvent('quiz_complete', { source: 'main_quiz' });
       trackMeta('QuizComplete', { source: 'main_quiz' });
-      setTimeout(() => setStep('done'), 300);
+      setTimeout(() => setStep('form'), 300);
     }
   };
 
-  // Cycle through loading messages then advance to form
+  // Cycle through loading messages then advance to booking
   useEffect(() => {
-    if (step !== 'done') return;
+    if (step !== 'success') return;
     const msgInterval = setInterval(() => {
       setLoadingMsg((prev) => {
         if (prev < 3) return prev + 1;
         return prev;
       });
     }, 1200);
-    const timer = setTimeout(() => setStep('form'), 5000);
+    const timer = setTimeout(() => setStep('booking'), 5000);
     return () => {
       clearInterval(msgInterval);
       clearTimeout(timer);
@@ -224,9 +224,6 @@ function QuizContent() {
         trackEvent('generate_lead', { source: 'main_quiz', business: formData.name });
         trackMetaStandard('Lead', { content_name: 'Roofing Quiz', content_category: 'main_quiz' });
         setStep('success');
-        setTimeout(() => {
-          setStep('booking');
-        }, 2000);
       } else {
         setFormError('Something went wrong. Please try again.');
         setStep('disclaimers');
@@ -291,59 +288,6 @@ function QuizContent() {
                       }`}
                     />
                   ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* ─── Done Screen ─── */}
-          {step === 'done' && (
-            <motion.div
-              key="done"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
-              className="w-full max-w-3xl"
-            >
-              <div className="quiz-card rounded-3xl p-12 text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-                  className="w-20 h-20 rounded-full bg-brand-accent flex items-center justify-center mx-auto"
-                >
-                  {loadingMsg < 3 ? (
-                    <Loader2 className="w-10 h-10 text-white animate-spin" />
-                  ) : (
-                    <CheckCircle className="w-10 h-10 text-white" />
-                  )}
-                </motion.div>
-
-                <div className="mt-6 h-16 flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={loadingMsg}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <h2 className="text-2xl font-bold text-brand-primary">
-                        {loadingMessages[loadingMsg]}
-                      </h2>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Loading bar */}
-                <div className="mt-6 mx-auto w-64 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-brand-accent rounded-full"
-                    initial={{ width: '0%' }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 4.8, ease: 'easeInOut' }}
-                  />
                 </div>
               </div>
             </motion.div>
@@ -536,12 +480,13 @@ function QuizContent() {
             </motion.div>
           )}
 
-          {/* ─── Success Screen ─── */}
+          {/* ─── Success Screen (loading animation before booking) ─── */}
           {step === 'success' && (
             <motion.div
               key="success"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4 }}
               className="w-full max-w-3xl"
             >
@@ -550,15 +495,39 @@ function QuizContent() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-                  className="w-20 h-20 rounded-full bg-emerald-500 flex items-center justify-center mx-auto"
+                  className="w-20 h-20 rounded-full bg-brand-accent flex items-center justify-center mx-auto"
                 >
-                  <CheckCircle className="w-10 h-10 text-white" />
+                  {loadingMsg < 3 ? (
+                    <Loader2 className="w-10 h-10 text-white animate-spin" />
+                  ) : (
+                    <CheckCircle className="w-10 h-10 text-white" />
+                  )}
                 </motion.div>
 
-                <h2 className="text-2xl font-bold text-brand-primary mt-6">You&apos;re All Set!</h2>
-                <p className="text-slate-500 mt-2 max-w-md mx-auto">
-                  Loading the calendar...
-                </p>
+                <div className="mt-6 h-16 flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={loadingMsg}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <h2 className="text-2xl font-bold text-brand-primary">
+                        {loadingMessages[loadingMsg]}
+                      </h2>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                <div className="mt-6 mx-auto w-64 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-brand-accent rounded-full"
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 4.8, ease: 'easeInOut' }}
+                  />
+                </div>
               </div>
             </motion.div>
           )}
