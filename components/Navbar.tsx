@@ -20,9 +20,9 @@ export default function Navbar() {
 
   const navItems = [
     { label: 'Home', href: '/' },
+    { label: 'How It Works', href: '/how-it-works' },
     { label: 'Features', href: '/features' },
     { label: 'Workflows', href: '/workflows' },
-    { label: 'How It Works', href: '/how-it-works' },
     { label: 'Pricing', href: '/pricing' },
   ];
 
