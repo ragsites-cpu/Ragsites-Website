@@ -364,7 +364,6 @@ export default function Home() {
             <div className="lg:col-span-2">
               <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Services</h4>
               <ul className="space-y-3">
-                <li><a href="/services" className="text-sm text-slate-400 hover:text-white transition-colors">All Services</a></li>
                 <li><a href="/quiz" className="text-sm text-slate-400 hover:text-white transition-colors">Find Your Fit</a></li>
                 <li><a href="/brochure" className="text-sm text-slate-400 hover:text-white transition-colors">Brochure</a></li>
               </ul>
