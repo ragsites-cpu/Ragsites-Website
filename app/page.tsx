@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Outfit, Rubik } from 'next/font/google';
 import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-react';
 import Script from 'next/script';
 import { trackPageVisit } from '@/app/actions/track';
@@ -10,6 +11,9 @@ import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import DemoWidget from '@/components/DemoWidget';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import Image from 'next/image';
+
+const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-outfit' });
+const rubik = Rubik({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-rubik' });
 
 // Reusable animation variants
 const fadeUp = {
@@ -69,7 +73,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className={`min-h-screen bg-black text-white ${outfit.variable} ${rubik.variable}`} style={{ fontFamily: 'var(--font-rubik), sans-serif' }}>
       <Navbar />
 
       {/* Hero Section */}
@@ -102,7 +106,7 @@ export default function Home() {
             <span className="text-sm font-bold tracking-widest text-[#40c9ff] uppercase">The Voice AI Revenue Engine</span>
           </motion.div>
 
-          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white">
+          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
             {'The Voice AI'.split('').map((char, i) => (
               <motion.span
                 key={`line1-${i}`}
@@ -167,7 +171,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
               Not another tool you have to figure out.
             </h2>
             <p className="text-2xl text-slate-400 max-w-4xl mx-auto font-light">
@@ -195,7 +199,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-5xl md:text-6xl font-black mb-6">
+            <h2 className="text-5xl md:text-6xl font-black mb-6" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
               Try It <span className="text-gradient-skye">Live</span>
             </h2>
             <p className="text-xl text-slate-300">
@@ -281,19 +285,19 @@ export default function Home() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2"><AnimatedCounter value="10K+" /></p>
+              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="10K+" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Calls Handled</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2"><AnimatedCounter value="99%" /></p>
+              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="99%" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Satisfaction Rate</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2"><AnimatedCounter value="24/7" /></p>
+              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="24/7" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Availability</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-[#e81cff] mb-2">&lt;<AnimatedCounter value="1s" /></p>
+              <p className="text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;<AnimatedCounter value="1s" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Response Time</p>
             </motion.div>
           </motion.div>
@@ -304,7 +308,7 @@ export default function Home() {
       <section className="py-32 px-4 relative overflow-hidden">
         <div className="glow-orb glow-orb-pink w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-black mb-8">Ready to Build Your Engine?</h2>
+          <h2 className="text-5xl md:text-7xl font-black mb-8" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Ready to Build Your Engine?</h2>
           <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">See our features or discover exactly how our workflows turn every missed call into closed revenue.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/features" className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold flex items-center justify-center gap-2 transition-all">
