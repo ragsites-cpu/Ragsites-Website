@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
@@ -20,7 +20,8 @@ interface QuizQuestion {
   key: string;
 }
 
-const BOOKING_URL = 'https://cal.com/ragsites/30min?user=ragsites';
+const CAL_LINK = 'ragsites/30min';
+const THANK_YOU_URL = '/thank-you';
 
 const QUESTIONS: QuizQuestion[] = [
   {
@@ -92,7 +93,7 @@ function trackMetaStandard(eventName: string, params?: Record<string, string>) {
 
 /* ─── Types ─── */
 
-type Step = 'quiz' | 'done' | 'form' | 'success';
+type Step = 'quiz' | 'done' | 'form' | 'success' | 'booking';
 
 type FormStatus = 'idle' | 'submitting';
 
@@ -195,9 +196,7 @@ function QuizContent() {
         trackMetaStandard('Lead', { content_name: 'AI Receptionist Quiz', content_category: 'main_quiz' });
         setStep('success');
         setTimeout(() => {
-          trackEvent('booking_redirect', { source: 'main_quiz' });
-          trackMetaStandard('Schedule', { content_name: 'Cal.com Booking' });
-          window.location.href = BOOKING_URL;
+          setStep('booking');
         }, 2000);
       } else {
         setFormError('Something went wrong. Please try again.');
@@ -214,7 +213,7 @@ function QuizContent() {
       {/* Logo */}
       <div className="flex justify-center pt-6 pb-2">
         <button onClick={() => (window.location.href = '/')} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <Image src="/logo.png" alt="Ragsites" width={36} height={36} />
+          <Image src="/new-logo.png" alt="Ragsites" width={36} height={36} />
           <span className="text-2xl font-bold text-brand-primary">RAGSITES</span>
         </button>
       </div>
@@ -456,13 +455,105 @@ function QuizContent() {
 
                 <h2 className="text-2xl font-bold text-brand-primary mt-6">You&apos;re All Set!</h2>
                 <p className="text-slate-500 mt-2 max-w-md mx-auto">
-                  Redirecting you to book your call...
+                  Loading the calendar...
                 </p>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Cal.com Inline Booking ─── */}
+          {step === 'booking' && (
+            <motion.div
+              key="booking"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="w-full max-w-4xl"
+            >
+              <div className="quiz-card rounded-3xl p-8 md:p-12">
+                <h2 className="text-2xl font-bold text-brand-primary text-center mb-2">Pick a Time That Works For You</h2>
+                <p className="text-slate-500 text-center mb-6 text-sm">Select a date and time below to lock in your free strategy call.</p>
+                <CalEmbed name={formData.name} email={formData.email} phone={formData.phone} />
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+    </div>
+  );
+}
+
+function CalEmbed({ name, email, phone }: { name?: string; email?: string; phone?: string }) {
+  const calReady = useRef(false);
+  const [calLoaded, setCalLoaded] = useState(false);
+
+  useEffect(() => {
+    if (calReady.current) return;
+    calReady.current = true;
+
+    (function (C: any, A: any, L: string) {
+      const p = function () {
+        if (!(C.Cal as any)?.loaded) {
+          (C.Cal as any) = function (...args: unknown[]) {
+            (C.Cal as any).q = (C.Cal as any).q || [];
+            (C.Cal as any).q.push(args);
+          };
+          (C.Cal as any).ns = {};
+          (C.Cal as any).loaded = true;
+          const d = A as Document;
+          const s = d.createElement(L) as HTMLScriptElement;
+          s.async = true;
+          s.src = 'https://app.cal.com/embed/embed.js';
+          d.head.appendChild(s);
+        }
+      };
+      p();
+    })(window, document, 'script');
+
+    setTimeout(() => {
+      if (typeof window.Cal === 'function') {
+        window.Cal('init', { origin: 'https://app.cal.com' });
+        window.Cal('inline', {
+          elementOrSelector: '#cal-embed-quiz',
+          calLink: CAL_LINK,
+          layout: 'month_view',
+          config: {
+            theme: 'light',
+            name: name || undefined,
+            email: email || undefined,
+            phoneNumber: phone ? `+1${phone.replace(/\D/g, '').replace(/^1/, '')}` : undefined,
+          },
+        });
+        window.Cal('on', {
+          action: 'bookingSuccessful',
+          callback: () => {
+            trackMetaStandard('Schedule', { content_name: 'Cal.com Booking' });
+            setTimeout(() => {
+              window.location.href = THANK_YOU_URL;
+            }, 1500);
+          },
+        });
+        window.Cal('on', {
+          action: '__iframeReady',
+          callback: () => setCalLoaded(true),
+        });
+        window.Cal('ui', {
+          styles: { branding: { brandColor: '#40c9ff' } },
+          hideEventTypeDetails: false,
+          layout: 'month_view',
+        });
+      }
+    }, 100);
+  }, []);
+
+  return (
+    <div id="cal-embed-quiz" className="w-full min-h-[450px] rounded-xl overflow-hidden flex items-center justify-center">
+      {!calLoaded && (
+        <div className="text-center">
+          <Loader2 className="w-10 h-10 text-brand-accent mx-auto mb-3 animate-spin" />
+          <p className="text-slate-500 text-sm">Loading calendar...</p>
+        </div>
+      )}
     </div>
   );
 }
