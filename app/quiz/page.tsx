@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Phone, Building2, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
+import { User, Mail, Phone, Globe, MapPin, Loader2, CheckCircle, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 /* ─── Quiz Data ─── */
@@ -93,7 +93,7 @@ function trackMetaStandard(eventName: string, params?: Record<string, string>) {
 
 /* ─── Types ─── */
 
-type Step = 'quiz' | 'done' | 'form' | 'success' | 'booking';
+type Step = 'quiz' | 'done' | 'form' | 'disclaimers' | 'submitting' | 'success' | 'booking';
 
 type FormStatus = 'idle' | 'submitting';
 
@@ -111,10 +111,12 @@ function QuizContent() {
   const [step, setStep] = useState<Step>('quiz');
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', businessName: '' });
-  const [agreed, setAgreed] = useState(false);
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', website: '', city: '' });
+  const [meetingCommit, setMeetingCommit] = useState(false);
+  const [spamConsent, setSpamConsent] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [formError, setFormError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ phone?: string; email?: string }>({});
   const [loadingMsg, setLoadingMsg] = useState(0);
   const searchParams = useSearchParams();
   const isPremium = searchParams.get('tier') === 'premium';
@@ -161,28 +163,55 @@ function QuizContent() {
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     if (formError) setFormError('');
+    if (fieldErrors[e.target.name as keyof typeof fieldErrors]) {
+      setFieldErrors((prev) => ({ ...prev, [e.target.name]: undefined }));
+    }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agreed) {
-      setFormError('Please agree to the terms to continue.');
+    const errors: { phone?: string; email?: string } = {};
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
-    setFormStatus('submitting');
+
+    setFieldErrors({});
+    setStep('disclaimers');
+  };
+
+  const handleFinalSubmit = async () => {
+    if (!meetingCommit) {
+      setFormError('Please confirm you can attend the call.');
+      return;
+    }
+    if (!spamConsent) {
+      setFormError('Please provide consent to continue.');
+      return;
+    }
     setFormError('');
+    setStep('submitting');
 
     const body = new FormData();
     body.append('access_key', 'a9e80fab-4da4-44c6-b31f-3369557abdbe');
-    body.append('subject', isPremium ? `Quiz Lead [Premium]: ${formData.businessName || formData.name}` : `Quiz Lead: ${formData.businessName || formData.name}`);
+    body.append('subject', `Roofing Lead (Quiz): ${formData.name} — ${formData.city}`);
     body.append('from_name', 'Ragsites Quiz');
-    if (isPremium) {
-      body.append('premium_interest', 'CRM, Live Dispatch, HIPAA Compliance');
-    }
     body.append('name', formData.name);
-    body.append('email', formData.email);
     body.append('phone', formData.phone);
-    body.append('business_name', formData.businessName);
+    body.append('email', formData.email);
+    body.append('website', formData.website);
+    body.append('city', formData.city);
 
     // Append quiz answers
     for (const q of QUESTIONS) {
@@ -192,19 +221,19 @@ function QuizContent() {
     try {
       const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body });
       if (res.ok) {
-        trackEvent('generate_lead', { source: 'main_quiz', business: formData.businessName });
-        trackMetaStandard('Lead', { content_name: 'AI Receptionist Quiz', content_category: 'main_quiz' });
+        trackEvent('generate_lead', { source: 'main_quiz', business: formData.name });
+        trackMetaStandard('Lead', { content_name: 'Roofing Quiz', content_category: 'main_quiz' });
         setStep('success');
         setTimeout(() => {
           setStep('booking');
         }, 2000);
       } else {
         setFormError('Something went wrong. Please try again.');
-        setFormStatus('idle');
+        setStep('disclaimers');
       }
     } catch {
       setFormError('Something went wrong. Please try again.');
-      setFormStatus('idle');
+      setStep('disclaimers');
     }
   };
 
@@ -320,7 +349,7 @@ function QuizContent() {
             </motion.div>
           )}
 
-          {/* ─── Contact Form ─── */}
+          {/* ─── Step 5: Contact Form ─── */}
           {step === 'form' && (
             <motion.div
               key="form"
@@ -331,106 +360,179 @@ function QuizContent() {
               className="w-full max-w-4xl"
             >
               <div className="quiz-card rounded-3xl p-8 md:p-12 max-w-3xl mx-auto">
-                <p className="text-center text-emerald-600 font-bold text-sm tracking-wide">
-                  Congratulations &mdash; You Qualify!
+                <p className="text-center text-emerald-600 font-bold text-sm tracking-wide uppercase">
+                  Step 5 of 6
                 </p>
                 <h1 className="text-3xl md:text-4xl font-extrabold text-brand-primary text-center mt-2 leading-tight">
-                  Get Your Free AI Receptionist Consultation
+                  Your Contact Details
                 </h1>
                 <p className="text-slate-500 text-center mt-3 text-base max-w-lg mx-auto">
-                  Based on your answers, you&apos;re a strong fit for an AI receptionist. Spots are limited &mdash; book your call below.
+                  So we can reach out and schedule your strategy call
                 </p>
 
-                <form onSubmit={handleSubmit} className="mt-10 space-y-5 max-w-md mx-auto">
+                <form onSubmit={handleContactSubmit} className="mt-10 space-y-5 max-w-md mx-auto">
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
                       name="name"
                       required
-                      placeholder="Your name"
+                      placeholder="Full name"
                       value={formData.name}
                       onChange={handleFormChange}
                       className="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-slate-200 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors text-base"
                     />
                   </div>
 
+                  <div>
+                    <div className="relative">
+                      <Phone className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${fieldErrors.phone ? 'text-red-500' : 'text-slate-400'}`} />
+                      <input
+                        name="phone"
+                        type="tel"
+                        required
+                        placeholder="Phone number"
+                        value={formData.phone}
+                        onChange={handleFormChange}
+                        className={`w-full pl-12 pr-4 py-4 rounded-xl bg-white border ${fieldErrors.phone ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 text-brand-primary focus:border-brand-accent focus:ring-brand-accent'} placeholder:text-slate-400 focus:outline-none focus:ring-1 transition-colors text-base`}
+                      />
+                    </div>
+                    {fieldErrors.phone && <p className="text-red-500 text-sm mt-1 px-1 font-bold">{fieldErrors.phone}</p>}
+                  </div>
+
+                  <div>
+                    <div className="relative">
+                      <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${fieldErrors.email ? 'text-red-500' : 'text-slate-400'}`} />
+                      <input
+                        name="email"
+                        type="email"
+                        required
+                        placeholder="Email address"
+                        value={formData.email}
+                        onChange={handleFormChange}
+                        className={`w-full pl-12 pr-4 py-4 rounded-xl bg-white border ${fieldErrors.email ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 text-brand-primary focus:border-brand-accent focus:ring-brand-accent'} placeholder:text-slate-400 focus:outline-none focus:ring-1 transition-colors text-base`}
+                      />
+                    </div>
+                    {fieldErrors.email && <p className="text-red-500 text-sm mt-1 px-1 font-bold">{fieldErrors.email}</p>}
+                  </div>
+
                   <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="Your email address"
-                      value={formData.email}
+                      name="website"
+                      placeholder="Company website"
+                      value={formData.website}
                       onChange={handleFormChange}
                       className="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-slate-200 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors text-base"
                     />
                   </div>
 
                   <div className="relative">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
-                      name="phone"
-                      type="tel"
+                      name="city"
                       required
-                      placeholder="Your phone number"
-                      value={formData.phone}
+                      placeholder="City"
+                      value={formData.city}
                       onChange={handleFormChange}
                       className="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-slate-200 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors text-base"
                     />
                   </div>
-
-                  <div className="relative">
-                    <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                    <input
-                      name="businessName"
-                      required
-                      placeholder="Business name"
-                      value={formData.businessName}
-                      onChange={handleFormChange}
-                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-slate-200 text-brand-primary placeholder:text-slate-400 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors text-base"
-                    />
-                  </div>
-
-                  <label className="flex items-start gap-3 cursor-pointer pt-1">
-                    <input
-                      type="checkbox"
-                      checked={agreed}
-                      onChange={(e) => {
-                        setAgreed(e.target.checked);
-                        if (formError) setFormError('');
-                      }}
-                      className="mt-1 w-4 h-4 rounded border-slate-300 text-brand-accent focus:ring-brand-accent"
-                    />
-                    <span className="text-sm text-slate-500 leading-relaxed">
-                      I agree to the terms &amp; conditions. By providing my phone number &amp; email, I consent to receive emails, text messages, and calls.
-                    </span>
-                  </label>
-
-                  {formError && (
-                    <p className="text-red-500 text-sm text-center">{formError}</p>
-                  )}
 
                   <button
                     type="submit"
-                    disabled={formStatus === 'submitting'}
-                    className="w-full py-4 rounded-xl bg-brand-accent text-white font-bold text-lg hover:bg-brand-accent-hover transition-colors shadow-sm disabled:opacity-70 flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl bg-brand-accent text-white font-bold text-lg hover:bg-brand-accent-hover transition-colors shadow-sm flex items-center justify-center gap-2"
                   >
-                    {formStatus === 'submitting' ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        Submitting...
-                      </>
-                    ) : (
-                      <>
-                        Book Free Consultation
-                        <ArrowRight className="w-5 h-5" />
-                      </>
-                    )}
+                    Continue
+                    <ArrowRight className="w-5 h-5" />
                   </button>
                 </form>
               </div>
+            </motion.div>
+          )}
 
+          {/* ─── Step 6: Disclaimers ─── */}
+          {step === 'disclaimers' && (
+            <motion.div
+              key="disclaimers"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="w-full max-w-4xl"
+            >
+              <div className="quiz-card rounded-3xl p-8 md:p-12 max-w-3xl mx-auto">
+                <p className="text-center text-emerald-600 font-bold text-sm tracking-wide uppercase">
+                  Step 6 of 6
+                </p>
+                <h1 className="text-3xl md:text-4xl font-extrabold text-brand-primary text-center mt-2 leading-tight">
+                  Almost There!
+                </h1>
+
+                <div className="mt-8 space-y-4 max-w-md mx-auto">
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                    <p className="text-slate-700 text-sm leading-relaxed mb-4">
+                      <span className="text-brand-primary font-bold">DISCLAIMER:</span> This meeting will be hosted on Google Meet, the link will be sent in the confirmation email. We have a waiting list and limit the number of clients we take on each month. If you need to reschedule, you must let us know 24h prior to our call.
+                    </p>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={meetingCommit}
+                        onChange={(e) => {
+                          setMeetingCommit(e.target.checked);
+                          if (formError) setFormError('');
+                        }}
+                        className="mt-1 w-4 h-4 rounded border-slate-300 text-brand-accent focus:ring-brand-accent"
+                      />
+                      <span className="text-sm text-slate-700">
+                        Will you be able to commit and attend to this call at the time of this booking?
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={spamConsent}
+                        onChange={(e) => {
+                          setSpamConsent(e.target.checked);
+                          if (formError) setFormError('');
+                        }}
+                        className="mt-1 w-4 h-4 rounded border-slate-300 text-brand-accent focus:ring-brand-accent"
+                      />
+                      <span className="text-sm text-slate-700">
+                        We hate spammers and will never spam you. Do you consent to us reaching out in a meaningful way regarding this offer?
+                      </span>
+                    </label>
+                  </div>
+
+                  {formError && <p className="text-red-500 text-sm text-center">{formError}</p>}
+
+                  <button
+                    onClick={handleFinalSubmit}
+                    className="w-full py-4 rounded-xl bg-brand-accent text-white font-bold text-lg hover:bg-brand-accent-hover transition-colors shadow-sm flex items-center justify-center gap-2"
+                  >
+                    Book My Call Now
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Submitting ─── */}
+          {step === 'submitting' && (
+            <motion.div
+              key="submitting"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="w-full max-w-3xl"
+            >
+              <div className="quiz-card rounded-3xl p-12 text-center">
+                <Loader2 className="w-12 h-12 text-brand-accent mx-auto mb-4 animate-spin" />
+                <p className="text-brand-primary font-bold text-lg">Reserving your spot...</p>
+              </div>
             </motion.div>
           )}
 
