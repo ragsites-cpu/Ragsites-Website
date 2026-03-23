@@ -678,17 +678,37 @@ const FAQS = [
   {
     question: 'What Do You Guys Do?',
     answer:
-      'Ragsites is a leading AI-powered lead and revenue generation solution dedicated to helping roofers grow their business. We dominate both organic and paid traffic to establish you as a trusted pillar in your community, crafting compelling ads and personalized AI lead qualification systems that ensure a successful launch and rapid results. Our streamlined, automated system pre-qualifies your leads before you go out for estimates, allowing you to focus on closing deals and scaling your roofing business with confidence.',
+      "We run the entire lead-to-close pipeline for roofing contractors. That means exclusive Meta ad campaigns that generate homeowner leads in your area, an AI agent that calls and texts every lead within minutes to pre-qualify them, automated daily reminders so your appointments actually show up, and proprietary software that transcribes your sales calls and coaches you on how to close more deals. You focus on roofing — we fill your calendar.",
   },
   {
     question: 'How Much Does It Cost?',
     answer:
-      "Think about it this way: if we put an extra $150k on your books over the next 90 days, what would that be worth to you?\n\nThere is no cookie-cutter pricing here. Every plan we put together is built around your business, your goals, and your budget.\n\nIf you are shopping around for the cheapest lead source, we are probably not the right fit. But if you want exclusive, pre-qualified roof replacement estimates on your calendar, that is exactly what we deliver.",
+      "Think about it this way: if we put 40 booked, pre-qualified roof replacement estimates on your calendar over the next 90 days, what would that be worth to you?\n\nThere is no cookie-cutter pricing here. Every plan we put together is built around your business, your goals, and your budget.\n\nIf you are shopping around for the cheapest lead source, we are probably not the right fit. But if you want exclusive, pre-qualified roof replacement estimates on your calendar, that is exactly what we deliver.",
   },
   {
     question: 'Do You Pre-Qualify Leads?',
     answer:
-      "Absolutely. Before a lead ever reaches your team, it goes through our multi-step qualification process powered by AI. We verify homeowner status, project scope, damage type, and buying intent so your crew only shows up to appointments that are worth the trip. No more wasted afternoons chasing tire kickers.",
+      "Absolutely. Before a lead ever reaches your team, it goes through our multi-step qualification process powered by AI. Our agent calls and texts every lead within minutes of them filling out a form. We verify homeowner status, project scope, damage type, and buying intent so your crew only shows up to appointments that are worth the trip. No more wasted afternoons chasing tire kickers.",
+  },
+  {
+    question: 'How Fast Will I Start Getting Leads?',
+    answer:
+      "We move fast. During the first two weeks, our team builds your AI qualification agent, sets up your ad campaigns, and configures your entire system. By day 14, your Meta ads go live and leads start flowing. Most clients see their first qualified appointments on the calendar within the first week of ads running.",
+  },
+  {
+    question: 'Do I Have To Sign a Long-Term Contract?',
+    answer:
+      "No. We don't lock you into long-term contracts because we don't need to. Our clients stay because the system works, not because they're stuck. We earn your business every single month with real results — booked jobs on your calendar.",
+  },
+  {
+    question: 'What Areas Do You Service?',
+    answer:
+      "We work with roofing contractors across the United States and Canada. Our Meta ad campaigns are hyper-targeted to homeowners in your specific service areas — down to the zip code. Whether you cover one city or an entire metro, we build campaigns around your exact footprint.",
+  },
+  {
+    question: 'How Do You Reduce No-Shows?',
+    answer:
+      "No-shows kill your productivity. That's why we built an automated reminder system that sends daily texts and calls leading up to every booked appointment. On the morning of the meeting, the lead gets a final confirmation call with all the details. If they don't respond, our AI follows up to reschedule before you ever waste a trip.",
   },
 ];
 
