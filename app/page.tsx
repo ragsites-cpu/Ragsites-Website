@@ -297,8 +297,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Custom Demo Widget */}
-      <DemoWidget />
+      {/* AI Demo Widget */}
+      <section className="py-24 px-4 bg-black">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white text-center" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+            Experience It <span className="text-gradient-skye">Live</span>
+          </h2>
+          <p className="text-xl text-slate-400 text-center mb-12 max-w-2xl mx-auto">
+            Talk to our lead qualification agent and see how it handles real conversations
+          </p>
+          <div className="bg-white/5 rounded-2xl border border-white/10 p-3 md:p-4">
+            <iframe
+              src="https://personaplex-receptionist.fly.dev/demo"
+              width="100%"
+              height="900"
+              frameBorder="0"
+              style={{ borderRadius: '16px', overflow: 'hidden' }}
+              title="AI Lead Qualification Demo"
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Testimonials (Senja) */}
       <section className="py-24 px-4 bg-black">
