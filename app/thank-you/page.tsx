@@ -82,7 +82,7 @@ export default function ThankYouPage() {
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F0F7FF] to-transparent pointer-events-none" />
                 <div className="max-w-4xl mx-auto relative z-10">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase leading-tight text-white">
-                        <span className="text-[#991b1b]">You&apos;re Almost Booked.</span> Complete These 3 Steps Before Your Call
+                        <span className="text-[#991b1b]">You&apos;re Almost Booked.</span> Please Watch This 90 Second Video.
                     </h1>
                     <p className="mt-5 text-lg text-slate-400 font-medium">
                         Follow each step below so we can hit the ground running on your call.
@@ -96,7 +96,7 @@ export default function ThankYouPage() {
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
                         <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">1</span>
                         <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
-                            Watch This 90 Second Video Before Your Call
+                            Important: Don&apos;t Skip This
                         </p>
                     </div>
                 </div>
