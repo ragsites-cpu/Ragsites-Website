@@ -678,7 +678,7 @@ const FAQS = [
   {
     question: 'What Do You Guys Do?',
     answer:
-      "We run the entire lead-to-close pipeline for roofing contractors. That means exclusive Meta ad campaigns that generate homeowner leads in your area, an AI agent that calls and texts every lead within minutes to pre-qualify them, automated daily reminders so your appointments actually show up, and proprietary software that transcribes your sales calls and coaches you on how to close more deals. You focus on roofing — we fill your calendar.",
+      "We run the entire lead-to-close pipeline for roofing contractors. That means a combination of Meta ads and Google Local Service Ads (LSA) — widely considered the best lead sources for roofers — generating exclusive homeowner leads in your area. From there, our AI agent calls and texts every lead within minutes to pre-qualify them, automated daily reminders ensure your appointments actually show up, and our proprietary software transcribes your sales calls and coaches you on how to close more deals. You focus on roofing — we fill your calendar.",
   },
   {
     question: 'How Much Does It Cost?',
