@@ -289,7 +289,7 @@ export default function Home() {
               <p className="text-sm text-slate-400 uppercase tracking-wider">Show-Up Rate</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-3xl sm:text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;5 min</p>
+              <p className="text-3xl sm:text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;<AnimatedCounter value="5min" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Lead Response Time</p>
             </motion.div>
           </motion.div>
