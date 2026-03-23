@@ -107,7 +107,7 @@ export default function Home() {
             <span className="text-sm font-bold tracking-widest text-[#40c9ff] uppercase">AI-Powered Growth For Roofing Contractors</span>
           </motion.div>
 
-          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight text-white" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
             {'Book More Roofs.'.split('').map((char, i) => (
               <motion.span
                 key={`line1-${i}`}
