@@ -233,8 +233,8 @@ export default function Home() {
 
 
       {/* AI Demo Widget */}
-      <section id="demo-section" className="py-24 px-4 bg-black">
-        <div className="max-w-7xl mx-auto">
+      <section id="demo-section" className="py-24 px-2 md:px-8 bg-black">
+        <div className="mx-auto" style={{ maxWidth: '1600px' }}>
           <iframe
             src="https://personaplex-receptionist.fly.dev/demo"
             width="100%"
