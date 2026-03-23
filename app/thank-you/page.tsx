@@ -197,7 +197,14 @@ export default function ThankYouPage() {
             {/* Step 3 — AI Demo */}
             <div className="py-10 px-4 bg-[#F0F7FF]">
                 <div className="max-w-7xl mx-auto">
-                    <PersonaPlexDemo />
+                    <iframe
+                        src="https://personaplex-receptionist.fly.dev/demo"
+                        width="100%"
+                        height="900"
+                        frameBorder="0"
+                        style={{ borderRadius: '20px', overflow: 'hidden' }}
+                        title="AI Lead Qualification Demo"
+                    />
                 </div>
             </div>
 

@@ -235,7 +235,14 @@ export default function Home() {
       {/* AI Demo Widget */}
       <section id="demo-section" className="py-24 px-4 bg-black">
         <div className="max-w-7xl mx-auto">
-          <PersonaPlexDemo />
+          <iframe
+            src="https://personaplex-receptionist.fly.dev/demo"
+            width="100%"
+            height="900"
+            frameBorder="0"
+            style={{ borderRadius: '20px', overflow: 'hidden' }}
+            title="AI Lead Qualification Demo"
+          />
         </div>
       </section>
 
