@@ -195,7 +195,7 @@ export default function ThankYouPage() {
 
             {/* Step 3 — AI Demo */}
             <div className="py-10 px-4 bg-[#F0F7FF]">
-                <div className="max-w-5xl mx-auto">
+                <div className="max-w-7xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-md p-3 md:p-4">
                         <iframe
                             src="https://personaplex-receptionist.fly.dev/demo"
