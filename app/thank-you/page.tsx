@@ -108,7 +108,7 @@ export default function ThankYouPage() {
                     <div className="bg-white rounded-2xl shadow-md p-3 md:p-4">
                         <div className="relative rounded-xl overflow-hidden">
                             <iframe
-                                src="https://player.mux.com/KqyGtWzxuiTBgxwaAdam9E6PV02vuKOviESFSLzzhGTo?autoplay=1&muted=1"
+                                src="https://player.mux.com/KqyGtWzxuiTBgxwaAdam9E6PV02vuKOviESFSLzzhGTo?autoplay=1"
                                 style={{ width: '100%', border: 'none', aspectRatio: '16/9' }}
                                 allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
                                 allowFullScreen
