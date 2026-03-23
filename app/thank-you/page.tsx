@@ -183,7 +183,7 @@ export default function ThankYouPage() {
 
             {/* ─── STEP 3 BANNER ─── */}
             <div className="px-4 py-2 bg-[#F0F7FF]">
-                <div className="max-w-5xl mx-auto">
+                <div className="max-w-7xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
                         <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">3</span>
                         <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
