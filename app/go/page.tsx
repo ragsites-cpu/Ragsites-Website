@@ -830,7 +830,7 @@ export default function RoofingLanding() {
             </span>
           </div>
           <h1
-            className="text-5xl md:text-7xl lg:text-[5.5rem] mb-14 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-14 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
@@ -989,7 +989,7 @@ export default function RoofingLanding() {
       <section className="pt-6 pb-24 px-4 relative overflow-hidden">
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black mb-6">
+          <h2 className="text-3xl md:text-6xl font-black mb-6">
             Ready for 40 Booked Jobs <span className="text-gradient-skye">in 90 Days?</span>
           </h2>
           <p className="text-xl text-slate-700 mb-10 max-w-xl mx-auto">

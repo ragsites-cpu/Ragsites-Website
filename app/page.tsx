@@ -274,19 +274,19 @@ export default function Home() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="10K+" /></p>
+              <p className="text-3xl sm:text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="10K+" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Leads Generated</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="40%+" /></p>
+              <p className="text-3xl sm:text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="40%+" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Avg. Close Rate Lift</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="90%" /></p>
+              <p className="text-3xl sm:text-5xl font-black text-white mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}><AnimatedCounter value="90%" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Show-Up Rate</p>
             </motion.div>
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;<AnimatedCounter value="5min" /></p>
+              <p className="text-3xl sm:text-5xl font-black text-[#e81cff] mb-2" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>&lt;<AnimatedCounter value="5min" /></p>
               <p className="text-sm text-slate-400 uppercase tracking-wider">Lead Response Time</p>
             </motion.div>
           </motion.div>
@@ -297,7 +297,7 @@ export default function Home() {
       <section className="py-32 px-4 relative overflow-hidden">
         <div className="glow-orb glow-orb-pink w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-black mb-8" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Ready to Fill Your Roofing Calendar?</h2>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-black mb-8" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>Ready to Fill Your Roofing Calendar?</h2>
           <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">Stop chasing leads that ghost you. Let our AI system generate, qualify, remind, and coach — so you just show up and close.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/workflows" className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold flex items-center justify-center gap-2 transition-all">
