@@ -187,34 +187,24 @@ export default function ThankYouPage() {
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-[#991b1b] px-6 py-4 flex items-center gap-4">
                         <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#991b1b] text-white font-black text-lg flex items-center justify-center">3</span>
                         <p className="text-slate-900 font-black text-lg md:text-xl uppercase tracking-wide">
-                            See What We&apos;ve Done for Other Clients
+                            Talk to Our AI Receptionist
                         </p>
                     </div>
                 </div>
             </div>
 
-            {/* Step 3 — Meta Campaign Proof */}
+            {/* Step 3 — AI Demo */}
             <div className="py-10 px-4 bg-[#F0F7FF]">
                 <div className="max-w-5xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 text-center mb-2">
-                        Real Ad Campaigns. <span className="text-[#991b1b]">Real Results.</span>
-                    </h2>
-                    <p className="text-slate-500 text-center mb-10 text-lg">
-                        Here&apos;s actual proof from campaigns we&apos;ve run for roofing clients just like you.
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {campaignImages.map((img, i) => (
-                            <div key={i} className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white">
-                                <Image
-                                    src={img.src}
-                                    alt={img.alt}
-                                    width={800}
-                                    height={500}
-                                    className="w-full h-auto object-cover"
-                                />
-                            </div>
-                        ))}
+                    <div className="bg-white rounded-2xl shadow-md p-3 md:p-4">
+                        <iframe
+                            src="https://personaplex-receptionist.fly.dev/demo"
+                            width="100%"
+                            height="900"
+                            frameBorder="0"
+                            style={{ borderRadius: '16px', overflow: 'hidden' }}
+                            title="AI Receptionist Demo"
+                        />
                     </div>
                 </div>
             </div>
