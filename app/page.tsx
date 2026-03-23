@@ -249,6 +249,9 @@ export default function Home() {
       {/* Testimonials (Senja) */}
       <section className="py-24 px-4 bg-black">
         <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-white text-center" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+            Our <span className="text-gradient-skye">Success Stories</span>
+          </h2>
           <Script
             src="https://widget.senja.io/widget/630388b8-5925-43a5-8d32-217aee54ab75/platform.js"
             strategy="afterInteractive"
