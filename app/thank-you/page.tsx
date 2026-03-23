@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { Volume2, CheckCircle2, Mail, MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
+import PersonaPlexDemo from '@/components/PersonaPlexDemo';
 import { trackPageVisit } from '@/app/actions/track';
 
 export default function ThankYouPage() {
@@ -196,16 +197,7 @@ export default function ThankYouPage() {
             {/* Step 3 — AI Demo */}
             <div className="py-10 px-4 bg-[#F0F7FF]">
                 <div className="max-w-7xl mx-auto">
-                    <div className="bg-white rounded-2xl shadow-md p-3 md:p-4">
-                        <iframe
-                            src="https://personaplex-receptionist.fly.dev/demo"
-                            width="100%"
-                            height="900"
-                            frameBorder="0"
-                            style={{ borderRadius: '16px', overflow: 'hidden' }}
-                            title="AI Receptionist Demo"
-                        />
-                    </div>
+                    <PersonaPlexDemo />
                 </div>
             </div>
 

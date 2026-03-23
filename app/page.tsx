@@ -11,6 +11,7 @@ import LiveVoiceDemo from '@/components/LiveVoiceDemo';
 import DemoWidget from '@/components/DemoWidget';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import Image from 'next/image';
+import PersonaPlexDemo from '@/components/PersonaPlexDemo';
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-outfit' });
 const rubik = Rubik({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-rubik' });
@@ -234,22 +235,7 @@ export default function Home() {
       {/* AI Demo Widget */}
       <section id="demo-section" className="py-24 px-4 bg-black">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white text-center" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
-            Experience It <span className="text-gradient-skye">Live</span>
-          </h2>
-          <p className="text-xl text-slate-400 text-center mb-12 max-w-2xl mx-auto">
-            Talk to our lead qualification agent and see how it handles real conversations
-          </p>
-          <div className="bg-white/5 rounded-2xl border border-white/10 p-3 md:p-4">
-            <iframe
-              src="https://personaplex-receptionist.fly.dev/demo"
-              width="100%"
-              height="900"
-              frameBorder="0"
-              style={{ borderRadius: '16px', overflow: 'hidden' }}
-              title="AI Lead Qualification Demo"
-            />
-          </div>
+          <PersonaPlexDemo />
         </div>
       </section>
 
