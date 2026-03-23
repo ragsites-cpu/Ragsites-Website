@@ -69,7 +69,7 @@ export default function Home() {
   }, []);
 
   const scrollToDemo = () => {
-    document.getElementById('live-demo-section')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('demo-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -230,75 +230,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Live Voice Demo Section */}
-      <section id="live-demo-section" className="py-32 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-brand-primary/20 to-black z-0"></div>
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={fadeUp}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl md:text-6xl font-black mb-6" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
-              Try It <span className="text-gradient-skye">Live</span>
-            </h2>
-            <p className="text-xl text-slate-300">
-              No forms. No waiting. Have a real conversation with our cutting-edge AI right now.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-              className="dark-glass-card p-10 h-full flex flex-col justify-center border-white/10"
-            >
-              <h3 className="text-3xl font-bold mb-6 text-white">No Script.<br />100% Real-Time.</h3>
-              <p className="text-slate-300 mb-8 text-lg">
-                Click the mic and talk to our AI receptionist. Test its emotional intelligence, try to interrupt it, or ask complex pricing questions.
-              </p>
-              <ul className="space-y-4 text-slate-200">
-                <li className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-5 h-5 text-[#40c9ff]" />
-                  </div>
-                  <span className="text-lg">Sub-second response time</span>
-                </li>
-                <li className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                    <MessageSquare className="w-5 h-5 text-[#e81cff]" />
-                  </div>
-                  <span className="text-lg">Handles interruptions flawlessly</span>
-                </li>
-                <li className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-5 h-5 text-[#40c9ff]" />
-                  </div>
-                  <span className="text-lg">Speaks 50+ languages</span>
-                </li>
-              </ul>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <LiveVoiceDemo />
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* AI Demo Widget */}
-      <section className="py-24 px-4 bg-black">
+      <section id="demo-section" className="py-24 px-4 bg-black">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white text-center" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
             Experience It <span className="text-gradient-skye">Live</span>
