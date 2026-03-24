@@ -19,6 +19,11 @@ const INTEGRATIONS = [
     { name: 'Slack', logo: '/integrations/slack.svg' },
     { name: 'WhatsApp', logo: '/integrations/whatsapp.svg' },
     { name: 'QuickBooks', logo: '/integrations/quickbooks.svg' },
+    { name: 'GoHighLevel', logo: '/integrations/gohighlevel.svg' },
+    { name: 'Google Ads', logo: '/integrations/googleads.svg' },
+    { name: 'Meta', logo: '/integrations/meta.svg' },
+    { name: 'Make', logo: '/integrations/make.svg' },
+    { name: 'Notion', logo: '/integrations/notion.svg' },
 ];
 
 const FAQS = [
