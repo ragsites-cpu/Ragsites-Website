@@ -1,9 +1,73 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Calendar, MessageSquare, BarChart3, Globe, Zap, Server, Users, AudioLines, PhoneOutgoing, Brain, Bell, BrainCircuit, MessageSquareText } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
+
+const INTEGRATIONS = [
+    { name: 'Google Calendar', logo: '/integrations/googlecalendar.svg' },
+    { name: 'HubSpot', logo: '/integrations/hubspot.svg' },
+    { name: 'Salesforce', logo: '/integrations/salesforce.svg' },
+    { name: 'Google Maps', logo: '/integrations/googlemaps.svg' },
+    { name: 'Zapier', logo: '/integrations/zapier.svg' },
+    { name: 'Calendly', logo: '/integrations/calendly.svg' },
+    { name: 'Stripe', logo: '/integrations/stripe.svg' },
+    { name: 'Square', logo: '/integrations/square.svg' },
+    { name: 'Twilio', logo: '/integrations/twilio.svg' },
+    { name: 'Slack', logo: '/integrations/slack.svg' },
+    { name: 'WhatsApp', logo: '/integrations/whatsapp.svg' },
+    { name: 'QuickBooks', logo: '/integrations/quickbooks.svg' },
+];
+
+const FAQS = [
+    {
+        question: 'What Do You Guys Do?',
+        answer: "We run the entire lead-to-close pipeline for roofing contractors. That means a combination of Meta ads and Google Local Service Ads (LSA) — widely considered the best lead sources for roofers — generating exclusive homeowner leads in your area. From there, our AI agent calls and texts every lead within minutes to pre-qualify them, automated daily reminders ensure your appointments actually show up, and our proprietary software transcribes your sales calls and coaches you on how to close more deals. You focus on roofing — we fill your calendar.",
+    },
+    {
+        question: 'How Much Does It Cost?',
+        answer: "Think about it this way: if we put 40 booked, pre-qualified roof replacement estimates on your calendar over the next 90 days, what would that be worth to you?\n\nThere is no cookie-cutter pricing here. Every plan we put together is built around your business, your goals, and your budget.\n\nIf you are shopping around for the cheapest lead source, we are probably not the right fit. But if you want exclusive, pre-qualified roof replacement estimates on your calendar, that is exactly what we deliver.",
+    },
+    {
+        question: 'Do You Pre-Qualify Leads?',
+        answer: "Absolutely. Before a lead ever reaches your team, it goes through our multi-step qualification process powered by AI. Our agent calls and texts every lead within minutes of them filling out a form. We verify homeowner status, project scope, damage type, and buying intent so your crew only shows up to appointments that are worth the trip. No more wasted afternoons chasing tire kickers.",
+    },
+    {
+        question: 'How Fast Will I Start Getting Leads?',
+        answer: "We move fast. During the first two weeks, our team builds your AI qualification agent, sets up your ad campaigns, and configures your entire system. By day 14, your Meta ads go live and leads start flowing. Most clients see their first qualified appointments on the calendar within the first week of ads running.",
+    },
+    {
+        question: 'Do I Have To Sign a Long-Term Contract?',
+        answer: "No. We don't lock you into long-term contracts because we don't need to. Our clients stay because the system works, not because they're stuck. We earn your business every single month with real results — booked jobs on your calendar.",
+    },
+    {
+        question: 'What Areas Do You Service?',
+        answer: "We work with roofing contractors across the United States and Canada. Our Meta ad campaigns are hyper-targeted to homeowners in your specific service areas — down to the zip code. Whether you cover one city or an entire metro, we build campaigns around your exact footprint.",
+    },
+    {
+        question: 'How Do You Reduce No-Shows?',
+        answer: "No-shows kill your productivity. That's why we built an automated reminder system that sends daily texts and calls leading up to every booked appointment. On the morning of the meeting, the lead gets a final confirmation call with all the details. If they don't respond, our AI follows up to reschedule before you ever waste a trip.",
+    },
+];
+
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <div className="border-b border-white/10">
+            <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between py-6 text-left group">
+                <span className="text-lg font-bold text-white group-hover:text-[#40c9ff] transition-colors pr-4">{question}</span>
+                <span className={`text-2xl text-slate-500 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>+</span>
+            </button>
+            {isOpen && (
+                <div className="overflow-hidden">
+                    <p className="pb-6 text-slate-400 leading-relaxed whitespace-pre-line">{answer}</p>
+                </div>
+            )}
+        </div>
+    );
+}
 
 const features = [
     {
@@ -164,6 +228,37 @@ export default function FeaturesPage() {
                             </motion.div>
                         ))}
                     </motion.div>
+                </div>
+            </section>
+
+            {/* Integrations */}
+            <section className="py-20 px-4 bg-black border-t border-white/10">
+                <div className="max-w-5xl mx-auto">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">Works With Your Favorite Tools</h2>
+                    <p className="text-slate-400 text-center mb-12">Seamlessly connects with the platforms you already use</p>
+                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+                        {INTEGRATIONS.map((item) => (
+                            <div key={item.name} className="flex flex-col items-center gap-2 group" title={item.name}>
+                                <Image src={item.logo} alt={item.name} width={36} height={36} className="w-9 h-9 object-contain opacity-60 group-hover:opacity-100 transition-opacity" />
+                                <span className="text-[11px] font-medium text-slate-500 group-hover:text-slate-300 transition-colors">{item.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQs */}
+            <section className="py-20 px-4 bg-black">
+                <div className="max-w-3xl mx-auto">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+                        Frequently Asked <span className="text-gradient-skye">Questions</span>
+                    </h2>
+                    <p className="text-slate-400 text-center mb-12">Everything you need to know about working with us</p>
+                    <div>
+                        {FAQS.map((faq) => (
+                            <FaqItem key={faq.question} {...faq} />
+                        ))}
+                    </div>
                 </div>
             </section>
 
