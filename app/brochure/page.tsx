@@ -291,6 +291,24 @@ export default function BrochurePage() {
                 </div>
             </section>
 
+            {/* AI Demo Widget */}
+            <section className="py-20 px-4 bg-[#0c1929]">
+                <div className="max-w-5xl mx-auto text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Experience It Live</h2>
+                    <p className="text-slate-400 text-lg">Talk to our AI agent and see how it qualifies leads in real time</p>
+                </div>
+                <div className="mx-auto" style={{ maxWidth: '1400px' }}>
+                    <iframe
+                        src="https://personaplex-receptionist.fly.dev/demo"
+                        width="100%"
+                        height="900"
+                        frameBorder="0"
+                        style={{ borderRadius: '20px', overflow: 'hidden' }}
+                        title="AI Lead Qualification Demo"
+                    />
+                </div>
+            </section>
+
             {/* Integrations Strip */}
             <section className="py-14 px-4 bg-slate-50 border-y border-slate-100">
                 <div className="max-w-7xl mx-auto">
@@ -597,24 +615,6 @@ export default function BrochurePage() {
                     >
                         Get Started for $99
                     </a>
-                </div>
-            </section>
-
-            {/* AI Demo Widget */}
-            <section className="py-20 px-4 bg-[#0c1929]">
-                <div className="max-w-5xl mx-auto text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Experience It Live</h2>
-                    <p className="text-slate-400 text-lg">Talk to our AI agent and see how it qualifies leads in real time</p>
-                </div>
-                <div className="mx-auto" style={{ maxWidth: '1400px' }}>
-                    <iframe
-                        src="https://personaplex-receptionist.fly.dev/demo"
-                        width="100%"
-                        height="900"
-                        frameBorder="0"
-                        style={{ borderRadius: '20px', overflow: 'hidden' }}
-                        title="AI Lead Qualification Demo"
-                    />
                 </div>
             </section>
 
