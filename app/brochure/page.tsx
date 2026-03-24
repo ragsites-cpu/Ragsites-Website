@@ -25,6 +25,7 @@ import {
     MessageSquare,
 } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -221,33 +222,17 @@ export default function BrochurePage() {
             </nav>
 
             {/* Hero */}
-            <section className="py-24 px-4 relative overflow-hidden" style={{ background: '#060d18' }}>
-                <NoiseOverlay />
-                {/* Animated mesh gradient — Retell AI style */}
-                <style>{`
-                    @keyframes meshBlob1 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(200px,-100px) scale(1.3)} 50%{transform:translate(-100px,120px) scale(0.8)} 75%{transform:translate(150px,80px) scale(1.15)} 100%{transform:translate(0,0) scale(1)} }
-                    @keyframes meshBlob2 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(-250px,80px) scale(1.25)} 50%{transform:translate(150px,-150px) scale(0.85)} 75%{transform:translate(-120px,-100px) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
-                    @keyframes meshBlob3 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(120px,180px) scale(0.8)} 50%{transform:translate(-200px,-80px) scale(1.3)} 75%{transform:translate(80px,-150px) scale(1.1)} 100%{transform:translate(0,0) scale(1)} }
-                    @keyframes meshBlob4 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(-180px,-120px) scale(1.2)} 50%{transform:translate(220px,60px) scale(0.85)} 75%{transform:translate(-80px,160px) scale(1.25)} 100%{transform:translate(0,0) scale(1)} }
-                    @keyframes meshBlob5 { 0%{transform:translate(0,0) scale(1)} 25%{transform:translate(100px,-200px) scale(1.15)} 50%{transform:translate(-150px,100px) scale(0.9)} 75%{transform:translate(180px,50px) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
-                `}</style>
-                <div className="absolute inset-0 overflow-hidden">
-                    {/* Large deep blue — dominant center glow */}
-                    <div className="absolute rounded-full" style={{ width: '900px', height: '700px', background: 'radial-gradient(circle, #1d4ed8 0%, #1e3a8a 40%, transparent 70%)', top: '-15%', left: '15%', opacity: 0.9, filter: 'blur(80px)', animation: 'meshBlob1 10s ease-in-out infinite' }} />
-                    {/* Bright blue — right side */}
-                    <div className="absolute rounded-full" style={{ width: '700px', height: '600px', background: 'radial-gradient(circle, #2563eb 0%, #1d4ed8 35%, transparent 70%)', top: '10%', right: '-10%', opacity: 0.8, filter: 'blur(70px)', animation: 'meshBlob2 12s ease-in-out infinite' }} />
-                    {/* Teal accent — bottom-left */}
-                    <div className="absolute rounded-full" style={{ width: '600px', height: '500px', background: 'radial-gradient(circle, #0d9488 0%, #0f766e 30%, transparent 70%)', bottom: '-20%', left: '-10%', opacity: 0.6, filter: 'blur(90px)', animation: 'meshBlob3 14s ease-in-out infinite' }} />
-                    {/* Indigo — top-right */}
-                    <div className="absolute rounded-full" style={{ width: '550px', height: '550px', background: 'radial-gradient(circle, #4f46e5 0%, #3730a3 35%, transparent 70%)', top: '-15%', right: '10%', opacity: 0.5, filter: 'blur(75px)', animation: 'meshBlob4 8s ease-in-out infinite' }} />
-                    {/* Mid blue — center fill */}
-                    <div className="absolute rounded-full" style={{ width: '800px', height: '600px', background: 'radial-gradient(circle, #3b82f6 0%, #2563eb 30%, transparent 65%)', top: '0%', left: '30%', opacity: 0.6, filter: 'blur(85px)', animation: 'meshBlob5 11s ease-in-out infinite' }} />
-                    {/* Edge vignette — softer so blobs show through */}
-                    <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 40%, transparent 35%, #060d18 85%)' }} />
-                </div>
+            <section className="py-24 px-4 relative overflow-hidden" style={{ background: '#000000' }}>
+                {/* Background Video */}
+                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
+                    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260217_030345_246c0224-10a4-422c-b324-070b7c0eceda.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black z-0 pointer-events-none" />
+                <div className="glow-orb glow-orb-purple w-[600px] h-[600px] top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-40 z-0" />
+                <div className="glow-orb glow-orb-blue w-[500px] h-[500px] bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 opacity-30 z-0" />
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-                    <div>
-                        <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] mb-8 tracking-tight">
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+                        <h1 className="text-3xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] mb-8 tracking-tight">
                             Never Miss Another Client. Get Started with Your AI Call Center for $99.
                         </h1>
                         <ul className="space-y-4 text-lg text-slate-300">
@@ -271,8 +256,8 @@ export default function BrochurePage() {
                         <p className="text-slate-400 mt-6 text-lg font-medium">
                             No contracts. Cancel anytime. Plans starting at $99/mo.
                         </p>
-                    </div>
-                    <div className="flex justify-center">
+                    </motion.div>
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="flex justify-center">
                         <div className="bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-center max-w-md w-full shadow-2xl">
                             <p className="text-[#22d3ee] font-semibold text-lg mb-2">Ready to get started?</p>
                             <h3 className="text-3xl font-extrabold text-white mb-4 tracking-tight">Book a Demo Call</h3>
@@ -284,7 +269,7 @@ export default function BrochurePage() {
                                 Get Started for $99
                             </a>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -612,6 +597,24 @@ export default function BrochurePage() {
                     >
                         Get Started for $99
                     </a>
+                </div>
+            </section>
+
+            {/* AI Demo Widget */}
+            <section className="py-20 px-4 bg-[#0c1929]">
+                <div className="max-w-5xl mx-auto text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Experience It Live</h2>
+                    <p className="text-slate-400 text-lg">Talk to our AI agent and see how it qualifies leads in real time</p>
+                </div>
+                <div className="mx-auto" style={{ maxWidth: '1400px' }}>
+                    <iframe
+                        src="https://personaplex-receptionist.fly.dev/demo"
+                        width="100%"
+                        height="900"
+                        frameBorder="0"
+                        style={{ borderRadius: '20px', overflow: 'hidden' }}
+                        title="AI Lead Qualification Demo"
+                    />
                 </div>
             </section>
 
