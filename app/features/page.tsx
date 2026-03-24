@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Calendar, MessageSquare, BarChart3, Globe, Zap, Server, Users, AudioLines, PhoneOutgoing, Brain, Bell, BrainCircuit, MessageSquareText } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, BarChart3, Zap, Server, AudioLines, PhoneOutgoing, Bell, BrainCircuit, MessageSquareText, Search, PhoneOff, Star, ClipboardList } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 
@@ -91,19 +91,9 @@ const features = [
         description: 'Asks the right questions based on your custom criteria to filter out tire-kickers and prioritize high-intent buyers.',
     },
     {
-        icon: Globe,
-        title: '50+ Languages Fluency',
-        description: 'Speaks practically every major language natively without translation lag, expanding your serviceable market instantly.',
-    },
-    {
         icon: BarChart3,
         title: 'Deep Analytics & Insights',
         description: 'Transcripts, sentiment analysis, call summaries, and actionable performance metrics synced back to your CRM automatically.',
-    },
-    {
-        icon: Users,
-        title: '30 Concurrent Calls',
-        description: 'Handles up to 30 live calls simultaneously with zero degradation in quality. Peak hours, holiday rushes, marketing spikes — never miss a single lead.',
     },
     {
         icon: AudioLines,
@@ -116,19 +106,24 @@ const features = [
         description: 'Automatically follows up with missed calls, abandoned quotes, and cold leads. Re-engages prospects with personalized outbound calls on your schedule.',
     },
     {
-        icon: Brain,
-        title: 'Self-Learning AI Memory',
-        description: 'Remembers returning callers, past conversations, and preferences. Gets smarter with every interaction to deliver increasingly personalized service.',
-    },
-    {
         icon: Zap,
         title: 'Cost-Effective Meta Ad Leads',
         description: 'We run high-converting Meta ad campaigns targeting homeowners actively looking for roof replacements. Every lead is exclusive to you — no shared leads, no bidding wars.',
     },
     {
+        icon: Search,
+        title: 'Google LSA Management',
+        description: 'We set up and manage your Google Local Service Ads — the highest-intent lead source for roofers. Homeowners searching for roof repair in your area call you directly.',
+    },
+    {
         icon: Bell,
         title: 'Daily Appointment Reminders',
         description: 'Automated daily reminders via call and text before every booked meeting. Drastically reduces no-shows so your crew never wastes a trip on a lead who forgot.',
+    },
+    {
+        icon: PhoneOff,
+        title: 'Automated No-Show Recovery',
+        description: 'When a prospect misses a meeting, our AI calls them within 5 minutes to reschedule. Handles objections, finds a new time, and updates your calendar automatically.',
     },
     {
         icon: BrainCircuit,
@@ -139,6 +134,16 @@ const features = [
         icon: MessageSquareText,
         title: 'Post-Estimate Follow-Up',
         description: 'After you give an estimate, our AI follows up automatically with the homeowner via call and text. No more deals falling through because you forgot to call back.',
+    },
+    {
+        icon: Star,
+        title: '5-Star Review Requests',
+        description: 'After a job is completed, our AI calls the homeowner to check satisfaction and guides happy customers to leave a Google review — growing your reputation on autopilot.',
+    },
+    {
+        icon: ClipboardList,
+        title: 'Daily Performance Reports',
+        description: 'Get a daily summary of homeowners contacted, appointments booked, no-shows recovered, and close rates. Know exactly how your pipeline is performing at a glance.',
     },
 ];
 
