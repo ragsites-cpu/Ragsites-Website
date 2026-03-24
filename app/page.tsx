@@ -154,7 +154,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <Phone className="w-8 h-8 animate-pulse" />
-              Call Our Voice AI
+              See Our AI Qualify a Lead — Live
             </button>
             <p className="text-slate-400 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Trusted by 100+ roofing contractors</p>
           </motion.div>
