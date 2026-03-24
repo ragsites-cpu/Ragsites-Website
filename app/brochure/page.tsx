@@ -24,7 +24,7 @@ import {
     ChevronDown,
     MessageSquare,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -187,8 +187,344 @@ function NoiseOverlay() {
     );
 }
 
+/* ─── Intake Questionnaire Modal ─── */
+
+const INTEREST_OPTIONS = [
+    'Inbound call handling (AI receptionist)',
+    'Outbound lead qualification (AI calls your leads)',
+    'Appointment setting & reminders',
+    'All of the above',
+];
+
+const INDUSTRY_OPTIONS = [
+    'Roofing', 'HVAC', 'Plumbing', 'Solar', 'Dental', 'Legal', 'Real Estate', 'Insurance', 'Restaurant', 'Other',
+];
+
+const VOLUME_OPTIONS = [
+    { label: 'Under 50', sublabel: 'Just getting started' },
+    { label: '50 - 200', sublabel: 'Growing steadily' },
+    { label: '200 - 500', sublabel: 'High volume' },
+    { label: '500+', sublabel: 'Enterprise level' },
+];
+
+const CRM_OPTIONS = [
+    'GoHighLevel', 'HubSpot', 'Salesforce', 'Calendly', 'None / Spreadsheets', 'Other',
+];
+
+const BOTTLENECK_OPTIONS = [
+    'Leads going cold before we follow up',
+    'Too many no-shows',
+    "Can't handle call volume",
+    'No system to track or qualify leads',
+];
+
+type IntakeStep = 'interest' | 'industry' | 'volume' | 'crm' | 'bottleneck' | 'contact' | 'disclaimers' | 'submitting' | 'success' | 'booking' | 'booked';
+
+const CAL_LINK = 'ragsites/30min';
+
+function IntakeModal({ onClose }: { onClose: () => void }) {
+    const [step, setStep] = useState<IntakeStep>('interest');
+    const [interest, setInterest] = useState('');
+    const [industry, setIndustry] = useState('');
+    const [volume, setVolume] = useState('');
+    const [crm, setCrm] = useState('');
+    const [bottleneck, setBottleneck] = useState('');
+    const [formData, setFormData] = useState({ name: '', phone: '', email: '', businessName: '', website: '' });
+    const [meetingCommit, setMeetingCommit] = useState(false);
+    const [spamConsent, setSpamConsent] = useState(false);
+    const [error, setError] = useState('');
+    const [fieldErrors, setFieldErrors] = useState<{ phone?: string; email?: string }>({});
+    const [calLoaded, setCalLoaded] = useState(false);
+    const calReady = useRef(false);
+
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+        if (error) setError('');
+        if (fieldErrors[e.target.name as keyof typeof fieldErrors]) {
+            setFieldErrors((prev) => ({ ...prev, [e.target.name]: undefined }));
+        }
+    };
+
+    const handleContactSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const errors: { phone?: string; email?: string } = {};
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Please enter a valid email address.';
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(formData.phone)) errors.phone = 'Please enter a valid phone number.';
+        if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
+        setFieldErrors({});
+        setStep('disclaimers');
+    };
+
+    const handleFinalSubmit = async () => {
+        if (!meetingCommit) { setError('Please confirm you can attend the call.'); return; }
+        if (!spamConsent) { setError('Please provide consent to continue.'); return; }
+        setError('');
+        setStep('submitting');
+
+        const body = new FormData();
+        body.append('access_key', 'a9e80fab-4da4-44c6-b31f-3369557abdbe');
+        body.append('subject', `Voice AI Lead (Brochure): ${formData.businessName || formData.name}`);
+        body.append('from_name', 'Ragsites Brochure');
+        body.append('name', formData.name);
+        body.append('phone', formData.phone);
+        body.append('email', formData.email);
+        body.append('business_name', formData.businessName);
+        body.append('website', formData.website);
+        body.append('interest', interest);
+        body.append('industry', industry);
+        body.append('monthly_volume', volume);
+        body.append('crm', crm);
+        body.append('bottleneck', bottleneck);
+
+        try {
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body });
+            if (res.ok) {
+                setStep('success');
+                setTimeout(() => setStep('booking'), 2000);
+            } else {
+                setError('Something went wrong. Please try again.');
+                setStep('disclaimers');
+            }
+        } catch {
+            setError('Something went wrong. Please try again.');
+            setStep('disclaimers');
+        }
+    };
+
+    // Cal.com embed
+    useEffect(() => {
+        if (step !== 'booking' || calReady.current) return;
+        calReady.current = true;
+
+        (function (C: any, A: any, L: string) {
+            const p = function () {
+                if (!(C.Cal as any)?.loaded) {
+                    (C.Cal as any) = function (...args: unknown[]) { (C.Cal as any).q = (C.Cal as any).q || []; (C.Cal as any).q.push(args); };
+                    (C.Cal as any).ns = {}; (C.Cal as any).loaded = true;
+                    const d = A as Document; const s = d.createElement(L) as HTMLScriptElement;
+                    s.async = true; s.src = 'https://app.cal.com/embed/embed.js'; d.head.appendChild(s);
+                }
+            };
+            p();
+        })(window, document, 'script');
+
+        setTimeout(() => {
+            if (typeof window.Cal === 'function') {
+                window.Cal('init', { origin: 'https://app.cal.com' });
+                window.Cal('inline', {
+                    elementOrSelector: '#cal-embed-brochure',
+                    calLink: CAL_LINK,
+                    layout: 'month_view',
+                    config: {
+                        theme: 'dark',
+                        name: formData.name || undefined,
+                        email: formData.email || undefined,
+                        phoneNumber: formData.phone ? `+1${formData.phone.replace(/\D/g, '').replace(/^1/, '')}` : undefined,
+                    },
+                });
+                window.Cal('on', {
+                    action: 'bookingSuccessful',
+                    callback: () => setStep('booked'),
+                });
+                window.Cal('on', {
+                    action: '__iframeReady',
+                    callback: () => setCalLoaded(true),
+                });
+                window.Cal('ui', { theme: 'dark', styles: { branding: { brandColor: '#3b82f6' } }, hideEventTypeDetails: false, layout: 'month_view' });
+            }
+        }, 100);
+    }, [step]);
+
+    const stepLabels: Record<string, string> = {
+        interest: 'Step 1 of 5', industry: 'Step 2 of 5', volume: 'Step 3 of 5',
+        crm: 'Step 4 of 5', bottleneck: 'Step 5 of 5',
+    };
+
+    const optionBtnClass = "w-full text-left px-6 py-4 rounded-xl bg-[#0f2035] border border-slate-700/50 text-white font-medium hover:border-[#3b82f6] hover:bg-[#1e3a5f] transition-all duration-200 hover:scale-[1.02]";
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+            <div className={`relative z-10 w-full bg-[#0c1929] border border-slate-700/50 rounded-2xl p-8 md:p-10 overflow-y-auto max-h-[90vh] ${step === 'booking' ? 'max-w-4xl' : 'max-w-lg'}`}>
+                <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white text-sm">✕</button>
+
+                {/* Quiz steps */}
+                {step === 'interest' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">{stepLabels[step]}</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">What are you most interested in?</h3>
+                        <p className="text-slate-400 text-sm mb-8">Select the option that best describes your needs</p>
+                        <div className="space-y-3">
+                            {INTEREST_OPTIONS.map((opt) => (
+                                <button key={opt} onClick={() => { setInterest(opt); setTimeout(() => setStep('industry'), 300); }} className={optionBtnClass}>{opt}</button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {step === 'industry' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">{stepLabels[step]}</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">What industry are you in?</h3>
+                        <p className="text-slate-400 text-sm mb-8">This helps us tailor your AI agent</p>
+                        <div className="space-y-3">
+                            {INDUSTRY_OPTIONS.map((opt) => (
+                                <button key={opt} onClick={() => { setIndustry(opt); setTimeout(() => setStep('volume'), 300); }} className={optionBtnClass}>{opt}</button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {step === 'volume' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">{stepLabels[step]}</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">How many leads/calls do you handle per month?</h3>
+                        <p className="text-slate-400 text-sm mb-8">This helps us size your plan</p>
+                        <div className="space-y-3">
+                            {VOLUME_OPTIONS.map((opt) => (
+                                <button key={opt.label} onClick={() => { setVolume(opt.label); setTimeout(() => setStep('crm'), 300); }} className={optionBtnClass}>{opt.label} <span className="text-slate-500 ml-2 text-sm">— {opt.sublabel}</span></button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {step === 'crm' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">{stepLabels[step]}</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">What CRM do you currently use?</h3>
+                        <p className="text-slate-400 text-sm mb-8">So we can integrate seamlessly</p>
+                        <div className="space-y-3">
+                            {CRM_OPTIONS.map((opt) => (
+                                <button key={opt} onClick={() => { setCrm(opt); setTimeout(() => setStep('bottleneck'), 300); }} className={optionBtnClass}>{opt}</button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {step === 'bottleneck' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">{stepLabels[step]}</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">What&apos;s your biggest bottleneck right now?</h3>
+                        <p className="text-slate-400 text-sm mb-8">We&apos;ll focus on solving this first</p>
+                        <div className="space-y-3">
+                            {BOTTLENECK_OPTIONS.map((opt) => (
+                                <button key={opt} onClick={() => { setBottleneck(opt); setTimeout(() => setStep('contact'), 300); }} className={optionBtnClass}>{opt}</button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Contact form */}
+                {step === 'contact' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">Your Details</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Almost there!</h3>
+                        <p className="text-slate-400 text-sm mb-8">So we can reach out and schedule your strategy call</p>
+                        <form onSubmit={handleContactSubmit} className="space-y-4">
+                            <input name="name" required placeholder="Full name" value={formData.name} onChange={handleFormChange} className="w-full px-4 py-4 rounded-xl bg-[#0f2035] border border-slate-700/50 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6] transition-colors" />
+                            <div>
+                                <input name="phone" type="tel" required placeholder="Phone number" value={formData.phone} onChange={handleFormChange} className={`w-full px-4 py-4 rounded-xl bg-[#0f2035] border ${fieldErrors.phone ? 'border-red-500' : 'border-slate-700/50'} text-white placeholder:text-slate-500 focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6] transition-colors`} />
+                                {fieldErrors.phone && <p className="text-red-400 text-sm mt-1">{fieldErrors.phone}</p>}
+                            </div>
+                            <div>
+                                <input name="email" type="email" required placeholder="Email address" value={formData.email} onChange={handleFormChange} className={`w-full px-4 py-4 rounded-xl bg-[#0f2035] border ${fieldErrors.email ? 'border-red-500' : 'border-slate-700/50'} text-white placeholder:text-slate-500 focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6] transition-colors`} />
+                                {fieldErrors.email && <p className="text-red-400 text-sm mt-1">{fieldErrors.email}</p>}
+                            </div>
+                            <input name="businessName" required placeholder="Business name" value={formData.businessName} onChange={handleFormChange} className="w-full px-4 py-4 rounded-xl bg-[#0f2035] border border-slate-700/50 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6] transition-colors" />
+                            <input name="website" placeholder="Website (optional)" value={formData.website} onChange={handleFormChange} className="w-full px-4 py-4 rounded-xl bg-[#0f2035] border border-slate-700/50 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#3b82f6] focus:ring-1 focus:ring-[#3b82f6] transition-colors" />
+                            <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#6366f1] text-white font-bold text-lg hover:from-[#2563eb] hover:to-[#4f46e5] transition-all">Continue</button>
+                        </form>
+                    </div>
+                )}
+
+                {/* Disclaimers */}
+                {step === 'disclaimers' && (
+                    <div>
+                        <p className="text-[#3b82f6] text-xs font-bold uppercase tracking-widest mb-3">Final Step</p>
+                        <h3 className="text-2xl font-bold text-white mb-6">Almost There!</h3>
+                        <div className="bg-[#0f2035] border border-slate-700/50 rounded-xl p-5 mb-4">
+                            <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                                <span className="text-white font-bold">DISCLAIMER:</span> This meeting will be hosted on Google Meet. We limit the number of clients we take on each month. If you need to reschedule, let us know 24h prior.
+                            </p>
+                            <label className="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" checked={meetingCommit} onChange={(e) => { setMeetingCommit(e.target.checked); if (error) setError(''); }} className="mt-1 w-4 h-4 rounded border-slate-600 text-[#3b82f6] focus:ring-[#3b82f6]" />
+                                <span className="text-sm text-slate-300">Will you be able to commit and attend this call?</span>
+                            </label>
+                        </div>
+                        <div className="bg-[#0f2035] border border-slate-700/50 rounded-xl p-5 mb-6">
+                            <label className="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" checked={spamConsent} onChange={(e) => { setSpamConsent(e.target.checked); if (error) setError(''); }} className="mt-1 w-4 h-4 rounded border-slate-600 text-[#3b82f6] focus:ring-[#3b82f6]" />
+                                <span className="text-sm text-slate-300">We hate spammers. Do you consent to us reaching out regarding this offer?</span>
+                            </label>
+                        </div>
+                        {error && <p className="text-red-400 text-sm text-center mb-4">{error}</p>}
+                        <button onClick={handleFinalSubmit} className="w-full py-4 rounded-xl bg-gradient-to-r from-[#3b82f6] to-[#6366f1] text-white font-bold text-lg hover:from-[#2563eb] hover:to-[#4f46e5] transition-all">Book My Call Now</button>
+                    </div>
+                )}
+
+                {/* Submitting */}
+                {step === 'submitting' && (
+                    <div className="text-center py-8">
+                        <div className="w-12 h-12 rounded-full border-2 border-[#3b82f6]/20 border-t-[#3b82f6] animate-spin mx-auto mb-4" />
+                        <p className="text-white font-bold text-lg">Reserving your spot...</p>
+                    </div>
+                )}
+
+                {/* Success */}
+                {step === 'success' && (
+                    <div className="text-center py-8">
+                        <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-2">You&apos;re In!</h3>
+                        <p className="text-slate-400 text-sm">Loading the calendar...</p>
+                    </div>
+                )}
+
+                {/* Cal.com booking */}
+                {step === 'booking' && (
+                    <div>
+                        <h3 className="text-2xl font-bold text-white mb-2">Pick a Time That Works</h3>
+                        <p className="text-slate-400 text-sm mb-6">Select a date and time below to lock in your call.</p>
+                        <div id="cal-embed-brochure" className="w-full min-h-[450px] rounded-xl overflow-hidden flex items-center justify-center">
+                            {!calLoaded && (
+                                <div className="text-center">
+                                    <div className="w-10 h-10 rounded-full border-2 border-[#3b82f6]/20 border-t-[#3b82f6] animate-spin mx-auto mb-3" />
+                                    <p className="text-slate-400 text-sm">Loading calendar...</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* Booked — done */}
+                {step === 'booked' && (
+                    <div className="text-center py-8">
+                        <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-2">You&apos;re All Booked!</h3>
+                        <p className="text-slate-400 text-sm mb-2">Check your email for the calendar invite and Google Meet link.</p>
+                        <p className="text-slate-500 text-xs">You can close this tab now.</p>
+                    </div>
+                )}
+
+                {/* Progress dots */}
+                {['interest', 'industry', 'volume', 'crm', 'bottleneck'].includes(step) && (
+                    <div className="flex justify-center gap-2 mt-8">
+                        {(['interest', 'industry', 'volume', 'crm', 'bottleneck'] as const).map((s, i) => (
+                            <div key={s} className={`h-1.5 rounded-full transition-all duration-300 ${s === step ? 'w-8 bg-[#3b82f6]' : i < ['interest', 'industry', 'volume', 'crm', 'bottleneck'].indexOf(step) ? 'w-2 bg-[#3b82f6]/60' : 'w-2 bg-white/20'}`} />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
 export default function BrochurePage() {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
+    const [showIntake, setShowIntake] = useState(false);
     const [callVolume, setCallVolume] = useState(1200);
     const [conversionRate, setConversionRate] = useState(18);
     const [transactionSize, setTransactionSize] = useState(220);
@@ -213,7 +549,8 @@ export default function BrochurePage() {
                         <span className="text-xl font-bold text-white tracking-tight">RAGSITES</span>
                     </div>
                     <a
-                        href="#pricing"
+                        href="#"
+                        onClick={(e) => { e.preventDefault(); setShowIntake(true); }}
                         className="bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-all hover:shadow-lg hover:shadow-blue-500/25"
                     >
                         Get Started for $99
@@ -263,7 +600,8 @@ export default function BrochurePage() {
                             <h3 className="text-3xl font-extrabold text-white mb-4 tracking-tight">Book a Demo Call</h3>
                             <p className="text-slate-400 mb-6">See how our AI receptionist works for your business in a quick 15-minute call.</p>
                             <a
-                                href="#pricing"
+                                href="#"
+                                onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowIntake(true); }}
                                 className="block w-full bg-gradient-to-r from-[#3b82f6] to-[#6366f1] hover:from-[#2563eb] hover:to-[#4f46e5] text-white font-bold py-4 rounded-xl text-lg transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
                             >
                                 Get Started for $99
@@ -610,8 +948,9 @@ export default function BrochurePage() {
                         Plans starting at $99/mo. No contracts. Cancel anytime.
                     </p>
                     <a
-                        href="mailto:team@ragsites.com?subject=Get Started with Ragsites"
-                        className="inline-block bg-white hover:bg-slate-50 text-[#3b82f6] font-bold py-4 px-12 rounded-xl text-lg transition-all shadow-lg hover:shadow-xl"
+                        href="#"
+                        onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowIntake(true); }}
+                        className="inline-block bg-white hover:bg-slate-50 text-[#3b82f6] font-bold py-4 px-12 rounded-xl text-lg transition-all shadow-lg hover:shadow-xl cursor-pointer"
                     >
                         Get Started for $99
                     </a>
@@ -633,6 +972,8 @@ export default function BrochurePage() {
                     </p>
                 </div>
             </footer>
+
+            {showIntake && <IntakeModal onClose={() => setShowIntake(false)} />}
         </main>
     );
 }
