@@ -101,14 +101,10 @@ function useMetaPixel() {
 /* ─── Cal.com Inline Booking ─── */
 
 function CalInlineBooking({ name, email, phone }: { name?: string; email?: string; phone?: string }) {
-  const calReady = useRef(false);
   const [calLoaded, setCalLoaded] = useState(false);
 
   useEffect(() => {
-    if (calReady.current) return;
-    calReady.current = true;
-
-    // Load Cal.com embed script
+    // 1. Setup namespace and script
     (function (C: any, A: any, L: string) {
       const p = function () {
         if (!(C.Cal as any)?.loaded) {
@@ -128,52 +124,61 @@ function CalInlineBooking({ name, email, phone }: { name?: string; email?: strin
       p();
     })(window, document, 'script');
 
-    setTimeout(() => {
-      if (typeof window.Cal === 'function') {
-        window.Cal('init', { origin: 'https://app.cal.com' });
+    // 2. Queue the embed commands
+    if (typeof window.Cal === 'function') {
+      window.Cal('init', { origin: 'https://app.cal.com' });
 
-        window.Cal('inline', {
-          elementOrSelector: '#cal-embed-modal',
-          calLink: CAL_LINK,
-          layout: 'month_view',
-          config: {
-            theme: 'dark',
-            name: name || undefined,
-            email: email || undefined,
-            phoneNumber: phone ? `+1${phone.replace(/\D/g, '').replace(/^1/, '')}` : undefined,
-          },
-        });
-
-        // Listen for successful booking → fire Schedule + redirect
-        window.Cal('on', {
-          action: 'bookingSuccessful',
-          callback: () => {
-            trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
-            setTimeout(() => {
-              window.location.href = THANK_YOU_URL;
-            }, 1500);
-          },
-        });
-
-        window.Cal('on', {
-          action: '__iframeReady',
-          callback: () => setCalLoaded(true),
-        });
-
-        window.Cal('ui', {
+      window.Cal('inline', {
+        elementOrSelector: '#cal-embed-modal',
+        calLink: CAL_LINK,
+        layout: 'month_view',
+        config: {
           theme: 'dark',
-          styles: { branding: { brandColor: '#40c9ff' } },
-          hideEventTypeDetails: false,
-          layout: 'month_view',
+          name: name || undefined,
+          email: email || undefined,
+          phone: phone ? `+1${phone.replace(/\D/g, '').replace(/^1/, '')}` : undefined,
+        },
+      });
+
+      window.Cal('on', {
+        action: 'bookingSuccessful',
+        callback: () => {
+          trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
+          setTimeout(() => {
+            window.location.href = THANK_YOU_URL;
+          }, 1500);
+        },
+      });
+
+      window.Cal('on', {
+        action: '__iframeReady',
+        callback: () => setCalLoaded(true),
+      });
+
+      window.Cal('ui', {
+        theme: 'dark',
+        styles: { branding: { brandColor: '#40c9ff' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    }
+
+    // Cleanup to prevent duplicate iframes across strict mode remounts
+    return () => {
+      const el = document.getElementById('cal-embed-modal');
+      if (el) {
+        // Clear children safely except the loading spinner
+        Array.from(el.children).forEach(child => {
+          if (!child.classList.contains('text-center')) {
+            child.remove();
+          }
         });
       }
-    }, 100);
-  }, []);
+    };
+  }, [name, email, phone]);
 
   return (
-    <div
-      key="booking"
-    >
+    <div key="booking">
       <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
         Final Step
       </p>
