@@ -100,7 +100,7 @@ function useMetaPixel() {
 
 /* ─── Cal.com Inline Booking ─── */
 
-function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
+function CalInlineBooking({ name, email, phone }: { name?: string; email?: string; phone?: string }) {
   const [calLoaded, setCalLoaded] = useState(false);
 
   useEffect(() => {
@@ -136,6 +136,8 @@ function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
           theme: 'dark',
           name: name || undefined,
           email: email || undefined,
+          phones: phone ? [`+1${phone.replace(/\D/g, '').replace(/^1/, '')}`] : undefined,
+          smsReminderNumber: phone ? `+1${phone.replace(/\D/g, '').replace(/^1/, '')}` : undefined,
         },
       });
 
@@ -174,7 +176,7 @@ function CalInlineBooking({ name, email }: { name?: string; email?: string }) {
         });
       }
     };
-  }, [name, email]);
+  }, [name, email, phone]);
 
   return (
     <div key="booking">
@@ -655,7 +657,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
           {/* ─── Booking (Cal.com inline) ─── */}
           {step === 'booking' && (
-            <CalInlineBooking name={formData.name} email={formData.email} />
+            <CalInlineBooking name={formData.name} email={formData.email} phone={formData.phone} />
           )}
         </>
 
