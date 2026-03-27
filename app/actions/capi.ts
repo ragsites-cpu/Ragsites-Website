@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 
 const META_PIXEL_ID = '2192809887920275';
 const META_ACCESS_TOKEN = 'EAAP4qriDd3EBQw4lbFuU6HzdyvaSSQOGT9Xsu06dF8wKlm7QnzbRQV0tH7BgFt87z9VaZCAL0rDFGoKzq5fZCnKImai87Fy3S14VSsZBnDV13POmhmWvcxZCPaTsBHRWetXtAjcKgV7ktqq6e7eyEAERhzeNZCGt2pbtFzeKESpOkHoyO8yBxE1yZBpLZCq5AZDZD';
-const TEST_EVENT_CODE = 'TEST22248';
+const TEST_EVENT_CODE = 'TEST52771';
 
 function hashData(data: string | undefined): string | undefined {
     if (!data) return undefined;
@@ -45,6 +45,7 @@ export async function sendMetaCAPIEvent(
                     ...(eventId && { event_id: eventId }),
                 },
             ],
+            test_event_code: TEST_EVENT_CODE,
         };
 
         const url = `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`;
