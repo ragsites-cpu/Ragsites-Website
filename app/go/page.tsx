@@ -579,7 +579,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                       setMeetingCommit(e.target.checked);
                       if (error) setError('');
                     }}
-                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#991b1b] focus:ring-[#991b1b] bg-transparent"
+                    className="mt-1 w-4 h-4 rounded border-slate-400 text-[#991b1b] focus:ring-[#991b1b] bg-white"
                   />
                   <span className="text-sm text-slate-700">
                     Will you be able to commit and attend to this call at the time of this booking?
@@ -597,7 +597,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                       setSpamConsent(e.target.checked);
                       if (error) setError('');
                     }}
-                    className="mt-1 w-4 h-4 rounded border-slate-600 text-[#991b1b] focus:ring-[#991b1b] bg-transparent"
+                    className="mt-1 w-4 h-4 rounded border-slate-400 text-[#991b1b] focus:ring-[#991b1b] bg-white"
                   />
                   <span className="text-sm text-slate-700">
                     We hate spammers and will never spam you. Do you consent to us reaching out in a
@@ -719,7 +719,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
     <div className="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-6 py-5 text-left group"
+        className="w-full flex items-center justify-between px-6 py-5 text-left group cursor-pointer"
       >
         <span className="text-lg font-bold text-slate-900 group-hover:text-[#991b1b] transition-colors pr-4">
           {question}
@@ -876,7 +876,7 @@ export default function RoofingLanding() {
               'https://randomuser.me/api/portraits/men/22.jpg',
             ].map((src, i) => (
               <div key={i} className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] overflow-hidden">
-                <Image src={src} alt="" width={44} height={44} className="w-full h-full object-cover" />
+                <Image src={src} alt={`Roofer ${i + 1}`} width={44} height={44} className="w-full h-full object-cover" />
               </div>
             ))}
             <div className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] bg-slate-900 flex items-center justify-center">
