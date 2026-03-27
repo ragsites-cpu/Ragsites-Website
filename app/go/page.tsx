@@ -936,41 +936,6 @@ export default function RoofingLanding() {
         </div>
       </section>
 
-      {/* Value Props */}
-      <section className="py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
-              <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
-                <Shield className="w-7 h-7 text-[#991b1b]" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Exclusive Leads</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Every lead is yours alone. No shared leads, no bidding wars — just homeowners ready for a new roof sent directly to you.
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
-              <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
-                <Bot className="w-7 h-7 text-[#991b1b]" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">AI Pre-Qualification</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Our AI vets every lead before it hits your calendar. Homeowner status, project scope, and intent are verified automatically.
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
-              <div className="w-14 h-14 rounded-xl bg-[#F0F7FF] flex items-center justify-center mx-auto mb-5">
-                <BadgeCheck className="w-7 h-7 text-[#991b1b]" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">90-Day Guarantee</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Get 40 booked jobs in 90 days or you don&apos;t pay. We put our money where our mouth is.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FAQs */}
       <section className="py-20 px-4">
         <div className="max-w-3xl mx-auto">
@@ -1016,7 +981,7 @@ export default function RoofingLanding() {
       <footer className="py-10 px-4 border-t border-blue-100 bg-[#F0F7FF]">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <p className="text-sm text-slate-600">
-            Ragsites &copy; 2025 - All Rights Reserved
+            Ragsites &copy; 2026 - All Rights Reserved
           </p>
           <div className="flex items-center justify-center gap-4 text-sm">
             <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors">Privacy Policy</a>
