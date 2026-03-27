@@ -37,9 +37,13 @@ function trackEvent(eventName: string, params?: Record<string, string>) {
   }
 }
 
-function trackMetaGo(eventName: string, params?: Record<string, string>) {
+function trackMetaGo(eventName: string, params?: Record<string, string>, eventId?: string) {
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq('trackSingle', META_PIXEL_ID, eventName, params);
+    if (eventId) {
+      window.fbq('trackSingle', META_PIXEL_ID, eventName, params, { eventID: eventId });
+    } else {
+      window.fbq('trackSingle', META_PIXEL_ID, eventName, params);
+    }
   }
 }
 
@@ -790,9 +794,10 @@ export default function RoofingLanding() {
   }, []);
 
   const openQuiz = (source: string) => {
-    trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source });
+    const eventId = crypto.randomUUID();
+    trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source }, eventId);
     // Send CAPI Lead event concurrently
-    sendMetaCAPIEvent('Lead', {}, { content_name: 'Book Call CTA', content_category: source }).catch(console.error);
+    sendMetaCAPIEvent('Lead', {}, { content_name: 'Book Call CTA', content_category: source }, eventId).catch(console.error);
     setShowQuiz(true);
   };
 

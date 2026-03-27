@@ -15,7 +15,8 @@ function hashData(data: string | undefined): string | undefined {
 export async function sendMetaCAPIEvent(
     eventName: 'Lead' | 'Schedule',
     userData: { email?: string; phone?: string } = {},
-    customData: Record<string, any> = {}
+    customData: Record<string, any> = {},
+    eventId?: string
 ) {
     try {
         const headersList = await headers();
@@ -41,6 +42,7 @@ export async function sendMetaCAPIEvent(
                         ...(hashedPhone && { ph: [hashedPhone] }),
                     },
                     custom_data: customData,
+                    ...(eventId && { event_id: eventId }),
                 },
             ],
         };
