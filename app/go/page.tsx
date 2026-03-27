@@ -277,9 +277,9 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       errors.email = 'Please enter a valid email address.';
     }
 
-    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-    if (!phoneRegex.test(formData.phone)) {
-      errors.phone = 'Please enter a valid phone number.';
+    const digitsOnly = formData.phone.replace(/\D/g, '');
+    if (digitsOnly.length !== 10) {
+      errors.phone = 'Please enter a valid 10-digit phone number.';
     }
 
     if (Object.keys(errors).length > 0) {
