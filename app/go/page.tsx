@@ -859,6 +859,9 @@ export default function RoofingLanding() {
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               Limited spots available &mdash; only 5 new clients per month
             </p>
+            <p className="text-yellow-400 font-bold text-sm mt-1">
+              🎁 Book a call &amp; get a free live AI demo for your business
+            </p>
           </div>
         </div>
       </section>
@@ -992,9 +995,12 @@ export default function RoofingLanding() {
           <h2 className="text-3xl md:text-6xl font-black mb-6">
             Ready for 40 Booked Jobs <span className="text-gradient-skye">in 90 Days?</span>
           </h2>
-          <p className="text-xl text-slate-700 mb-10 max-w-xl mx-auto">
+          <p className="text-xl text-slate-700 mb-4 max-w-xl mx-auto">
             Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
             guaranteed.
+          </p>
+          <p className="text-[#991b1b] font-bold text-base mb-10">
+            🎁 Book a call &amp; get a free live AI demo customized for your business
           </p>
           <button
             onClick={() => openQuiz('bottom_cta')}
