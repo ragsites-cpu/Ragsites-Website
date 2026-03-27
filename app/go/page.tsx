@@ -907,10 +907,10 @@ export default function RoofingLanding() {
             {[
               { id: 'OhDg8ahNr01gbToDYtYvrurAPGVZKdGxChldKuqz5t5E', before: '"Doubled Weekly Booking Rates ', highlight: 'in 30 Days', after: '"' },
               { id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE', before: '"From \'Chuck in a Truck\' to ', highlight: '30+ Extra Sales Monthly', after: '"' },
+              { id: 'jsOjDYJRqSEfTDmcXY31mj68PIMjXXX1kQg1G02evppU', before: '"', highlight: 'Job Volume Doubled', after: '"' },
               { id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8', before: '"It\'s A ', highlight: 'Game Changer', after: '"' },
               { id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM', before: '"', highlight: 'I Got My Life Back', after: '"' },
               { id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o', before: '"Doubled Booking Rate to ', highlight: '44% in Just One Month', after: '"' },
-              { id: 'cc02iEl00DqKNsS8RgywwL90202rxFwQwC01vqUmKF01AQsJk', before: '"It\'s Not Just Leads, It\'s ', highlight: 'Actual Work', after: '"' },
               { id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js', before: '"I\'m ', highlight: 'Not on the Phone', after: ' Until 9 PM Anymore"' },
             ].map((video, index) => (
               <div key={index} className="flex flex-col">
