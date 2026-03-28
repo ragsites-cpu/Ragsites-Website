@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Outfit, Rubik } from 'next/font/google';
 import { ArrowRight, Phone, MessageSquare, Globe, Zap, Clock } from 'lucide-react';
 import Script from 'next/script';
@@ -30,6 +30,103 @@ const staggerContainer = {
     },
   },
 };
+
+/* ─── Bento Testimonials ─── */
+
+const BENTO_TESTIMONIALS = [
+  {
+    id: 'OhDg8ahNr01gbToDYtYvrurAPGVZKdGxChldKuqz5t5E',
+    quote: "I'll admit I was a skeptic, but these guys delivered. Their funnel and ad spend management is so effective that we doubled our weekly jobs after just 30 days of working together.",
+    name: 'Mitch Park, Ironwood Roofing',
+    stat: '2x',
+    statLabel: 'Booking Rate',
+  },
+  {
+    id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE',
+    quote: "Before Ragsites, we looked like a 'chuck in a truck.' Now, their AI handles every lead instantly with a professional callback. We're landing 30 more roof replacements every single month.",
+    name: 'Bill Burrows, Safe Haven Roofing',
+    stat: '30+',
+    statLabel: 'Extra Sales/Mo',
+  },
+  {
+    id: 'jsOjDYJRqSEfTDmcXY31mj68PIMjXXX1kQg1G02evppU',
+    quote: 'Their AI qualifier sounds like a real person and understands the psychology of the sale. Our job volume more than doubled in five weeks because the system vets and calls leads immediately.',
+    name: 'Vernon Lamb, Blackwood Roofing',
+    stat: '2x',
+    statLabel: 'Job Volume',
+  },
+  {
+    id: 'eEuKPe3XUUicrWrV8Oj259ca7xyTgyNlOeDOIfX01R02o',
+    quote: 'I was stuck on ladders missing leads. This system handled 120 calls this month and booked 50 jobs I definitely would have lost. My booking rate literally doubled from 22% to 44%.',
+    name: 'David Hartmann, Peak Roofing',
+    stat: '44%',
+    statLabel: 'Booking Rate',
+  },
+];
+
+const CARD_COLORS = [
+  'from-[#0a1e3d] to-[#122d5a] border-blue-400/40',
+  'from-[#0c2244] to-[#153366] border-blue-400/50',
+  'from-[#0e264b] to-[#183a72] border-blue-300/50',
+  'from-[#102a52] to-[#1b417e] border-blue-300/60',
+  'from-[#122e5a] to-[#1e488a] border-blue-300/60',
+  'from-[#143262] to-[#214f96] border-blue-200/60',
+];
+
+function BentoCard({ testimonial, index, total }: { testimonial: typeof BENTO_TESTIMONIALS[0]; index: number; total: number }) {
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { once: true, amount: 0.2 });
+
+  return (
+    <div className="sticky w-full" style={{ top: `calc(15vh + ${index * 40}px)`, zIndex: index + 1, marginBottom: index === total - 1 ? '10vh' : '50vh' }}>
+      <motion.div
+        ref={cardRef}
+        initial={{ opacity: 0, y: 150 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 150 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className={`group relative overflow-hidden rounded-3xl border bg-gradient-to-br ${CARD_COLORS[index % CARD_COLORS.length]} shadow-[0_-20px_50px_rgba(0,0,0,0.5)]`}
+      >
+        <div className="flex flex-col md:flex-row h-full min-h-[500px]">
+          {/* Text side */}
+          <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-between">
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-8">
+                <span className="text-6xl md:text-7xl font-black tracking-tight" style={{ color: '#40c9ff', fontFamily: 'Impact, "Arial Black", sans-serif' }}>
+                  {testimonial.stat}
+                </span>
+                <span className="text-sm uppercase tracking-[0.2em] text-cyan-400 font-bold">
+                  {testimonial.statLabel}
+                </span>
+              </div>
+              <p className="text-2xl md:text-3xl font-bold text-white leading-tight mb-8" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+                &ldquo;{testimonial.quote}&rdquo;
+              </p>
+            </div>
+            <div className="mt-auto pt-6 border-t border-white/20">
+              <p className="text-base text-blue-200 font-semibold tracking-wide">
+                {testimonial.name}
+              </p>
+            </div>
+          </div>
+          {/* Video side */}
+          <div className="md:w-1/2 bg-black/50 relative">
+            <div className="absolute inset-0 w-full h-full p-2 md:p-6">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl relative border border-white/10 bg-black">
+                <iframe
+                  src={`https://player.mux.com/${testimonial.id}`}
+                  style={{ width: '100%', height: '100%', border: 'none', position: 'absolute', inset: 0 }}
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  title={testimonial.quote}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 export default function Home() {
   const visitIdRef = useRef('');
@@ -246,23 +343,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials (Senja) */}
+      {/* Case Studies CTA */}
       <section className="py-24 px-4 bg-black">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-white text-center" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
-            Our <span className="text-gradient-skye">Success Stories</span>
-          </h2>
-          <Script
-            src="https://widget.senja.io/widget/630388b8-5925-43a5-8d32-217aee54ab75/platform.js"
-            strategy="afterInteractive"
-          />
-          <div
-            className="senja-embed"
-            data-id="630388b8-5925-43a5-8d32-217aee54ab75"
-            data-mode="shadow"
-            data-lazyload="false"
-            style={{ display: 'block', width: '100%' }}
-          />
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+          <div>
+            <p className="text-sm font-semibold tracking-wide uppercase mb-4" style={{ color: '#40c9ff' }}>
+              Proven Impact, Real Conversations
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+              Proven Impact,<br />Real Conversations
+            </h2>
+          </div>
+          <div className="flex flex-col items-start gap-4">
+            <a
+              href="/customers"
+              className="inline-block px-8 py-3 rounded-full bg-white text-black font-semibold text-sm hover:bg-slate-100 transition-colors"
+            >
+              See Our Success Stories
+            </a>
+            <p className="text-slate-400 text-base leading-relaxed max-w-md">
+              Discover how roofing contractors use Ragsites&apos; lead generation and qualification system to fill their calendars, pre-qualify leads, and close more deals effortlessly.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Bento Testimonials */}
+      <section className="relative px-4 bg-black pt-12 pb-32">
+        <div className="max-w-7xl mx-auto">
+          <div className="py-12 md:py-24">
+            {BENTO_TESTIMONIALS.map((t, i) => (
+              <BentoCard key={t.id} testimonial={t} index={i} total={BENTO_TESTIMONIALS.length} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -336,7 +449,7 @@ export default function Home() {
                 <li><a href="/features" className="text-sm text-slate-400 hover:text-white transition-colors">Features</a></li>
                 <li><a href="/how-it-works" className="text-sm text-slate-400 hover:text-white transition-colors">How It Works</a></li>
                 <li><a href="/workflows" className="text-sm text-slate-400 hover:text-white transition-colors">Workflows</a></li>
-                <li><a href="/pricing" className="text-sm text-slate-400 hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="/customers" className="text-sm text-slate-400 hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
 
