@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { Network, ArrowRight, ArrowDownRight, UserX, UserCheck, CalendarX, Zap, CheckCircle2, Bell, BrainCircuit, MessageSquareText, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Outfit, Rubik } from 'next/font/google';
+
+const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-outfit' });
+const rubik = Rubik({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-rubik' });
 
 const workflows = [
     {
@@ -140,7 +144,7 @@ const fadeUp = {
 
 export default function WorkflowsPage() {
     return (
-        <main className="min-h-screen bg-black text-white">
+        <main className={`min-h-screen bg-black text-white ${outfit.variable} ${rubik.variable}`} style={{ fontFamily: 'var(--font-rubik), sans-serif' }}>
             <Navbar />
 
             <section className="pt-40 pb-20 px-4 relative overflow-hidden">

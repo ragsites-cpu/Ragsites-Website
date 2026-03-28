@@ -1,6 +1,6 @@
 'use client';
 
-import { Inter } from 'next/font/google';
+import { Inter, Outfit, Rubik } from 'next/font/google';
 import {
     Phone,
     PhoneOutgoing,
@@ -30,6 +30,8 @@ import Image from 'next/image';
 import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
+const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-outfit' });
+const rubik = Rubik({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-rubik' });
 
 const FEATURES = [
     {
@@ -540,7 +542,7 @@ export default function BrochurePage() {
     const annualProfit = Math.round(monthlyRecovered * transactionSize * 12);
 
     return (
-        <main className={`min-h-screen bg-white text-slate-900 ${inter.className}`} data-brochure="">
+        <main className={`min-h-screen bg-white text-slate-900 ${inter.className} ${outfit.variable} ${rubik.variable}`} style={{ fontFamily: 'var(--font-rubik), sans-serif' }} data-brochure="">
             <style>{`[data-brochure], [data-brochure] * { font-family: ${inter.style.fontFamily}, system-ui, sans-serif !important; }`}</style>
             {/* Nav */}
             <nav className="bg-[#0c1929] sticky top-0 z-50 border-b border-white/5">
