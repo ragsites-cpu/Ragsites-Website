@@ -27,6 +27,7 @@ import {
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -957,21 +958,7 @@ export default function BrochurePage() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="py-10 px-4 bg-[#0c1929] text-center">
-                <div className="max-w-4xl mx-auto space-y-4">
-                    <div className="flex items-center justify-center gap-2 mb-4">
-                        <Image src="/new-logo.png" alt="Ragsites" width={28} height={28} />
-                        <span className="text-lg font-bold text-white tracking-tight">RAGSITES</span>
-                    </div>
-                    <p className="text-sm text-slate-500">
-                        Ragsites &copy; 2026 &mdash; All Rights Reserved
-                    </p>
-                    <p className="text-xs text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
-                    </p>
-                </div>
-            </footer>
+            <Footer />
 
             {showIntake && <IntakeModal onClose={() => setShowIntake(false)} />}
         </main>

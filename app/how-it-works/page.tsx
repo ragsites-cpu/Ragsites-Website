@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { Settings, Wrench, Rocket, TrendingUp, Cpu, BrainCircuit } from 'lucide-react';
-import Image from 'next/image';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const timelineSteps = [
     {
@@ -154,19 +154,7 @@ export default function HowItWorksPage() {
                 </div>
             </section>
 
-            <footer className="py-12 px-4 border-t border-white/10 bg-black">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="flex items-center gap-2">
-                            <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
-                            <span className="font-bold text-white">RAGSITES</span>
-                        </div>
-                        <p className="text-sm text-slate-500">
-                            Built by Ragsites. &copy; 2026
-                        </p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </main>
     );
 }

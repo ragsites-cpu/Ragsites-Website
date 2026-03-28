@@ -4,6 +4,7 @@ import { ArrowLeft, Phone } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import AudioCard from '@/components/AudioCard';
+import Footer from '@/components/Footer';
 
 export default function ServicesPage() {
   return (
@@ -94,20 +95,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-white/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <Image src="/logo.png" alt="Ragsites" width={24} height={24} />
-              <span className="font-bold gradient-text">RAGSITES</span>
-            </div>
-            <p className="text-sm text-gray-500">
-              Built by Ragsites. © 2025
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

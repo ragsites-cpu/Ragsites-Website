@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function CustomersPage() {
   return (
@@ -16,25 +17,29 @@ export default function CustomersPage() {
           <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-4" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
             Customers
           </h1>
+          <div className="flex items-center justify-center -space-x-3 mb-4">
+            {[
+              'https://randomuser.me/api/portraits/men/32.jpg',
+              'https://randomuser.me/api/portraits/men/52.jpg',
+              'https://randomuser.me/api/portraits/men/46.jpg',
+              'https://randomuser.me/api/portraits/men/67.jpg',
+              'https://randomuser.me/api/portraits/men/22.jpg',
+            ].map((src, i) => (
+              <div key={i} className="w-11 h-11 rounded-full border-[3px] border-black overflow-hidden">
+                <Image src={src} alt={`Customer ${i + 1}`} width={44} height={44} className="w-full h-full object-cover" />
+              </div>
+            ))}
+            <div className="w-11 h-11 rounded-full border-[3px] border-black bg-white/10 flex items-center justify-center">
+              <span className="text-xs font-bold text-white">+100</span>
+            </div>
+          </div>
           <p className="text-slate-400 text-center text-lg max-w-2xl mx-auto mb-16">
-            Discover how roofing contractors use Ragsites&apos; lead generation and qualification system to fill their calendars, pre-qualify leads, and close more deals.
+            Trusted by 100+ roofing contractors across the US and Canada.
           </p>
         </div>
       </div>
 
-      <footer className="py-12 px-4 border-t border-white/10 bg-black">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <Image src="/new-logo.png" alt="Ragsites" width={24} height={24} />
-              <span className="font-bold text-white">RAGSITES</span>
-            </div>
-            <p className="text-sm text-slate-500">
-              Built by Ragsites. &copy; 2026
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
