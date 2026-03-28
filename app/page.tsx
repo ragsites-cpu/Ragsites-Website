@@ -86,7 +86,7 @@ function BentoCard({ testimonial, index, total }: { testimonial: typeof BENTO_TE
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className={`group relative overflow-hidden rounded-3xl border bg-gradient-to-br ${CARD_COLORS[index % CARD_COLORS.length]} shadow-[0_-20px_50px_rgba(0,0,0,0.5)]`}
       >
-        <div className="flex flex-col md:flex-row h-full min-h-[500px]">
+        <div className="flex flex-col md:flex-row h-full">
           {/* Text side */}
           <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-between">
             <div>
@@ -109,17 +109,15 @@ function BentoCard({ testimonial, index, total }: { testimonial: typeof BENTO_TE
             </div>
           </div>
           {/* Video side */}
-          <div className="md:w-1/2 bg-black/50 relative">
-            <div className="absolute inset-0 w-full h-full p-2 md:p-6">
-              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl relative border border-white/10 bg-black">
-                <iframe
-                  src={`https://player.mux.com/${testimonial.id}`}
-                  style={{ width: '100%', height: '100%', border: 'none', position: 'absolute', inset: 0 }}
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  title={testimonial.quote}
-                />
-              </div>
+          <div className="md:w-1/2 bg-black/50 p-2 md:p-6">
+            <div className="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black aspect-video">
+              <iframe
+                src={`https://player.mux.com/${testimonial.id}`}
+                style={{ width: '100%', height: '100%', border: 'none' }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                title={testimonial.quote}
+              />
             </div>
           </div>
         </div>
