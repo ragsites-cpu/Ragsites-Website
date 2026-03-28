@@ -366,14 +366,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bento Testimonials */}
-      <section className="relative px-4 bg-black pt-12 pb-32">
+      {/* Bento Testimonials — Desktop: sticky stack, Mobile: horizontal swipe */}
+
+      {/* Desktop */}
+      <section className="relative px-4 bg-black pt-12 pb-32 hidden md:block">
         <div className="max-w-7xl mx-auto">
-          <div className="py-12 md:py-24">
+          <div className="py-24">
             {BENTO_TESTIMONIALS.map((t, i) => (
               <BentoCard key={t.id} testimonial={t} index={i} total={BENTO_TESTIMONIALS.length} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Mobile */}
+      <section className="bg-black pt-8 pb-16 md:hidden">
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-4 pb-4 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
+          {BENTO_TESTIMONIALS.map((t, i) => (
+            <div key={t.id} className="snap-center flex-shrink-0 w-[85vw]">
+              <div className={`rounded-3xl border bg-gradient-to-br ${CARD_COLORS[i % CARD_COLORS.length]} shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden`}>
+                <div className="p-6">
+                  <div className="flex items-baseline gap-3 mb-4">
+                    <span className="text-5xl font-black tracking-tight" style={{ color: '#40c9ff', fontFamily: 'Impact, "Arial Black", sans-serif' }}>
+                      {t.stat}
+                    </span>
+                    <span className="text-xs uppercase tracking-[0.2em] text-cyan-400 font-bold">
+                      {t.statLabel}
+                    </span>
+                  </div>
+                  <p className="text-lg font-bold text-white leading-tight mb-4" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <p className="text-sm text-blue-200 font-semibold pb-4 border-b border-white/20 mb-4">
+                    {t.name}
+                  </p>
+                </div>
+                <div className="px-2 pb-2">
+                  <div className="rounded-2xl overflow-hidden border border-white/10 bg-black aspect-video">
+                    <iframe
+                      src={`https://player.mux.com/${t.id}`}
+                      style={{ width: '100%', height: '100%', border: 'none' }}
+                      allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
+                      title={t.quote}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Scroll indicator dots */}
+        <div className="flex justify-center gap-2 mt-4">
+          {BENTO_TESTIMONIALS.map((_, i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-white/20" />
+          ))}
         </div>
       </section>
 
