@@ -487,23 +487,19 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Product column */}
+            {/* Product columns */}
             <div className="lg:col-span-2">
               <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Product</h4>
               <ul className="space-y-3">
                 <li><a href="/features" className="text-sm text-slate-400 hover:text-white transition-colors">Features</a></li>
                 <li><a href="/how-it-works" className="text-sm text-slate-400 hover:text-white transition-colors">How It Works</a></li>
-                <li><a href="/workflows" className="text-sm text-slate-400 hover:text-white transition-colors">Workflows</a></li>
-                <li><a href="/customers" className="text-sm text-slate-400 hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
-
-            {/* Services column */}
             <div className="lg:col-span-2">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Services</h4>
+              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">&nbsp;</h4>
               <ul className="space-y-3">
-                <li><a href="/quiz" className="text-sm text-slate-400 hover:text-white transition-colors">Find Your Fit</a></li>
-                <li><a href="/brochure" className="text-sm text-slate-400 hover:text-white transition-colors">Brochure</a></li>
+                <li><a href="/workflows" className="text-sm text-slate-400 hover:text-white transition-colors">Workflows</a></li>
+                <li><a href="/customers" className="text-sm text-slate-400 hover:text-white transition-colors">Customers</a></li>
               </ul>
             </div>
 
