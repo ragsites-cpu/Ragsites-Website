@@ -488,19 +488,18 @@ export default function Home() {
             </div>
 
             {/* Product columns */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-4">
               <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Product</h4>
-              <ul className="space-y-3">
-                <li><a href="/features" className="text-sm text-slate-400 hover:text-white transition-colors">Features</a></li>
-                <li><a href="/how-it-works" className="text-sm text-slate-400 hover:text-white transition-colors">How It Works</a></li>
-              </ul>
-            </div>
-            <div className="lg:col-span-2">
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">&nbsp;</h4>
-              <ul className="space-y-3">
-                <li><a href="/workflows" className="text-sm text-slate-400 hover:text-white transition-colors">Workflows</a></li>
-                <li><a href="/customers" className="text-sm text-slate-400 hover:text-white transition-colors">Customers</a></li>
-              </ul>
+              <div className="grid grid-cols-2 gap-x-8">
+                <ul className="space-y-3">
+                  <li><a href="/features" className="text-sm text-slate-400 hover:text-white transition-colors">Features</a></li>
+                  <li><a href="/how-it-works" className="text-sm text-slate-400 hover:text-white transition-colors">How It Works</a></li>
+                </ul>
+                <ul className="space-y-3">
+                  <li><a href="/workflows" className="text-sm text-slate-400 hover:text-white transition-colors">Workflows</a></li>
+                  <li><a href="/customers" className="text-sm text-slate-400 hover:text-white transition-colors">Customers</a></li>
+                </ul>
+              </div>
             </div>
 
             {/* CTA column */}
