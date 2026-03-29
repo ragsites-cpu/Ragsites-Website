@@ -20,6 +20,20 @@ const TESTIMONIALS = [
     statLabel: 'Booking Rate',
   },
   {
+    id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8',
+    quote: "I've tried every lead service out there, but RagSites is a total game-changer. Their AI calls every lead within a minute and books them straight onto my calendar. My booked appointments jumped from 28% to 47% — those are the real numbers. I'm finally done chasing cold leads!",
+    name: 'Jake Garner, Sole Operator',
+    stat: '47%',
+    statLabel: 'Booking Rate',
+  },
+  {
+    id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM',
+    quote: "I used to spend my evenings returning calls and trying to book estimates, it was killing my family time. Since we plugged in the RagSites AI lead qualifier, it's like I got my life back. The system has already handled over 100 leads for us and has booked them more efficiently than I ever could! If you want to stop being a slave to your phone and start enjoying your business again, you need this system.",
+    name: 'Kevin Allen, Point Roofing',
+    stat: '100+',
+    statLabel: 'Leads Handled',
+  },
+  {
     id: '21FnKkcSO35SRsOPw3CvxBmBL3HfSh6hPvxfPUIt1pE',
     quote: "Before Ragsites, we looked like a 'chuck in a truck.' Now, their AI handles every lead instantly with a professional callback. We're landing 30 more roof replacements every single month.",
     name: 'Bill Burrows, Safe Haven Roofing',
@@ -39,20 +53,6 @@ const TESTIMONIALS = [
     name: 'David Hartmann, Peak Roofing',
     stat: '44%',
     statLabel: 'Booking Rate',
-  },
-  {
-    id: 'vHFqs02Mc6rOksLZ02nmKPgdl7WEwKZO00YiE01Vbk0001Vf8',
-    quote: "I've tried every lead service out there, but RagSites is a total game-changer. Their AI calls every lead within a minute and books them straight onto my calendar. My booked appointments jumped from 28% to 47% — those are the real numbers. I'm finally done chasing cold leads!",
-    name: 'Jake Garner, Sole Operator',
-    stat: '47%',
-    statLabel: 'Booking Rate',
-  },
-  {
-    id: '11mLPLDOWTi02LW2PsM00TEENCkkTFf7H1QDqwPUye9DM',
-    quote: "I used to spend my evenings returning calls and trying to book estimates, it was killing my family time. Since we plugged in the RagSites AI lead qualifier, it's like I got my life back. The system has already handled over 100 leads for us and has booked them more efficiently than I ever could! If you want to stop being a slave to your phone and start enjoying your business again, you need this system.",
-    name: 'Kevin Allen, Point Roofing',
-    stat: '100+',
-    statLabel: 'Leads Handled',
   },
   {
     id: 'cMqAuUp2KtjGB6iGF9RFR62JkRRLWBVplKAr01p8L2Js',
