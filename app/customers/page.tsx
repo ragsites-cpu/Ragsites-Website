@@ -182,8 +182,8 @@ export default function CustomersPage() {
         <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-4 pb-4 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
           {TESTIMONIALS.map((t, i) => (
             <div key={t.id} className="snap-center flex-shrink-0 w-[85vw]">
-              <div className={`rounded-3xl border bg-gradient-to-br ${CARD_COLORS[i % CARD_COLORS.length]} shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden`}>
-                <div className="p-6">
+              <div className={`rounded-3xl border bg-gradient-to-br ${CARD_COLORS[i % CARD_COLORS.length]} shadow-[0_-20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col`} style={{ minHeight: '520px' }}>
+                <div className="p-6 flex-1 flex flex-col">
                   <div className="flex items-baseline gap-3 mb-4">
                     <span className="text-5xl font-black tracking-tight" style={{ color: '#40c9ff', fontFamily: 'Impact, "Arial Black", sans-serif' }}>
                       {t.stat}
@@ -192,10 +192,10 @@ export default function CustomersPage() {
                       {t.statLabel}
                     </span>
                   </div>
-                  <p className="text-lg font-bold text-white leading-tight mb-4" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+                  <p className="text-sm font-bold text-white leading-tight mb-4" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
                     &ldquo;{t.quote}&rdquo;
                   </p>
-                  <p className="text-sm text-blue-200 font-semibold pb-4 border-b border-white/20 mb-4">
+                  <p className="text-sm text-blue-200 font-semibold pb-4 border-b border-white/20 mb-4 mt-auto">
                     {t.name}
                   </p>
                 </div>
