@@ -417,12 +417,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-        {/* Scroll indicator dots */}
-        <div className="flex justify-center gap-2 mt-4">
-          {BENTO_TESTIMONIALS.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full bg-white/20" />
-          ))}
-        </div>
       </section>
 
       {/* Metrics Section */}
