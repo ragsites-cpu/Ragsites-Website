@@ -153,10 +153,10 @@ export default function CustomersPage() {
               <span className="text-xs font-bold text-white">+100</span>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-1 mb-2">
+          <div className="flex items-center justify-center gap-0 mb-2">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="w-7 h-7 flex items-center justify-center" style={{ backgroundColor: '#00b67a' }}>
-                <Star className="w-4 h-4 fill-white text-white" />
+              <div key={i} className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#00b67a' }}>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M12 1.5l3.09 6.26L22 8.94l-5 4.87 1.18 6.88L12 17.77l-6.18 2.92L7 13.81 2 8.94l6.91-1.18z"/></svg>
               </div>
             ))}
           </div>
