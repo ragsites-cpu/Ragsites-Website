@@ -9,7 +9,7 @@ const PIXEL_CONFIGS = {
     go: {
         pixelId: '2192809887920275',
         accessToken: 'EAAP4qriDd3EBRBfRDGC6GIPWvT67e3wrvJZC15fIkdqrSfUKUO40OAqpEnUb4h4nIZArngKyKE1OzyED3xfGcWCqt7lW8LQdcYGDzjZBY7tWEdZBYrZBEZA5FJ9jrSOkZCXjA3l7OrQPzzkSAtDu70eqY3xSZBzZAlvGsOFv56QSO98e8ZCeMwgd9CGZCf16ScRDAZDZD',
-        testEventCode: 'TEST52771',
+        testEventCode: 'TEST20798',
     },
     go2: {
         pixelId: '827605470377523',

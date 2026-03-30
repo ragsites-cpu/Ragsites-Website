@@ -102,6 +102,7 @@ function useMetaPixel() {
 
 function CalInlineBooking({ name, email, phone }: { name?: string; email?: string; phone?: string }) {
   const [calLoaded, setCalLoaded] = useState(false);
+  const scheduleFired = useRef(false);
 
   useEffect(() => {
     // 1. Setup namespace and script
@@ -143,6 +144,8 @@ function CalInlineBooking({ name, email, phone }: { name?: string; email?: strin
       window.Cal('on', {
         action: 'bookingSuccessful',
         callback: () => {
+          if (scheduleFired.current) return;
+          scheduleFired.current = true;
           trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
           setTimeout(() => {
             window.location.href = THANK_YOU_URL;
