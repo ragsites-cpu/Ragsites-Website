@@ -898,8 +898,8 @@ export default function RoofingLanding() {
           </div>
           <div className="flex items-center justify-center gap-1 mb-1">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="w-8 h-8 flex items-center justify-center" style={{ backgroundColor: '#00b67a' }}>
-                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.4l-6.18 3.62L7 12.14 2 7.27l6.91-1.01L12 0z" fill="white"/><line x1="16.5" y1="12.2" x2="8.5" y2="17.2" stroke="#009E68" stroke-width="0.9"/></svg>
+              <div key={i} className="w-6 h-6 flex items-center justify-center" style={{ backgroundColor: '#00b67a' }}>
+                <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.4l-6.18 3.62L7 12.14 2 7.27l6.91-1.01L12 0z" fill="white"/><line x1="16.5" y1="12.2" x2="8.5" y2="17.2" stroke="#009E68" stroke-width="0.9"/></svg>
               </div>
             ))}
           </div>
