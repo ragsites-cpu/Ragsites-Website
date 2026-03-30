@@ -319,7 +319,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
     body.append('roofs_per_month', roofsPerMonth);
     body.append('licensing_status', licensingStatus);
     body.append('timeline', timeline);
-    body.append('campaign', '30 Booked Jobs in 30 Days');
+    body.append('campaign', '30 Full Roof Replacement Jobs in 30 Days');
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -847,7 +847,8 @@ export default function RoofingLanding() {
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
-              <span>30 BOOKED JOBS</span>
+              <span>30 FULL ROOF</span>
+              <span>REPLACEMENT JOBS</span>
               <span>IN 30 DAYS</span>
               <span>OR</span>
             </div>
@@ -973,7 +974,7 @@ export default function RoofingLanding() {
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-6xl font-black mb-6">
-            Ready for 30 Booked Jobs <span className="text-gradient-skye">in 30 Days?</span>
+            Ready for 30 Full Roof Replacement Jobs <span className="text-gradient-skye">in 30 Days?</span>
           </h2>
           <p className="text-xl text-slate-700 mb-4 max-w-xl mx-auto">
             Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
