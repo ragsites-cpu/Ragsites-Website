@@ -29,7 +29,7 @@ const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
-const META_PIXEL_ID = '2192809887920275';
+const META_PIXEL_ID = '827605470377523';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -802,7 +802,7 @@ export default function RoofingLanding() {
     const eventId = crypto.randomUUID();
     trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source }, eventId);
     // Send CAPI Lead event concurrently
-    sendMetaCAPIEvent('Lead', {}, { content_name: 'Book Call CTA', content_category: source }, eventId).catch(console.error);
+    sendMetaCAPIEvent('go2', 'Lead', {}, { content_name: 'Book Call CTA', content_category: source }, eventId).catch(console.error);
     setShowQuiz(true);
   };
 

@@ -802,7 +802,7 @@ export default function RoofingLanding() {
     const eventId = crypto.randomUUID();
     trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source }, eventId);
     // Send CAPI Lead event concurrently
-    sendMetaCAPIEvent('Lead', {}, { content_name: 'Book Call CTA', content_category: source }, eventId).catch(console.error);
+    sendMetaCAPIEvent('go', 'Lead', {}, { content_name: 'Book Call CTA', content_category: source }, eventId).catch(console.error);
     setShowQuiz(true);
   };
 

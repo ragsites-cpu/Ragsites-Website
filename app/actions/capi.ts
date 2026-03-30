@@ -3,9 +3,22 @@
 import crypto from 'crypto';
 import { headers } from 'next/headers';
 
-const META_PIXEL_ID = '2192809887920275';
-const META_ACCESS_TOKEN = 'EAAP4qriDd3EBQw4lbFuU6HzdyvaSSQOGT9Xsu06dF8wKlm7QnzbRQV0tH7BgFt87z9VaZCAL0rDFGoKzq5fZCnKImai87Fy3S14VSsZBnDV13POmhmWvcxZCPaTsBHRWetXtAjcKgV7ktqq6e7eyEAERhzeNZCGt2pbtFzeKESpOkHoyO8yBxE1yZBpLZCq5AZDZD';
-const TEST_EVENT_CODE = 'TEST52771';
+/* ─── Pixel Configs (one per A/B landing page) ─── */
+
+const PIXEL_CONFIGS = {
+    go: {
+        pixelId: '2192809887920275',
+        accessToken: 'EAAP4qriDd3EBRBfRDGC6GIPWvT67e3wrvJZC15fIkdqrSfUKUO40OAqpEnUb4h4nIZArngKyKE1OzyED3xfGcWCqt7lW8LQdcYGDzjZBY7tWEdZBYrZBEZA5FJ9jrSOkZCXjA3l7OrQPzzkSAtDu70eqY3xSZBzZAlvGsOFv56QSO98e8ZCeMwgd9CGZCf16ScRDAZDZD',
+        testEventCode: 'TEST52771',
+    },
+    go2: {
+        pixelId: '827605470377523',
+        accessToken: 'EAAP4qriDd3EBRBfRDGC6GIPWvT67e3wrvJZC15fIkdqrSfUKUO40OAqpEnUb4h4nIZArngKyKE1OzyED3xfGcWCqt7lW8LQdcYGDzjZBY7tWEdZBYrZBEZA5FJ9jrSOkZCXjA3l7OrQPzzkSAtDu70eqY3xSZBzZAlvGsOFv56QSO98e8ZCeMwgd9CGZCf16ScRDAZDZD',
+        testEventCode: 'TEST64287',
+    },
+} as const;
+
+type PageKey = keyof typeof PIXEL_CONFIGS;
 
 function hashData(data: string | undefined): string | undefined {
     if (!data) return undefined;
@@ -13,11 +26,14 @@ function hashData(data: string | undefined): string | undefined {
 }
 
 export async function sendMetaCAPIEvent(
+    page: PageKey,
     eventName: 'Lead' | 'Schedule',
     userData: { email?: string; phone?: string } = {},
     customData: Record<string, any> = {},
     eventId?: string
 ) {
+    const config = PIXEL_CONFIGS[page];
+
     try {
         const headersList = await headers();
         const sourceIp = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || '';
@@ -45,10 +61,10 @@ export async function sendMetaCAPIEvent(
                     ...(eventId && { event_id: eventId }),
                 },
             ],
-            test_event_code: TEST_EVENT_CODE,
+            test_event_code: config.testEventCode,
         };
 
-        const url = `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`;
+        const url = `https://graph.facebook.com/v19.0/${config.pixelId}/events?access_token=${config.accessToken}`;
 
         const response = await fetch(url, {
             method: 'POST',
@@ -59,10 +75,10 @@ export async function sendMetaCAPIEvent(
         });
 
         const result = await response.json();
-        console.log(`[Meta CAPI] Event: ${eventName} | Status: ${response.status}`, result);
+        console.log(`[Meta CAPI][${page}] Event: ${eventName} | Pixel: ${config.pixelId} | Status: ${response.status}`, result);
         return result;
     } catch (error) {
-        console.error('[Meta CAPI] Error:', error);
+        console.error(`[Meta CAPI][${page}] Error:`, error);
         return { error: 'Failed' };
     }
 }
