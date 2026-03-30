@@ -9,12 +9,10 @@ const PIXEL_CONFIGS = {
     go: {
         pixelId: '2192809887920275',
         accessToken: 'EAAP4qriDd3EBRBfRDGC6GIPWvT67e3wrvJZC15fIkdqrSfUKUO40OAqpEnUb4h4nIZArngKyKE1OzyED3xfGcWCqt7lW8LQdcYGDzjZBY7tWEdZBYrZBEZA5FJ9jrSOkZCXjA3l7OrQPzzkSAtDu70eqY3xSZBzZAlvGsOFv56QSO98e8ZCeMwgd9CGZCf16ScRDAZDZD',
-        testEventCode: 'TEST20798',
     },
     go2: {
         pixelId: '827605470377523',
         accessToken: 'EAAP4qriDd3EBRBfRDGC6GIPWvT67e3wrvJZC15fIkdqrSfUKUO40OAqpEnUb4h4nIZArngKyKE1OzyED3xfGcWCqt7lW8LQdcYGDzjZBY7tWEdZBYrZBEZA5FJ9jrSOkZCXjA3l7OrQPzzkSAtDu70eqY3xSZBzZAlvGsOFv56QSO98e8ZCeMwgd9CGZCf16ScRDAZDZD',
-        testEventCode: 'TEST64287',
     },
 } as const;
 
@@ -61,7 +59,6 @@ export async function sendMetaCAPIEvent(
                     ...(eventId && { event_id: eventId }),
                 },
             ],
-            test_event_code: config.testEventCode,
         };
 
         const url = `https://graph.facebook.com/v19.0/${config.pixelId}/events?access_token=${config.accessToken}`;
