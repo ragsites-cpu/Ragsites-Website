@@ -7,10 +7,7 @@ import {
   ArrowRight,
   Loader2,
   X,
-  User,
   Mail,
-  Globe,
-  MapPin,
   Zap,
   CheckCircle,
   Shield,
@@ -208,68 +205,47 @@ function CalInlineBooking({ name, email, phone }: { name?: string; email?: strin
 
 /* ─── Questionnaire Modal ─── */
 
-const BUSINESS_SIZES = [
-  'Less than $200k',
-  '$200k - $400k',
-  '$400k - $1M',
-  '$1M - $10M',
-  '$10M+ per year',
-];
-
 const ROOFS_PER_MONTH = [
-  '0 - 1 roofs per month',
+  '0 -1 roofs per month',
   '2 - 4 roofs per month',
   '5 - 8 roofs per month',
-  '9+ roofs per month',
+  '9 + roofs per month',
+  "I'm not a roofing contractor",
 ];
 
 const LICENSING_OPTIONS = [
   "Yes we're fully licensed, bonded, & insured",
   'We have some, but not all of these',
-  'No, we\'re working on getting these in place',
-  'No, I\'m not a roofing contractor',
+  'No, were working on getting these in place',
+  "No, I'm not a roofing contractor",
 ];
 
-type QuizStep = 'size' | 'roofs' | 'licensing' | 'contact' | 'roi' | 'disclaimers' | 'submitting' | 'done' | 'booking';
+const REVENUE_OPTIONS = [
+  'Less than $500k/year',
+  '$500k – $1M/year',
+  '$1M – $2M/year',
+  '$2M – $5M/year',
+  '$5M+/year',
+];
+
+type QuizStep = 'contact' | 'questions' | 'timeline' | 'submitting' | 'done' | 'booking';
 
 function QuestionnaireModal({ onClose }: { onClose: () => void }) {
-  const [step, setStep] = useState<QuizStep>('size');
-  const [businessSize, setBusinessSize] = useState('');
-  const [roofsPerMonth, setRoofsPerMonth] = useState('');
-  const [licensingStatus, setLicensingStatus] = useState('');
+  const [step, setStep] = useState<QuizStep>('contact');
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     phone: '',
     email: '',
-    website: '',
-    city: '',
   });
-  const [timeline, setTimeline] = useState('');
-  const [meetingCommit, setMeetingCommit] = useState(false);
   const [spamConsent, setSpamConsent] = useState(false);
+  const [roofsPerMonth, setRoofsPerMonth] = useState('');
+  const [licensingStatus, setLicensingStatus] = useState('');
+  const [revenue, setRevenue] = useState('');
+  const [timeline, setTimeline] = useState('');
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{ phone?: string; email?: string }>({});
   const calInitialized = useRef(false);
-
-  const handleSizeSelect = (size: string) => {
-    setBusinessSize(size);
-    setTimeout(() => setStep('roofs'), 300);
-  };
-
-  const handleRoofsSelect = (value: string) => {
-    setRoofsPerMonth(value);
-    setTimeout(() => setStep('licensing'), 300);
-  };
-
-  const handleLicensingSelect = (value: string) => {
-    setLicensingStatus(value);
-    setTimeout(() => setStep('roi'), 300);
-  };
-
-  const handleTimelineSelect = (value: string) => {
-    setTimeline(value);
-    setTimeout(() => setStep('contact'), 300);
-  };
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -290,17 +266,28 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
       return;
     }
 
+    if (!spamConsent) {
+      setError('Please provide consent to continue.');
+      return;
+    }
+
     setFieldErrors({});
-    setStep('disclaimers');
+    setError('');
+    setStep('questions');
+  };
+
+  const handleQuestionsNext = () => {
+    if (!roofsPerMonth || !licensingStatus || !revenue) {
+      setError('Please answer all questions.');
+      return;
+    }
+    setError('');
+    setStep('timeline');
   };
 
   const handleFinalSubmit = async () => {
-    if (!meetingCommit) {
-      setError('Please confirm you can attend the call.');
-      return;
-    }
-    if (!spamConsent) {
-      setError('Please provide consent to continue.');
+    if (!timeline) {
+      setError('Please select an option.');
       return;
     }
     setError('');
@@ -308,18 +295,17 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
     const body = new FormData();
     body.append('access_key', 'a9e80fab-4da4-44c6-b31f-3369557abdbe');
-    body.append('subject', `Roofing Lead: ${formData.name} — ${formData.city}`);
+    body.append('subject', `Roofing Lead: ${formData.name} — ${formData.company}`);
     body.append('from_name', 'Ragsites Roofing Landing');
     body.append('name', formData.name);
+    body.append('company', formData.company);
     body.append('phone', formData.phone);
     body.append('email', formData.email);
-    body.append('website', formData.website);
-    body.append('city', formData.city);
-    body.append('business_size', businessSize);
     body.append('roofs_per_month', roofsPerMonth);
     body.append('licensing_status', licensingStatus);
+    body.append('revenue', revenue);
     body.append('timeline', timeline);
-    body.append('campaign', '40 Roofs in 90 Days');
+    body.append('campaign', '60 Roofs in 90 Days');
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -333,11 +319,11 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         }, 2000);
       } else {
         setError('Something went wrong. Please try again.');
-        setStep('disclaimers');
+        setStep('timeline');
       }
     } catch {
       setError('Something went wrong. Please try again.');
-      setStep('disclaimers');
+      setStep('timeline');
     }
   };
 
@@ -369,239 +355,70 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         </button>
 
         <>
-          {/* ─── Step 1: Business Size ─── */}
-          {step === 'size' && (
-            <div
-              key="size"
-            >
-              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 1 of 6
-              </p>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                What&apos;s the size of your business?
-              </h3>
-              <p className="text-slate-600 text-sm mb-8">Annual revenue</p>
-
-              <div className="space-y-3">
-                {BUSINESS_SIZES.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => handleSizeSelect(size)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ─── Step 2: Roofs Per Month ─── */}
-          {step === 'roofs' && (
-            <div
-              key="roofs"
-            >
-              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 2 of 6
-              </p>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                Roughly how many roofs does your company typically complete in a month?
-              </h3>
-              <p className="text-slate-600 text-sm mb-8">This helps us understand your capacity</p>
-
-              <div className="space-y-3">
-                {ROOFS_PER_MONTH.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleRoofsSelect(option)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ─── Step 3: Licensing Status ─── */}
-          {step === 'licensing' && (
-            <div
-              key="licensing"
-            >
-              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 3 of 6
-              </p>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                Are you licensed, bonded, &amp; insured?
-              </h3>
-              <p className="text-slate-600 text-sm mb-8">Select the option that best describes your situation</p>
-
-              <div className="space-y-3">
-                {LICENSING_OPTIONS.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleLicensingSelect(option)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ─── Step 5: Contact Info ─── */}
+          {/* ─── Step 1: Contact Info ─── */}
           {step === 'contact' && (
-            <div
-              key="contact"
-            >
-              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 5 of 6
-              </p>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Your Contact Details</h3>
-              <p className="text-slate-600 text-sm mb-8">
-                So we can reach out and schedule your strategy call
+            <div key="contact">
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest text-center mb-2">
+                Enter Your Info To...
+              </h3>
+              <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase text-center mb-2">
+                Start Flooding Your Calendar With Qualified Estimates
+              </h2>
+              <p className="text-xs font-bold text-slate-700 uppercase tracking-wide text-center mb-8">
+                Your info is just to hold a spot while you see if this is for you and remains 100% confidential
               </p>
 
               <form onSubmit={handleContactSubmit} className="space-y-4">
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                <div>
+                  <label className="block text-sm font-bold text-slate-900 mb-1">My name is... *</label>
                   <input
                     name="name"
                     required
-                    placeholder="Full name"
+                    placeholder="Full Name"
                     value={formData.name}
                     onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
+                    className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
                   />
                 </div>
                 <div>
-                  <div className="relative">
-                    <Phone className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${fieldErrors.phone ? 'text-red-500' : 'text-slate-500'}`} />
-                    <input
-                      name="phone"
-                      type="tel"
-                      required
-                      placeholder="Phone number"
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      className={`w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border ${fieldErrors.phone ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 text-slate-900 focus:border-[#991b1b] focus:ring-[#991b1b]'} placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-colors`}
-                    />
-                  </div>
+                  <label className="block text-sm font-bold text-slate-900 mb-1">My company name is... *</label>
+                  <input
+                    name="company"
+                    required
+                    placeholder="Company Name"
+                    value={formData.company}
+                    onChange={handleFormChange}
+                    className="w-full px-4 py-3 rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-900 mb-1">My phone number is... *</label>
+                  <input
+                    name="phone"
+                    type="tel"
+                    required
+                    placeholder="Phone"
+                    value={formData.phone}
+                    onChange={handleFormChange}
+                    className={`w-full px-4 py-3 rounded-lg bg-white border ${fieldErrors.phone ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 text-slate-900 focus:border-[#991b1b] focus:ring-[#991b1b]'} placeholder:text-slate-400 focus:outline-none focus:ring-1 transition-colors`}
+                  />
                   {fieldErrors.phone && <p className="text-red-500 text-sm mt-1 px-1 font-bold">{fieldErrors.phone}</p>}
                 </div>
                 <div>
-                  <div className="relative">
-                    <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${fieldErrors.email ? 'text-red-500' : 'text-slate-500'}`} />
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="Email address"
-                      value={formData.email}
-                      onChange={handleFormChange}
-                      className={`w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border ${fieldErrors.email ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-200 text-slate-900 focus:border-[#991b1b] focus:ring-[#991b1b]'} placeholder:text-slate-500 focus:outline-none focus:ring-1 transition-colors`}
-                    />
-                  </div>
+                  <label className="block text-sm font-bold text-slate-900 mb-1">My email is... *</label>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleFormChange}
+                    className={`w-full px-4 py-3 rounded-lg bg-white border ${fieldErrors.email ? 'border-red-500 text-red-600 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 text-slate-900 focus:border-[#991b1b] focus:ring-[#991b1b]'} placeholder:text-slate-400 focus:outline-none focus:ring-1 transition-colors`}
+                  />
                   {fieldErrors.email && <p className="text-red-500 text-sm mt-1 px-1 font-bold">{fieldErrors.email}</p>}
                 </div>
-                <div className="relative">
-                  <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <input
-                    name="website"
-                    placeholder="Company website"
-                    value={formData.website}
-                    onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
-                  />
-                </div>
-                <div className="relative">
-                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <input
-                    name="city"
-                    required
-                    placeholder="City"
-                    value={formData.city}
-                    onChange={handleFormChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-colors"
-                  />
-                </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(153,27,27,0.3)] flex items-center justify-center gap-2 mt-2"
-                >
-                  Continue
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </form>
-            </div>
-          )}
-
-          {/* ─── Step 4: Timeline ─── */}
-          {step === 'roi' && (
-            <div
-              key="roi"
-            >
-              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 4 of 6
-              </p>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                If we are a good fit, when could we get started?
-              </h3>
-              <p className="text-slate-600 text-sm mb-8">Select the best option</p>
-
-              <div className="space-y-3">
-                {['This week', 'This month', 'Unsure'].map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleTimelineSelect(option)}
-                    className="w-full text-left px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 font-medium hover:bg-gradient-skye hover:border-transparent transition-all duration-200 hover:scale-[1.02]"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ─── Step 6: Disclaimers ─── */}
-          {step === 'disclaimers' && (
-            <div
-              key="disclaimers"
-            >
-              <p className="text-[#991b1b] text-xs font-bold uppercase tracking-widest mb-3">
-                Step 6 of 6
-              </p>
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Almost There!</h3>
-
-              {/* Meeting Disclaimer */}
-              <div className="bg-slate-100 border border-slate-200 rounded-xl p-5 mb-4">
-                <p className="text-slate-700 text-sm leading-relaxed mb-4">
-                  <span className="text-slate-900 font-bold">DISCLAIMER:</span> This meeting will be
-                  hosted on Google Meet, the link will be sent in the confirmation email. We have a
-                  waiting list and limit the number of clients we take on each month. If you need to
-                  reschedule, you must let us know 24h prior to our call.
-                </p>
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={meetingCommit}
-                    onChange={(e) => {
-                      setMeetingCommit(e.target.checked);
-                      if (error) setError('');
-                    }}
-                    className="mt-1 w-4 h-4 rounded border-slate-400 text-[#991b1b] focus:ring-[#991b1b] bg-white"
-                  />
-                  <span className="text-sm text-slate-700">
-                    Will you be able to commit and attend to this call at the time of this booking?
-                  </span>
-                </label>
-              </div>
-
-              {/* Spam Disclaimer */}
-              <div className="bg-slate-100 border border-slate-200 rounded-xl p-5 mb-6">
-                <label className="flex items-start gap-3 cursor-pointer">
+                <label className="flex items-start gap-3 cursor-pointer pt-2">
                   <input
                     type="checkbox"
                     checked={spamConsent}
@@ -613,20 +430,151 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
                   />
                   <span className="text-sm text-slate-700">
                     We hate spammers and will never spam you. Do you consent to us reaching out in a
-                    meaningful way regarding this offer?
+                    meaningful way regarding this offer.
                   </span>
                 </label>
+
+                {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+                <button
+                  type="submit"
+                  className="w-full py-4 rounded-xl bg-[#991b1b] text-white font-bold text-lg hover:bg-[#7f1616] transition-all flex items-center justify-center gap-2 mt-2"
+                >
+                  NEXT
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* ─── Step 2: Qualifying Questions (all on one page) ─── */}
+          {step === 'questions' && (
+            <div key="questions">
+              <div className="space-y-8">
+                {/* Roofs per month */}
+                <div>
+                  <p className="text-sm font-bold text-slate-900 mb-3">
+                    Roughly how many roofs does your company typically complete in a month? *
+                  </p>
+                  <div className="space-y-2">
+                    {ROOFS_PER_MONTH.map((option) => (
+                      <label key={option} className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="roofs"
+                          checked={roofsPerMonth === option}
+                          onChange={() => { setRoofsPerMonth(option); if (error) setError(''); }}
+                          className="w-4 h-4 text-[#991b1b] border-slate-300 focus:ring-[#991b1b]"
+                        />
+                        <span className="text-sm text-slate-700">{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Licensing */}
+                <div>
+                  <p className="text-sm font-bold text-slate-900 mb-3">
+                    Is your business currently licensed, bonded, &amp; insured? *
+                  </p>
+                  <div className="space-y-2">
+                    {LICENSING_OPTIONS.map((option) => (
+                      <label key={option} className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="licensing"
+                          checked={licensingStatus === option}
+                          onChange={() => { setLicensingStatus(option); if (error) setError(''); }}
+                          className="w-4 h-4 text-[#991b1b] border-slate-300 focus:ring-[#991b1b]"
+                        />
+                        <span className="text-sm text-slate-700">{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Revenue */}
+                <div>
+                  <p className="text-sm font-bold text-slate-900 mb-3">
+                    What is your current yearly revenue? *
+                  </p>
+                  <div className="space-y-2">
+                    {REVENUE_OPTIONS.map((option) => (
+                      <label key={option} className="flex items-center gap-3 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="revenue"
+                          checked={revenue === option}
+                          onChange={() => { setRevenue(option); if (error) setError(''); }}
+                          className="w-4 h-4 text-[#991b1b] border-slate-300 focus:ring-[#991b1b]"
+                        />
+                        <span className="text-sm text-slate-700">{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {error && <p className="text-red-400 text-sm text-center mb-4">{error}</p>}
+              {error && <p className="text-red-500 text-sm text-center mt-4">{error}</p>}
 
-              <button
-                onClick={handleFinalSubmit}
-                className="w-full py-4 rounded-xl bg-gradient-skye text-white font-bold text-lg hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(153,27,27,0.3)] flex items-center justify-center gap-2"
-              >
-                Book My Call Now
-                <ArrowRight className="w-5 h-5" />
-              </button>
+              <div className="flex items-center justify-between mt-8">
+                <button
+                  onClick={() => setStep('contact')}
+                  className="px-6 py-3 rounded-xl bg-[#991b1b] text-white font-bold text-sm hover:bg-[#7f1616] transition-all flex items-center gap-2"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180" />
+                  PREV
+                </button>
+                <button
+                  onClick={handleQuestionsNext}
+                  className="px-6 py-3 rounded-xl bg-[#991b1b] text-white font-bold text-sm hover:bg-[#7f1616] transition-all flex items-center gap-2"
+                >
+                  NEXT
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ─── Step 3: Timeline ─── */}
+          {step === 'timeline' && (
+            <div key="timeline">
+              <p className="text-sm font-bold text-slate-900 mb-3">
+                If we are a good fit, when could we get started? *
+              </p>
+              <div className="space-y-2">
+                {['This week', 'This month', 'Unsure'].map((option) => (
+                  <label key={option} className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="timeline"
+                      checked={timeline === option}
+                      onChange={() => { setTimeline(option); if (error) setError(''); }}
+                      className="w-4 h-4 text-[#991b1b] border-slate-300 focus:ring-[#991b1b]"
+                    />
+                    <span className="text-sm text-slate-700">{option}</span>
+                  </label>
+                ))}
+              </div>
+
+              {error && <p className="text-red-500 text-sm text-center mt-4">{error}</p>}
+
+              <div className="flex items-center justify-between mt-8">
+                <button
+                  onClick={() => setStep('questions')}
+                  className="px-6 py-3 rounded-xl bg-[#991b1b] text-white font-bold text-sm hover:bg-[#7f1616] transition-all flex items-center gap-2"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180" />
+                  PREV
+                </button>
+                <button
+                  onClick={handleFinalSubmit}
+                  className="px-6 py-3 rounded-xl bg-[#991b1b] text-white font-bold text-sm hover:bg-[#7f1616] transition-all flex items-center gap-2"
+                >
+                  SUBMIT
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           )}
 
@@ -666,14 +614,14 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
         {/* Progress dots */}
         {!['submitting', 'done', 'booking'].includes(step) && (
           <div className="flex justify-center gap-2 mt-8">
-            {(['size', 'roofs', 'licensing', 'roi', 'contact', 'disclaimers'] as const).map((s, i) => (
+            {(['contact', 'questions', 'timeline'] as const).map((s, i) => (
               <div
                 key={s}
                 className={`h-1.5 rounded-full transition-all duration-300 ${s === step
-                  ? 'w-8 bg-gradient-skye'
-                  : i < ['size', 'roofs', 'licensing', 'contact', 'roi', 'disclaimers'].indexOf(step)
+                  ? 'w-8 bg-[#991b1b]'
+                  : i < ['contact', 'questions', 'timeline'].indexOf(step)
                     ? 'w-2 bg-[#991b1b]/60'
-                    : 'w-2 bg-white/20'
+                    : 'w-2 bg-slate-200'
                   }`}
               />
             ))}
@@ -847,7 +795,7 @@ export default function RoofingLanding() {
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
-              <span>40 BOOKED JOBS</span>
+              <span>60 BOOKED JOBS</span>
               <span>IN 90 DAYS</span>
               <span>OR</span>
             </div>
@@ -973,7 +921,7 @@ export default function RoofingLanding() {
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-6xl font-black mb-6">
-            Ready for 40 Booked Jobs <span className="text-gradient-skye">in 90 Days?</span>
+            Ready for 60 Booked Jobs <span className="text-gradient-skye">in 90 Days?</span>
           </h2>
           <p className="text-xl text-slate-700 mb-4 max-w-xl mx-auto">
             Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
