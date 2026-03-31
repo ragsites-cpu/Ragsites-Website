@@ -450,6 +450,15 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
           {/* ─── Step 2: Qualifying Questions (all on one page) ─── */}
           {step === 'questions' && (
             <div key="questions">
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest text-center mb-2">
+                Enter Your Info To...
+              </h3>
+              <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase text-center mb-2">
+                Start Flooding Your Calendar With Qualified Estimates
+              </h2>
+              <p className="text-xs font-bold text-slate-700 uppercase tracking-wide text-center mb-8">
+                Your info is just to hold a spot while you see if this is for you and remains 100% confidential
+              </p>
               <div className="space-y-8">
                 {/* Roofs per month */}
                 <div>
@@ -539,6 +548,15 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
           {/* ─── Step 3: Timeline ─── */}
           {step === 'timeline' && (
             <div key="timeline">
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest text-center mb-2">
+                Enter Your Info To...
+              </h3>
+              <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase text-center mb-2">
+                Start Flooding Your Calendar With Qualified Estimates
+              </h2>
+              <p className="text-xs font-bold text-slate-700 uppercase tracking-wide text-center mb-8">
+                Your info is just to hold a spot while you see if this is for you and remains 100% confidential
+              </p>
               <p className="text-sm font-bold text-slate-900 mb-3">
                 If we are a good fit, when could we get started? *
               </p>
