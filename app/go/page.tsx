@@ -319,7 +319,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
     body.append('roofs_per_month', roofsPerMonth);
     body.append('licensing_status', licensingStatus);
     body.append('timeline', timeline);
-    body.append('campaign', '30 Roofs in 30 Days');
+    body.append('campaign', '40 Roofs in 90 Days');
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
