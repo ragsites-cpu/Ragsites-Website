@@ -26,7 +26,7 @@ const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
-const META_PIXEL_ID = '2192809887920275';
+const META_PIXEL_ID = '1458916382371186';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
