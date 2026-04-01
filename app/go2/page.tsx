@@ -810,7 +810,7 @@ export default function RoofingLanding() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F0F7FF] text-slate-900">
+    <main className="min-h-screen bg-white text-slate-900">
       {/* Simple top bar */}
       <div className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -828,10 +828,10 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center px-4 overflow-hidden pt-24 pb-16 bg-slate-900">
+      <section className="relative flex items-center justify-center px-4 overflow-hidden pt-24 pb-12 bg-slate-900">
         {/* Subtle gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F0F7FF] to-transparent pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
           <div
@@ -843,7 +843,7 @@ export default function RoofingLanding() {
             </span>
           </div>
           <h1
-            className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-14 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-8 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
             <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
@@ -881,7 +881,7 @@ export default function RoofingLanding() {
       </section>
 
       {/* Social Proof Strip */}
-      <section className="py-10 px-4">
+      <section className="py-6 px-4">
         <div className="max-w-3xl mx-auto flex flex-col items-center">
           {/* Overlapping avatar stack */}
           <div className="flex items-center -space-x-3 mb-4">
@@ -892,11 +892,11 @@ export default function RoofingLanding() {
               'https://randomuser.me/api/portraits/men/67.jpg',
               'https://randomuser.me/api/portraits/men/22.jpg',
             ].map((src, i) => (
-              <div key={i} className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] overflow-hidden">
+              <div key={i} className="w-11 h-11 rounded-full border-[3px] border-white overflow-hidden">
                 <Image src={src} alt={`Roofer ${i + 1}`} width={44} height={44} className="w-full h-full object-cover" />
               </div>
             ))}
-            <div className="w-11 h-11 rounded-full border-[3px] border-[#F0F7FF] bg-slate-900 flex items-center justify-center">
+            <div className="w-11 h-11 rounded-full border-[3px] border-white bg-slate-900 flex items-center justify-center">
               <span className="text-xs font-bold text-white">+100</span>
             </div>
           </div>
@@ -914,12 +914,12 @@ export default function RoofingLanding() {
       </section>
 
       {/* Reviews */}
-      <section className="pt-8 pb-2 px-4">
+      <section className="pt-4 pb-2 px-4">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-sm font-semibold text-[#991b1b] tracking-wide uppercase mb-2">
             Real Results
           </p>
-          <h2 className="text-3xl md:text-4xl font-black text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-6">
             Our <span className="text-gradient-skye">Success Stories</span>
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
@@ -994,7 +994,7 @@ export default function RoofingLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 px-4 border-t border-blue-100 bg-[#F0F7FF]">
+      <footer className="py-10 px-4 border-t border-slate-100 bg-white">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <p className="text-sm text-slate-600">
             Ragsites &copy; 2026 - All Rights Reserved
