@@ -794,14 +794,12 @@ export default function RoofingLanding() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center px-4 overflow-hidden pt-24 pb-12 bg-slate-900">
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
+      <section className="relative flex items-center justify-center px-4 overflow-hidden pt-20 pb-6 bg-white">
+
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
           <div
-            className="mb-6 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-yellow-500 border border-yellow-400"
+            className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500 border border-yellow-400"
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
@@ -809,23 +807,15 @@ export default function RoofingLanding() {
             </span>
           </div>
           <h1
-            className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-8 leading-[1.1] tracking-normal text-white uppercase font-black flex flex-col items-center"
+            className="text-[2rem] sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-6 leading-[1.05] tracking-normal text-slate-900 uppercase font-black"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
-            <div className="flex flex-wrap justify-center items-end gap-x-3 gap-y-3 text-center px-2">
-              <span>60 BOOKED JOBS</span>
-              <span>IN 90 DAYS</span>
-              <span>OR</span>
-            </div>
-            <div className="flex flex-wrap justify-center mt-3 md:mt-5 text-center">
-              <span className="text-[#991b1b] border-b-[6px] md:border-b-[8px] border-[#991b1b] pb-0 md:pb-1 leading-[0.85]">
-                YOU DON&apos;T PAY
-              </span>
-            </div>
+            60 BOOKED JOBS IN 90 DAYS<br />
+            <span className="text-[#991b1b]">OR YOU DON&apos;T PAY</span>
           </h1>
 
           <div
-            className="flex flex-col items-center gap-4"
+            className="flex flex-col items-center gap-2"
           >
             <button
               onClick={() => openQuiz('hero')}
@@ -834,11 +824,11 @@ export default function RoofingLanding() {
               <Phone className="w-8 h-8" />
               Book Call Now
             </button>
-            <p className="text-slate-400 flex items-center gap-2 text-sm">
+            <p className="text-slate-500 flex items-center gap-2 text-sm">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               Limited spots available &mdash; only 5 new clients per month
             </p>
-            <p className="text-yellow-400 font-bold text-lg mt-1">
+            <p className="text-[#991b1b] font-bold text-lg mt-1">
               🎁 Book a call &amp; get a free AI Lead Qualifier demo for your business
             </p>
           </div>
@@ -846,10 +836,10 @@ export default function RoofingLanding() {
       </section>
 
       {/* Social Proof Strip */}
-      <section className="py-6 px-4">
+      <section className="py-3 px-4">
         <div className="max-w-3xl mx-auto flex flex-col items-center">
           {/* Overlapping avatar stack */}
-          <div className="flex items-center -space-x-3 mb-4">
+          <div className="flex items-center -space-x-3 mb-2">
             {[
               'https://randomuser.me/api/portraits/men/32.jpg',
               'https://randomuser.me/api/portraits/men/52.jpg',
@@ -879,12 +869,12 @@ export default function RoofingLanding() {
       </section>
 
       {/* Reviews */}
-      <section className="pt-4 pb-2 px-4">
+      <section className="pt-2 pb-2 px-4">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-sm font-semibold text-[#991b1b] tracking-wide uppercase mb-2">
             Real Results
           </p>
-          <h2 className="text-3xl md:text-4xl font-black text-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-4">
             Our <span className="text-gradient-skye">Success Stories</span>
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">

@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-brand-secondary text-brand-primary antialiased;
+    @apply bg-white text-brand-primary antialiased;
     font-family: Impact, "Arial Black", sans-serif !important;
   }
 
