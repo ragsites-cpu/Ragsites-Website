@@ -257,8 +257,8 @@ export default function FeaturesPage() {
                         <div className="flex gap-10 animate-scroll-left w-max">
                             {[...INTEGRATIONS, ...INTEGRATIONS].map((item, i) => (
                                 <div key={`r1-${i}`} className="flex flex-col items-center gap-2 shrink-0 group" title={item.name}>
-                                    <Image src={item.logo} alt={item.name} width={40} height={40} className="w-10 h-10 object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
-                                    <span className="text-[11px] font-medium text-slate-500 group-hover:text-slate-300 transition-colors">{item.name}</span>
+                                    <Image src={item.logo} alt={item.name} width={40} height={40} className="w-10 h-10 object-contain" />
+                                    <span className="text-[11px] font-medium text-slate-300">{item.name}</span>
                                 </div>
                             ))}
                         </div>
@@ -269,8 +269,8 @@ export default function FeaturesPage() {
                         <div className="flex gap-10 animate-scroll-right w-max">
                             {[...INTEGRATIONS, ...INTEGRATIONS].map((item, i) => (
                                 <div key={`r2-${i}`} className="flex flex-col items-center gap-2 shrink-0 group" title={item.name}>
-                                    <Image src={item.logo} alt={item.name} width={40} height={40} className="w-10 h-10 object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
-                                    <span className="text-[11px] font-medium text-slate-500 group-hover:text-slate-300 transition-colors">{item.name}</span>
+                                    <Image src={item.logo} alt={item.name} width={40} height={40} className="w-10 h-10 object-contain" />
+                                    <span className="text-[11px] font-medium text-slate-300">{item.name}</span>
                                 </div>
                             ))}
                         </div>
