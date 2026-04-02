@@ -810,8 +810,8 @@ export default function RoofingLanding() {
             className="text-[2rem] sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-6 leading-[1.05] tracking-normal text-slate-900 uppercase font-black"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
-            60 ROOFING JOBS IN 90 DAYS<br />
-            <span className="text-[#991b1b]">PAY PER RESULT</span>
+            60 <span className="text-[#991b1b]">ROOFING</span> JOBS IN 90 DAYS<br />
+            <span className="text-[#991b1b]">PAY PER RESULT</span> BASIS
           </h1>
 
           <div
