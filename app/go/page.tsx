@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 
 import {
   Phone,
+  CalendarCheck,
   ArrowRight,
   Loader2,
   X,
@@ -26,7 +27,7 @@ const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
-const META_PIXEL_ID = '1458916382371186';
+const META_PIXEL_ID = '1475611827595771';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -776,25 +777,19 @@ export default function RoofingLanding() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+    <main className="min-h-screen bg-[#F5EDE3] text-slate-900">
       {/* Simple top bar */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-40 bg-[#F5EDE3] shadow-sm border-b border-[#E8DDD1]">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center">
           <div className="flex items-center gap-2">
             <Image src="/new-logo.png" alt="Ragsites" width={32} height={32} />
             <span className="text-xl font-bold text-slate-900">RAGSITES</span>
           </div>
-          <button
-            onClick={() => openQuiz('navbar')}
-            className="px-5 py-2 rounded-full bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 hover:scale-105 transition-all"
-          >
-            Book Call Now
-          </button>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center px-4 overflow-hidden pt-20 pb-6 bg-white">
+      <section className="relative flex items-center justify-center px-4 overflow-hidden pt-20 pb-6 bg-[#F5EDE3]">
 
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-center">
@@ -810,23 +805,23 @@ export default function RoofingLanding() {
             className="text-[2rem] sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-6 leading-[1.05] tracking-normal text-slate-900 uppercase font-black"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
-            60 <span className="text-[#991b1b]">ROOFING</span> JOBS IN 90 DAYS<br />
+            <span className="text-[#991b1b]">60 ROOFING JOBS</span> IN 90 DAYS<br />
             <span className="text-[#991b1b]">PAY PER RESULT</span> BASIS
           </h1>
 
           <div
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center gap-3"
           >
+            <p className="text-xl md:text-2xl font-black tracking-wide text-slate-700 uppercase">
+              We Book Appointments And Close Them For You
+            </p>
             <button
               onClick={() => openQuiz('hero')}
               className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-[#991b1b] text-2xl font-bold text-white hover:bg-[#7f1d1d] hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(153,27,27,0.5)]"
             >
-              <Phone className="w-8 h-8" />
-              Book Call Now
+              <CalendarCheck className="w-8 h-8" />
+              Book Strategy Session
             </button>
-            <span className="text-sm font-black tracking-wide text-black uppercase">
-              We Book And Close The Clients For You
-            </span>
           </div>
         </div>
       </section>
@@ -854,7 +849,7 @@ export default function RoofingLanding() {
           <div className="flex items-center justify-center gap-1 mb-1">
             {[...Array(5)].map((_, i) => (
               <div key={i} className="w-6 h-6 flex items-center justify-center" style={{ backgroundColor: '#00b67a' }}>
-                <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.4l-6.18 3.62L7 12.14 2 7.27l6.91-1.01L12 0z" fill="white"/><line x1="16.9" y1="12.5" x2="11" y2="16" stroke="#009E68" stroke-width="0.7"/></svg>
+                <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.4l-6.18 3.62L7 12.14 2 7.27l6.91-1.01L12 0z" fill="white" /><line x1="16.9" y1="12.5" x2="11" y2="16" stroke="#009E68" stroke-width="0.7" /></svg>
               </div>
             ))}
           </div>
@@ -871,7 +866,7 @@ export default function RoofingLanding() {
             Real Results
           </p>
           <h2 className="text-3xl md:text-4xl font-black text-center mb-4">
-            Our <span className="text-gradient-skye">Success Stories</span>
+            Hear It From <span className="text-gradient-skye">Our Clients</span>
           </h2>
           <div className="grid grid-cols-1 gap-8 md:gap-12 mb-16 max-w-3xl mx-auto">
             {[
@@ -938,14 +933,15 @@ export default function RoofingLanding() {
             onClick={() => openQuiz('bottom_cta')}
             className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-slate-900 text-2xl font-bold text-white hover:bg-slate-800 hover:scale-105 transition-all duration-300 shadow-lg"
           >
-            Book Call Now
+            <CalendarCheck className="w-7 h-7" />
+            Book Strategy Session
             <ArrowRight className="w-7 h-7" />
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-10 px-4 border-t border-slate-100 bg-white">
+      <footer className="py-10 px-4 border-t border-[#E8DDD1] bg-[#F5EDE3]">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <p className="text-sm text-slate-600">
             Ragsites &copy; 2026 - All Rights Reserved
