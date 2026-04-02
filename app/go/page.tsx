@@ -803,15 +803,15 @@ export default function RoofingLanding() {
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
-              This Is ONLY For Roofers With Sub Crews That Can Handle New Installs Weekly
+              This Is ONLY For Roofers Making Over $400k Annually
             </span>
           </div>
           <h1
             className="text-[2rem] sm:text-5xl md:text-7xl lg:text-[5.5rem] mb-6 leading-[1.05] tracking-normal text-slate-900 uppercase font-black"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', transform: 'scaleY(1.05)' }}
           >
-            60 BOOKED JOBS IN 90 DAYS<br />
-            <span className="text-[#991b1b]">OR YOU DON&apos;T PAY</span>
+            60 ROOFING JOBS IN 90 DAYS<br />
+            <span className="text-[#991b1b]">PAY PER RESULT</span>
           </h1>
 
           <div
@@ -824,13 +824,9 @@ export default function RoofingLanding() {
               <Phone className="w-8 h-8" />
               Book Call Now
             </button>
-            <p className="text-slate-500 flex items-center gap-2 text-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              Limited spots available &mdash; only 5 new clients per month
-            </p>
-            <p className="text-[#991b1b] font-bold text-lg mt-1">
-              🎁 Book a call &amp; get a free AI Lead Qualifier demo for your business
-            </p>
+            <span className="text-sm font-black tracking-wide text-black uppercase">
+              We Book And Close The Clients For You
+            </span>
           </div>
         </div>
       </section>
@@ -929,7 +925,7 @@ export default function RoofingLanding() {
 
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-6xl font-black mb-6">
-            Ready for 60 Booked Jobs <span className="text-gradient-skye">in 90 Days?</span>
+            Ready for 60 Roofing Jobs <span className="text-gradient-skye">in 90 Days?</span>
           </h2>
           <p className="text-xl text-slate-700 mb-4 max-w-xl mx-auto">
             Stop chasing leads. Let our AI fill your schedule with qualified roof replacement jobs —
