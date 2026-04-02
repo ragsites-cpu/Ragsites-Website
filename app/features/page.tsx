@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Calendar, MessageSquare, BarChart3, Zap, Server, AudioLines, PhoneOutgoing, Bell, BrainCircuit, MessageSquareText, Search, PhoneOff, Star, ClipboardList } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, BarChart3, Zap, Server, AudioLines, PhoneOutgoing, Bell, BrainCircuit, MessageSquareText, Search, PhoneOff, Star, ClipboardList, Check, Minus } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -30,6 +30,48 @@ const INTEGRATIONS = [
     { name: 'Make', logo: '/integrations/make.svg' },
     { name: 'Notion', logo: '/integrations/notion.svg' },
 ];
+
+const COMPARISON_DATA = [
+    { feature: 'Architecture', ragsites: 'Native audio (end-to-end)', retell: 'STT→LLM→TTS pipeline', vapi: 'STT→LLM→TTS pipeline', bland: 'STT→LLM→TTS pipeline' },
+    { feature: 'Model', ragsites: 'Custom speech-to-speech model', retell: 'GPT-3.5/4-mini', vapi: 'Bring your own LLM', bland: 'GPT-3.5/4/Claude' },
+    { feature: 'Avg Latency', ragsites: '~500ms ⚡ Best in market', retell: '>1s', vapi: '>1.5s', bland: '>1s' },
+    { feature: 'Voice Quality', ragsites: 'Native AI audio (human-like prosody, emotion) ⚡ Best in market', retell: 'TTS stitched (ElevenLabs/Cartesia)', vapi: 'TTS stitched (multiple providers)', bland: 'TTS stitched' },
+    { feature: 'Barge-in', ragsites: 'Native (model-level)', retell: 'Yes (pipeline-level)', vapi: 'Yes', bland: 'Yes' },
+    { feature: 'Noise Reduction', ragsites: 'Far-field (built-in)', retell: 'Add-on ($)', vapi: 'No', bland: 'No' },
+    { feature: 'Languages', ragsites: '31+ (auto-detect)', retell: '31+', vapi: 'Varies by TTS/STT', bland: 'Limited' },
+    { feature: 'Inbound Agents', ragsites: 'Yes', retell: 'Yes', vapi: 'Yes', bland: 'Yes' },
+    { feature: 'Outbound Agents', ragsites: 'Yes (4 types)', retell: 'Yes', vapi: 'Yes', bland: 'Yes' },
+    { feature: 'Call Transfer', ragsites: 'Warm + cold', retell: 'Warm + cold', vapi: 'Warm + cold', bland: 'Warm + cold' },
+    { feature: 'CRM Integration', ragsites: 'Webhooks + ntfy', retell: 'Native (HubSpot, etc.)', vapi: 'Webhooks', bland: 'Webhooks' },
+    { feature: 'Dashboard', ragsites: 'Per-tenant, compartmentalized', retell: 'Shared', vapi: 'Basic', bland: 'Basic' },
+    { feature: 'Call Recording', ragsites: 'Dual-channel + waveform player', retell: 'Yes', vapi: 'Yes', bland: 'Yes' },
+    { feature: 'Sentiment Analysis', ragsites: 'Yes', retell: 'Yes', vapi: 'No', bland: 'No' },
+    { feature: 'Knowledge Base / RAG', ragsites: 'Yes', retell: 'Yes ($8/mo per KB)', vapi: 'Yes', bland: 'Yes' },
+    { feature: 'Visual Flow Builder', ragsites: 'Yes', retell: 'Yes (drag-and-drop)', vapi: 'No', bland: 'No' },
+    { feature: 'Voicemail Detection', ragsites: 'Yes', retell: 'Yes', vapi: 'Yes', bland: 'No' },
+    { feature: 'Multi-channel', ragsites: 'Voice, ntfy, SMS', retell: 'Voice, chat, email, SMS', vapi: 'Voice only', bland: 'Voice, SMS' },
+    { feature: 'HIPAA', ragsites: 'Yes', retell: 'Yes', vapi: 'Yes', bland: 'No' },
+    { feature: 'SOC 2', ragsites: 'Yes', retell: 'Yes (Type I & II)', vapi: 'No', bland: 'No' },
+    { feature: 'Anti-spam / Robocall', ragsites: 'Yes (built-in)', retell: 'No', vapi: 'No', bland: 'No' },
+    { feature: 'Silence Timeout', ragsites: 'Yes (6s auto-prompt)', retell: 'No', vapi: 'No', bland: 'No' },
+    { feature: 'Pricing', ragsites: 'Custom (flat monthly)', retell: '$0.07–0.31/min', vapi: '$0.05–0.15/min', bland: '$0.09–0.12/min' },
+    { feature: 'White Label', ragsites: 'Yes (per-tenant branding)', retell: 'Yes ($)', vapi: 'No', bland: 'Yes' },
+    { feature: 'Target Market', ragsites: 'SMB service businesses', retell: 'Enterprise call centers', vapi: 'Developers', bland: 'Enterprise' },
+];
+
+function ComparisonCell({ value, highlight }: { value: string; highlight?: boolean }) {
+    if (value === 'Yes') {
+        return <Check className={`w-5 h-5 mx-auto ${highlight ? 'text-emerald-400' : 'text-slate-400'}`} />;
+    }
+    if (value === 'No') {
+        return <Minus className="w-5 h-5 mx-auto text-slate-600" />;
+    }
+    return (
+        <span className={`text-xs ${highlight ? 'text-white font-medium' : 'text-slate-400'}`}>
+            {value}
+        </span>
+    );
+}
 
 const FAQS = [
     {
@@ -274,6 +316,51 @@ export default function FeaturesPage() {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Voice AI Comparison */}
+            <section className="py-20 px-4 bg-black border-t border-white/10">
+                <div className="max-w-6xl mx-auto">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+                        How We <span className="text-gradient-skye">Compare</span>
+                    </h2>
+                    <p className="text-slate-400 text-center mb-12">See how Ragsites stacks up against the competition</p>
+
+                    <div className="overflow-x-auto rounded-2xl border border-white/10">
+                        <table className="w-full text-sm text-left">
+                            <thead>
+                                <tr className="bg-white/5">
+                                    <th className="px-4 py-4 text-slate-400 font-semibold sticky left-0 bg-[#0a0a0a] z-10 min-w-[180px]">Feature</th>
+                                    <th className="px-4 py-4 text-center min-w-[140px]">
+                                        <span className="text-white font-bold">Ragsites</span>
+                                    </th>
+                                    <th className="px-4 py-4 text-slate-400 font-semibold text-center min-w-[140px]">Retell AI</th>
+                                    <th className="px-4 py-4 text-slate-400 font-semibold text-center min-w-[140px]">Vapi</th>
+                                    <th className="px-4 py-4 text-slate-400 font-semibold text-center min-w-[140px]">Bland AI</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {COMPARISON_DATA.map((row) => (
+                                    <tr key={row.feature} className="hover:bg-white/[0.02] transition-colors">
+                                        <td className="px-4 py-3 text-slate-300 font-medium sticky left-0 bg-black z-10">{row.feature}</td>
+                                        <td className="px-4 py-3 text-center">
+                                            <ComparisonCell value={row.ragsites} highlight />
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <ComparisonCell value={row.retell} />
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <ComparisonCell value={row.vapi} />
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <ComparisonCell value={row.bland} />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
