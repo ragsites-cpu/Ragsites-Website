@@ -143,6 +143,14 @@
   animation: marquee-right 60s linear infinite;
 }
 
+.animate-scroll-left {
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: marquee-right 30s linear infinite;
+}
+
 @keyframes float-heart {
   0% {
     transform: translateY(0) scale(1) rotate(0deg);

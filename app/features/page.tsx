@@ -247,17 +247,33 @@ export default function FeaturesPage() {
             </section>
 
             {/* Integrations */}
-            <section className="py-20 px-4 bg-black border-t border-white/10">
+            <section className="py-20 px-4 bg-black border-t border-white/10 overflow-hidden">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">Works With Your Favorite Tools</h2>
                     <p className="text-slate-400 text-center mb-12">Seamlessly connects with the platforms you already use</p>
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                        {INTEGRATIONS.map((item) => (
-                            <div key={item.name} className="flex flex-col items-center gap-2 group" title={item.name}>
-                                <Image src={item.logo} alt={item.name} width={36} height={36} className="w-9 h-9 object-contain opacity-60 group-hover:opacity-100 transition-opacity" />
-                                <span className="text-[11px] font-medium text-slate-500 group-hover:text-slate-300 transition-colors">{item.name}</span>
-                            </div>
-                        ))}
+
+                    {/* Row 1 — scrolls left */}
+                    <div className="relative mb-8">
+                        <div className="flex gap-10 animate-scroll-left w-max">
+                            {[...INTEGRATIONS, ...INTEGRATIONS].map((item, i) => (
+                                <div key={`r1-${i}`} className="flex flex-col items-center gap-2 shrink-0" title={item.name}>
+                                    <Image src={item.logo} alt={item.name} width={40} height={40} className="w-10 h-10 object-contain brightness-0 invert opacity-90" />
+                                    <span className="text-[11px] font-medium text-slate-300">{item.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Row 2 — scrolls right */}
+                    <div className="relative">
+                        <div className="flex gap-10 animate-scroll-right w-max">
+                            {[...INTEGRATIONS, ...INTEGRATIONS].map((item, i) => (
+                                <div key={`r2-${i}`} className="flex flex-col items-center gap-2 shrink-0" title={item.name}>
+                                    <Image src={item.logo} alt={item.name} width={40} height={40} className="w-10 h-10 object-contain brightness-0 invert opacity-90" />
+                                    <span className="text-[11px] font-medium text-slate-300">{item.name}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
