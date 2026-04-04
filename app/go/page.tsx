@@ -798,7 +798,7 @@ export default function RoofingLanding() {
           >
             <Zap className="w-5 h-5 text-black" />
             <span className="text-sm font-black tracking-wide text-black uppercase">
-              This Is ONLY For Roofers Making Over $400k Annually
+              This Is For Roofers With Sub Crews And A Dedicated Sales Team
             </span>
           </div>
           <h1
