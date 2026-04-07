@@ -7,8 +7,9 @@ import { headers } from 'next/headers';
 
 const PIXEL_CONFIGS = {
     go: {
-        pixelId: '1475611827595771',
+        pixelId: '1610397183412112',
         accessToken: 'EAAP4qriDd3EBRBfRDGC6GIPWvT67e3wrvJZC15fIkdqrSfUKUO40OAqpEnUb4h4nIZArngKyKE1OzyED3xfGcWCqt7lW8LQdcYGDzjZBY7tWEdZBYrZBEZA5FJ9jrSOkZCXjA3l7OrQPzzkSAtDu70eqY3xSZBzZAlvGsOFv56QSO98e8ZCeMwgd9CGZCf16ScRDAZDZD',
+        testEventCode: 'TEST48030',
     },
     go2: {
         pixelId: '827605470377523',
@@ -26,7 +27,7 @@ function hashData(data: string | undefined): string | undefined {
 export async function sendMetaCAPIEvent(
     page: PageKey,
     eventName: 'Lead' | 'Schedule',
-    userData: { email?: string; phone?: string } = {},
+    userData: { email?: string; phone?: string; fbc?: string; fbp?: string } = {},
     customData: Record<string, any> = {},
     eventId?: string
 ) {
@@ -54,6 +55,8 @@ export async function sendMetaCAPIEvent(
                         client_user_agent: userAgent || undefined,
                         ...(hashedEmail && { em: [hashedEmail] }),
                         ...(hashedPhone && { ph: [hashedPhone] }),
+                        ...(userData.fbc && { fbc: userData.fbc }),
+                        ...(userData.fbp && { fbp: userData.fbp }),
                     },
                     custom_data: customData,
                     ...(eventId && { event_id: eventId }),

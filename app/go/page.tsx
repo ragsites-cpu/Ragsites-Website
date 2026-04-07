@@ -27,7 +27,7 @@ const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
-const META_PIXEL_ID = '1475611827595771';
+const META_PIXEL_ID = '1610397183412112';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -43,6 +43,12 @@ function trackMetaGo(eventName: string, params?: Record<string, string>, eventId
       window.fbq('trackSingle', META_PIXEL_ID, eventName, params);
     }
   }
+}
+
+function getCookie(name: string): string | undefined {
+  if (typeof document === 'undefined') return undefined;
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : undefined;
 }
 
 /**
@@ -85,7 +91,7 @@ function useMetaPixel() {
       if (viewContentFired.current) return;
       const scrollPercent =
         window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-      if (scrollPercent >= 0.25) {
+      if (scrollPercent >= 0.50) {
         viewContentFired.current = true;
         trackMetaGo('ViewContent', { content_name: '30 Roofs Landing' });
         window.removeEventListener('scroll', handleScroll);
@@ -144,7 +150,26 @@ function CalInlineBooking({ name, email, phone }: { name?: string; email?: strin
         callback: () => {
           if (scheduleFired.current) return;
           scheduleFired.current = true;
-          trackMetaGo('Schedule', { content_name: 'Cal.com Booking' });
+
+          const eventId = crypto.randomUUID();
+          // Browser pixel Lead event
+          trackMetaGo('Lead', { content_name: 'Cal.com Booking' }, eventId);
+          // CAPI Lead event with user data for better match quality
+          const fbc = getCookie('_fbc');
+          const fbp = getCookie('_fbp');
+          sendMetaCAPIEvent(
+            'go',
+            'Lead',
+            {
+              ...(email ? { email } : {}),
+              ...(phone ? { phone } : {}),
+              ...(fbc ? { fbc } : {}),
+              ...(fbp ? { fbp } : {}),
+            },
+            { content_name: 'Cal.com Booking' },
+            eventId
+          ).catch(console.error);
+
           setTimeout(() => {
             window.location.href = THANK_YOU_URL;
           }, 1500);
@@ -768,11 +793,7 @@ export default function RoofingLanding() {
     };
   }, []);
 
-  const openQuiz = (source: string) => {
-    const eventId = crypto.randomUUID();
-    trackMetaGo('Lead', { content_name: 'Book Call CTA', content_category: source }, eventId);
-    // Send CAPI Lead event concurrently
-    sendMetaCAPIEvent('go', 'Lead', {}, { content_name: 'Book Call CTA', content_category: source }, eventId).catch(console.error);
+  const openQuiz = () => {
     setShowQuiz(true);
   };
 
@@ -816,7 +837,7 @@ export default function RoofingLanding() {
               We Book Appointments And Close Them For You
             </p>
             <button
-              onClick={() => openQuiz('hero')}
+              onClick={() => openQuiz()}
               className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-[#991b1b] text-2xl font-bold text-white hover:bg-[#7f1d1d] hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(153,27,27,0.5)]"
             >
               <CalendarCheck className="w-8 h-8" />
@@ -930,7 +951,7 @@ export default function RoofingLanding() {
             🎁 Book a call &amp; get a free AI Lead Qualifier demo customized for your business
           </p>
           <button
-            onClick={() => openQuiz('bottom_cta')}
+            onClick={() => openQuiz()}
             className="group relative inline-flex items-center justify-center gap-4 px-12 py-6 rounded-full bg-slate-900 text-2xl font-bold text-white hover:bg-slate-800 hover:scale-105 transition-all duration-300 shadow-lg"
           >
             <CalendarCheck className="w-7 h-7" />
