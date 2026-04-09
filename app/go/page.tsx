@@ -836,9 +836,12 @@ export default function RoofingLanding() {
             <p className="text-xl md:text-2xl font-black tracking-wide text-slate-700 uppercase">
               We Book Appointments And Close Them For You
             </p>
+            <p className="text-2xl md:text-3xl font-extrabold text-emerald-600 uppercase tracking-wide">
+              Get Started For $0 Down
+            </p>
             <button
               onClick={() => openQuiz()}
-              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-[#991b1b] text-2xl font-bold text-white hover:bg-[#7f1d1d] hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(153,27,27,0.5)]"
+              className="group relative flex items-center justify-center gap-4 px-10 py-5 rounded-full bg-[#991b1b] text-2xl font-bold text-white hover:bg-[#7f1d1d] hover:scale-105 transition-all duration-300"
             >
               <CalendarCheck className="w-8 h-8" />
               Book Strategy Session
