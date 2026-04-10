@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const CASE_IMAGES = [
-  '/WhatsApp Image 2026-04-11 at 01.52.50.jpeg',
+  '/first-roofing.jpeg',
   '/WhatsApp Image 2026-04-11 at 01.52.50 (1).jpeg',
   '/WhatsApp Image 2026-04-11 at 01.53.20.jpeg',
   '/WhatsApp Image 2026-04-11 at 01.53.20 (1).jpeg',
@@ -25,10 +25,10 @@ export default function CasePage() {
       </div>
 
       {/* Hero */}
-      <section className="px-4 py-20 md:py-28 border-b border-slate-100">
+      <section className="px-4 pt-16 pb-6 md:pt-20 md:pb-8">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-bold tracking-widest uppercase text-[#991b1b] mb-4">
-            Case Studies
+            Case Studies In Canada
           </p>
           <h1
             className="text-4xl md:text-6xl font-black uppercase leading-[1.05] text-slate-900"
@@ -40,8 +40,8 @@ export default function CasePage() {
       </section>
 
       {/* Case Study Images */}
-      <section className="px-4 py-20">
-        <div className="max-w-3xl mx-auto space-y-12">
+      <section className="px-4 pt-4 pb-20">
+        <div className="max-w-5xl mx-auto space-y-16">
           {CASE_IMAGES.map((src, idx) => (
             <div
               key={idx}
@@ -50,8 +50,8 @@ export default function CasePage() {
               <Image
                 src={src}
                 alt={`Case study ${idx + 1}`}
-                width={1200}
-                height={1600}
+                width={1600}
+                height={2000}
                 className="w-full h-auto"
                 unoptimized
               />
