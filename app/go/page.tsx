@@ -653,7 +653,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
           {/* ─── Booking (Cal.com inline) ─── */}
           {step === 'booking' && (
-            <CalInlineBooking name={formData.name} email={formData.email} phone={formData.phone} qualified={revenue !== REVENUE_OPTIONS[0]} />
+            <CalInlineBooking name={formData.name} email={formData.email} phone={formData.phone} qualified={revenue !== REVENUE_OPTIONS[0] && roofsPerMonth !== ROOFS_PER_MONTH[ROOFS_PER_MONTH.length - 1] && licensingStatus !== LICENSING_OPTIONS[LICENSING_OPTIONS.length - 1]} />
           )}
         </>
 
