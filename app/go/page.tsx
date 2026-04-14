@@ -27,7 +27,7 @@ const THANK_YOU_URL = '/thank-you';
 
 /* ─── Analytics Helpers ─── */
 
-const META_PIXEL_ID = '1610397183412112';
+const META_PIXEL_ID = '932251286469148';
 
 function trackEvent(eventName: string, params?: Record<string, string>) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -104,7 +104,7 @@ function useMetaPixel() {
 
 /* ─── Cal.com Inline Booking ─── */
 
-function CalInlineBooking({ name, email, phone }: { name?: string; email?: string; phone?: string }) {
+function CalInlineBooking({ name, email, phone, qualified }: { name?: string; email?: string; phone?: string; qualified?: boolean }) {
   const [calLoaded, setCalLoaded] = useState(false);
   const scheduleFired = useRef(false);
 
@@ -151,24 +151,26 @@ function CalInlineBooking({ name, email, phone }: { name?: string; email?: strin
           if (scheduleFired.current) return;
           scheduleFired.current = true;
 
-          const eventId = crypto.randomUUID();
-          // Browser pixel Lead event
-          trackMetaGo('Lead', { content_name: 'Cal.com Booking' }, eventId);
-          // CAPI Lead event with user data for better match quality
-          const fbc = getCookie('_fbc');
-          const fbp = getCookie('_fbp');
-          sendMetaCAPIEvent(
-            'go',
-            'Lead',
-            {
-              ...(email ? { email } : {}),
-              ...(phone ? { phone } : {}),
-              ...(fbc ? { fbc } : {}),
-              ...(fbp ? { fbp } : {}),
-            },
-            { content_name: 'Cal.com Booking' },
-            eventId
-          ).catch(console.error);
+          if (qualified !== false) {
+            const eventId = crypto.randomUUID();
+            // Browser pixel Lead event
+            trackMetaGo('Lead', { content_name: 'Cal.com Booking' }, eventId);
+            // CAPI Lead event with user data for better match quality
+            const fbc = getCookie('_fbc');
+            const fbp = getCookie('_fbp');
+            sendMetaCAPIEvent(
+              'go',
+              'Lead',
+              {
+                ...(email ? { email } : {}),
+                ...(phone ? { phone } : {}),
+                ...(fbc ? { fbc } : {}),
+                ...(fbp ? { fbp } : {}),
+              },
+              { content_name: 'Cal.com Booking' },
+              eventId
+            ).catch(console.error);
+          }
 
           setTimeout(() => {
             window.location.href = THANK_YOU_URL;
@@ -247,8 +249,8 @@ const LICENSING_OPTIONS = [
 ];
 
 const REVENUE_OPTIONS = [
-  'Less than $400k/year (DO NOT BOOK)',
-  '$400k – $1M/year',
+  'Less than $500k/year (DO NOT BOOK)',
+  '$500k – $1M/year',
   '$1M – $2M/year',
   '$2M – $5M/year',
   '$5M+/year',
@@ -651,7 +653,7 @@ function QuestionnaireModal({ onClose }: { onClose: () => void }) {
 
           {/* ─── Booking (Cal.com inline) ─── */}
           {step === 'booking' && (
-            <CalInlineBooking name={formData.name} email={formData.email} phone={formData.phone} />
+            <CalInlineBooking name={formData.name} email={formData.email} phone={formData.phone} qualified={revenue !== REVENUE_OPTIONS[0]} />
           )}
         </>
 
