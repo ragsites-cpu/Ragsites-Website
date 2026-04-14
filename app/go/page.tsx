@@ -249,7 +249,7 @@ const LICENSING_OPTIONS = [
 ];
 
 const REVENUE_OPTIONS = [
-  'Less than $500k/year (DO NOT BOOK)',
+  'Less than $500k/year',
   '$500k – $1M/year',
   '$1M – $2M/year',
   '$2M – $5M/year',
