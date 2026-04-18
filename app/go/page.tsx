@@ -153,8 +153,10 @@ function CalInlineBooking({ name, email, phone, qualified }: { name?: string; em
 
           if (qualified !== false) {
             const eventId = crypto.randomUUID();
-            // Browser pixel Lead event
-            trackMetaGo('Lead', { content_name: 'Cal.com Booking' }, eventId);
+            // Browser pixel Lead event (using 'track' instead of 'trackSingle' for proper eventID dedup)
+            if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+              window.fbq('track', 'Lead', { content_name: 'Cal.com Booking' }, { eventID: eventId });
+            }
             // CAPI Lead event with user data for better match quality
             const fbc = getCookie('_fbc');
             const fbp = getCookie('_fbp');
