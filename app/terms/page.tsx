@@ -256,8 +256,8 @@ const sections = [
           <p className="text-white font-medium">Ragsites</p>
           <p className="mt-1">
             Email:{' '}
-            <a href="mailto:ragsites@gmail.com" className="text-[#40c9ff] hover:underline">
-              ragsites@gmail.com
+            <a href="mailto:admin@ragsites.com" className="text-[#40c9ff] hover:underline">
+              admin@ragsites.com
             </a>
           </p>
           <p className="mt-1">
